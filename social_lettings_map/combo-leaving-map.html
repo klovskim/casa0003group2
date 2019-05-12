@@ -1,0 +1,885 @@
+<!-- combo reasons for leaving housing map -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--set the basic stuff up, add the css sheet -->
+    <meta charset='utf-8' />
+    <title>Display a map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='leaving_map.css' rel='stylesheet' />
+
+    <!-- initialize the headers and sliders for each of the maps -->
+
+    <div id='social' class='map'></div>
+    <div id='private' class='map'></div>
+    <div id='divider'></div>
+    <nav id="socialmenu"></nav>
+    <div class='map-overlay' id='features'><h2>Social Leavings</h2><div id='pd'><p>Reasons for letting socially-owned social housing</p></div>
+    <div class="map-overlay-inner">
+        <h2>Year: <label id='active-year1'>2014</label></h2>
+            <input id='slider1' class='row' type='range' min='2014' max='2017' step='1' value='2014' />
+        </div>
+    </div>
+
+    <nav id="privatemenu"></nav>
+    <div class='map-overlay' id='features1'><h2>Private Leavings</h2><div id='pd'><p>Reasons for letting privately-owned social housing</p></div>
+    <div class="map-overlay-inner">
+        <h2>Year: <label id='active-year2'>2014</label></h2>
+            <input id='slider2' class='row' type='range' min='2014' max='2017' step='1' value='2014' />
+        </div>
+    </div> 
+
+    <div class='map-overlay' id='sociallegend'></div>
+    <div class='map-overlay' id='privatelegend'></div>
+
+    <!-- start the script portion -->
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWtsb3Zza2kiLCJhIjoiY2l6N2R0azl2MDA1NDJ3cG9uZ2RoMzF5aiJ9.UacgAXrCVFX4BmcbH4oj_w';
+
+        // add nav control
+
+        // clone map function
+
+        function moveToMapPosition(master, clones) {
+            var center = master.getCenter();
+            var zoom = master.getZoom();
+            var bearing = master.getBearing();
+            var pitch = master.getPitch();
+
+            clones.forEach(function (clone) {
+                clone.jumpTo({
+                    center: center,
+                    zoom: zoom,
+                    bearing: bearing,
+                    pitch: pitch
+                });
+            });
+        }
+
+        // Sync movements of two maps.
+        //
+        // All interactions that result in movement end up firing
+        // a "move" event. The trick here, though, is to
+        // ensure that movements don't cycle from one map
+        // to the other and back again, because such a cycle
+        // - could cause an infinite loop
+        // - prematurely halts prolonged movements like
+        //   double-click zooming, box-zooming, and flying
+        function syncMaps() {
+            var maps;
+            var argLen = arguments.length;
+            if (argLen === 1) {
+                maps = arguments[0];
+            } else {
+                maps = [];
+                for (var i = 0; i < argLen; i++) {
+                    maps.push(arguments[i]);
+                }
+            }
+
+            //   credit to this section goes to Dan Zhang
+            // Create all the movement functions, because if they're created every time
+            // they wouldn't be the same and couldn't be removed.
+            var fns = [];
+            maps.forEach(function (map, index) {
+                fns[index] = sync.bind(null, map, maps.filter(function (o, i) { return i !== index; }));
+            });
+
+            function on() {
+                maps.forEach(function (map, index) {
+                    map.on('move', fns[index]);
+                });
+            }
+
+            function off() {
+                maps.forEach(function (map, index) {
+                    map.off('move', fns[index]);
+                });
+            }
+
+            // When one map moves, we turn off the movement listeners
+            // on all the maps, move it, then turn the listeners on again
+            function sync(master, clones) {
+                off();
+                moveToMapPosition(master, clones);
+                on();
+            }
+            on();
+        };
+
+        // set the two maps as either social or private
+        var social = new mapboxgl.Map({
+            container: 'social',
+            style: 'mapbox://styles/mklovski/cjvb0602e09go1fn0zwgps0cn',
+            // set the default load location
+            center: [-0.012, 51.493],
+            zoom: 9.5
+        });
+
+        var private = new mapboxgl.Map({
+            container: 'private',
+            style: 'mapbox://styles/mklovski/cjvb0602e09go1fn0zwgps0cn',
+            // set the default load location
+            center: [-0.012, 51.493],
+            zoom: 9.5
+        });
+
+        var maps = syncMaps(social, private);
+
+        social.on('load', function () {
+            social.addLayer({
+                id: 'gla_boundary',
+                type: 'line',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.bjr2ut89'
+                },
+                'source-layer': 'gla_boundary-5dmnh1',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                // style the colors
+                paint: {
+                    'line-color': '#000000',
+                    'line-width': 2
+                }
+            });
+
+            // adding the totals
+            social.addLayer({
+                id: 'social_leaving',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.bww58hh3'
+                },
+                'source-layer': 'social_leaving-2scgtp',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'totalper100k',
+                        stops: [
+                            [106, '#fef0d9'],
+                            [213, '#fdcc8a'],
+                            [320, '#fc8d59'],
+                            [427, '#e34a33'],
+                            [534, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+
+            social.addLayer({
+                id: 'social_evict',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.bww58hh3'
+                },
+                'source-layer': 'social_leaving-2scgtp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'evictper100k',
+                        stops: [
+                            [6.7, '#fef0d9'],
+                            [13.4, '#fdcc8a'],
+                            [20.108, '#fc8d59'],
+                            [26.808, '#e34a33'],
+                            [33.5, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+
+            social.addLayer({
+                id: 'social_decant',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.bww58hh3'
+                },
+                'source-layer': 'social_leaving-2scgtp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'decantper100k',
+                        stops: [
+                            [20, '#fef0d9'],
+                            [40, '#fdcc8a'],
+                            [60, '#fc8d59'],
+                            [80, '#e34a33'],
+                            [93.1387, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+
+            social.addLayer({
+                id: 'social_unafford',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.bww58hh3'
+                },
+                'source-layer': 'social_leaving-2scgtp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'unafford100k',
+                        stops: [
+                            [5.58, '#fef0d9'],
+                            [11.17, '#fdcc8a'],
+                            [16.75, '#fc8d59'],
+                            [22.33, '#e34a33'],
+                            [27.933, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+
+            social.addLayer({
+                id: 'social_condition',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.bww58hh3'
+                },
+                'source-layer': 'social_leaving-2scgtp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'poor_condper100k',
+                        stops: [
+                            [5.4, '#fef0d9'],
+                            [10.8, '#fdcc8a'],
+                            [16.2, '#fc8d59'],
+                            [21.6, '#e34a33'],
+                            [27.0234, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+
+            social.addLayer({
+                id: 'social_overcrowded',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.bww58hh3'
+                },
+                'source-layer': 'social_leaving-2scgtp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'overcrowdper100k',
+                        stops: [
+                            [29.1, '#fef0d9'],
+                            [58.2, '#fdcc8a'],
+                            [87.3, '#fc8d59'],
+                            [116.4, '#e34a33'],
+                            [145.518, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+            //   THE ACTUAL SLIDER FUNCTION HERE
+            document.getElementById('slider1').addEventListener('input', function (e) {
+                var socialyear = parseInt(e.target.value);
+                // update the map
+                social.setFilter('social_leaving', ['==', ['number', ['get', 'year']], socialyear]);
+                social.setFilter('social_evict', ['==', ['number', ['get', 'year']], socialyear]);
+                social.setFilter('social_decant', ['==', ['number', ['get', 'year']], socialyear]);
+                social.setFilter('social_unafford', ['==', ['number', ['get', 'year']], socialyear]);
+                social.setFilter('social_condition', ['==', ['number', ['get', 'year']], socialyear]);
+                social.setFilter('social_overcrowded', ['==', ['number', ['get', 'year']], socialyear]);
+                // update text in the UI
+                document.getElementById('active-year1').innerText = socialyear;
+            });
+        });
+        // END OF SLIDER FUNCTION
+
+            var socialchangelayers = ['social_leaving', 'social_evict', 'social_decant', 'social_unafford', 'social_condition', 'social_overcrowded'];
+
+            for (var i = 0; i < socialchangelayers.length; i++) {
+                var socialid = socialchangelayers[i];
+
+                var link1 = document.createElement('a');
+                link1.href = '#';
+                link1.className = ['active', 'not-active'];
+                link1.textContent = socialid;
+                link1.onclick = function (e) {
+                    var socialclickedLayer = this.textContent;
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var socialvisibility = social.getLayoutProperty(socialclickedLayer, 'visibility');
+
+                    if (socialvisibility === 'visible') {
+                        social.setLayoutProperty(socialclickedLayer, 'visibility', 'none');
+                        this.className = 'not-active';
+                    } else {
+                        this.className = 'active';
+                        social.setLayoutProperty(socialclickedLayer, 'visibility', 'visible');
+                    }
+                };
+                var sociallayers = document.getElementById('socialmenu');
+            }
+        social.on('click', 'social_leaving', function (e) {
+            var socialname = e.features[0].properties.name;
+            var socialyear = e.features[0].properties.year;
+            var socialtotal_leaving = e.features[0].properties.total_leaving;
+            var socialtotalper100k = e.features[0].properties.totalper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_leaving + " people left " + socialname + " which is " + socialtotalper100k + " People per 100,000" + "</h3>")
+                .addTo(social);
+        });
+        // change the icon when you hover it
+        social.on('mouseenter', 'social_leaving', function () {
+            social.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        social.on('mouseleave', 'social_leaving', function () {
+            social.getCanvas().style.cursor = '';
+        });
+
+
+        social.on('click', 'social_evict', function (e) {
+            var socialname = e.features[0].properties.name;
+            var socialyear = e.features[0].properties.year;
+            var socialtotal_evict = e.features[0].properties.evict_or_repossess;
+            var socialevictper100k = e.features[0].properties.evictper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_evict + " people were evicted from " + socialname + " which is " + socialevictper100k + " people per 100,000" + "</h3>")
+                .addTo(social);
+        });
+        // change the icon when you hover it
+        social.on('mouseenter', 'social_evict', function () {
+            social.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        social.on('mouseleave', 'social_evict', function () {
+            social.getCanvas().style.cursor = '';
+        });
+
+        social.on('click', 'social_decant', function (e) {
+            var socialname = e.features[0].properties.name;
+            var socialyear = e.features[0].properties.year;
+            var socialtotal_decant = e.features[0].properties.permanently_decanted;
+            var socialdecantper100k = e.features[0].properties.decantper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_decant + " people were permanently decanted from " + socialname + " which is " + socialdecantper100k + " people per 100,000" + "</h3>")
+                .addTo(social);
+        });
+        // change the icon when you hover it
+        social.on('mouseenter', 'social_decant', function () {
+            social.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        social.on('mouseleave', 'social_decant', function () {
+            social.getCanvas().style.cursor = '';
+        });
+
+
+        social.on('click', 'social_unafford', function (e) {
+            var socialname = e.features[0].properties.name;
+            var socialyear = e.features[0].properties.year;
+            var socialtotal_unafford = e.features[0].properties.unaffordable;
+            var socialunaffordper100k = e.features[0].properties.unafford100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_unafford + " left " + socialname + " because their housing was unaffordable, which is " + socialunaffordper100k + " People per 100,000" + "</h3>")
+                .addTo(social);
+        });
+        // change the icon when you hover it
+        social.on('mouseenter', 'social_unafford', function () {
+            social.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        social.on('mouseleave', 'social_unafford', function () {
+            social.getCanvas().style.cursor = '';
+        });
+
+
+        social.on('click', 'social_condition', function (e) {
+            var socialname = e.features[0].properties.name;
+            var socialyear = e.features[0].properties.year;
+            var socialtotal_condition = e.features[0].properties.poor_condition;
+            var socialconditionper100k = e.features[0].properties.poor_condper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_condition + " people left because of poor home condition, " + socialname + " which is " + socialconditionper100k + " People per 100,000" + "</h3>")
+                .addTo(social);
+        });
+        // change the icon when you hover it
+        social.on('mouseenter', 'social_condition', function () {
+            social.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        social.on('mouseleave', 'social_condition', function () {
+            social.getCanvas().style.cursor = '';
+        });
+
+
+
+        social.on('click', 'social_overcrowded', function (e) {
+            var socialname = e.features[0].properties.name;
+            var socialyear = e.features[0].properties.year;
+            var socialtotal_over = e.features[0].properties.overcrowded;
+            var socialovercrow100k = e.features[0].properties.overcrowdper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_over + " people left " + socialname + " because of overcrowding which is " + socialovercrow100k + " People per 100,000" + "</h3>")
+                .addTo(social);
+        });
+        // change the icon when you hover it
+        social.on('mouseenter', 'social_overcrowded', function () {
+            social.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        social.on('mouseleave', 'social_overcrowded', function () {
+            social.getCanvas().style.cursor = '';
+        });
+
+        // add a legend
+        var sociallegendlabels = ['Very Low', 'Low', 'Middle', 'High', 'Very High'];
+        var socialcolors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
+        for (i = 0; i < sociallegendlabels.length; i++) {
+            var sociallayer = sociallegendlabels[i];
+            var socialcolor = socialcolors[i];
+            var socialitem = document.createElement('div');
+            var socialkey = document.createElement('span');
+            socialkey.className = 'sociallegend-key';
+            socialkey.style.backgroundColor = socialcolor;
+
+            var socialvalue = document.createElement('span');
+            socialvalue.innerHTML = sociallayer;
+            socialitem.appendChild(socialkey);
+            socialitem.appendChild(socialvalue);
+            sociallegend.appendChild(socialitem);
+        }
+
+        private.on('load', function () {
+
+            private.addLayer({
+                id: 'gla_boundary',
+                type: 'line',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.bjr2ut89'
+                },
+                'source-layer': 'gla_boundary-5dmnh1',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                // style the colors
+                paint: {
+                    'line-color': '#000000',
+                    'line-width': 2
+                }
+            });
+
+            // adding the totals
+            private.addLayer({
+                id: 'private_leaving',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.c21q08eu'
+                },
+                'source-layer': 'private_leaving-0mzusp',
+                'layout': {
+                    'visibility': 'visible'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'totalper100k',
+                        stops: [
+                            [106, '#fef0d9'],
+                            [213, '#fdcc8a'],
+                            [320, '#fc8d59'],
+                            [427, '#e34a33'],
+                            [534, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+            // adding the totals
+            private.addLayer({
+                id: 'private_evict',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.c21q08eu'
+                },
+                'source-layer': 'private_leaving-0mzusp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'evictper100k',
+                        stops: [
+                            [6.7, '#fef0d9'],
+                            [13.4, '#fdcc8a'],
+                            [20.108, '#fc8d59'],
+                            [26.808, '#e34a33'],
+                            [33.5, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+            private.addLayer({
+                id: 'private_decant',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.c21q08eu'
+                },
+                'source-layer': 'private_leaving-0mzusp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'decantper100k',
+                        stops: [
+                            [20, '#fef0d9'],
+                            [40, '#fdcc8a'],
+                            [60, '#fc8d59'],
+                            [80, '#e34a33'],
+                            [93.1387, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+            private.addLayer({
+                id: 'private_unafford',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.c21q08eu'
+                },
+                'source-layer': 'private_leaving-0mzusp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'unaffordper100k',
+                        stops: [
+                            [5.58, '#fef0d9'],
+                            [11.17, '#fdcc8a'],
+                            [16.75, '#fc8d59'],
+                            [22.33, '#e34a33'],
+                            [27.933, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+            private.addLayer({
+                id: 'private_condition',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.c21q08eu'
+                },
+                'source-layer': 'private_leaving-0mzusp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'poor_condper100k',
+                        stops: [
+                            [5.4, '#fef0d9'],
+                            [10.8, '#fdcc8a'],
+                            [16.2, '#fc8d59'],
+                            [21.6, '#e34a33'],
+                            [27.0234, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+            private.addLayer({
+                id: 'private_overcrowded',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mklovski.c21q08eu'
+                },
+                'source-layer': 'private_leaving-0mzusp',
+                'layout': {
+                    'visibility': 'none'
+                },
+                // style the colors
+                paint: {
+                    'fill-opacity': .85,
+                    'fill-color': {
+                        property: 'overcrowdper100k',
+                        stops: [
+                            [29.1, '#fef0d9'],
+                            [58.2, '#fdcc8a'],
+                            [87.3, '#fc8d59'],
+                            [116.4, '#e34a33'],
+                            [145.518, '#b30000'],
+                        ]
+                    },
+                },
+                filter: ['==', ['number', ['get', 'year']], 2014]
+            });
+
+            document.getElementById('slider2').addEventListener('input', function (e) {
+                var privateyear = parseInt(e.target.value);
+                // update the map
+                private.setFilter('private_leaving', ['==', ['number', ['get', 'year']], privateyear]);
+                private.setFilter('private_evict', ['==', ['number', ['get', 'year']], privateyear]);
+                private.setFilter('private_decant', ['==', ['number', ['get', 'year']], privateyear]);
+                private.setFilter('private_unafford', ['==', ['number', ['get', 'year']], privateyear]);
+                private.setFilter('private_condition', ['==', ['number', ['get', 'year']], privateyear]);
+                private.setFilter('private_overcrowded', ['==', ['number', ['get', 'year']], privateyear]);
+                // update text in the UI
+                document.getElementById('active-year2').innerText = privateyear;
+            });
+        });
+
+            var privatechangelayers = ['social_leaving', 'social_evict', 'social_decant', 'social_unafford', 'social_condition', 'social_overcrowded'];
+
+            for (var i = 0; i < privatechangelayers.length; i++) {
+                var privateid = privatechangelayers[i];
+
+                var link2 = document.createElement('a');
+                link2.href = '#';
+                link2.className = ['active', 'not-active'];
+                link2.textContent = privateid;
+                link2.onclick = function (e) {
+                    var privateclickedLayer = this.textContent;
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var privatevisibility = private.getLayoutProperty(privateclickedLayer, 'visibility');
+
+                    if (visibility === 'visible') {
+                        private.setLayoutProperty(privateclickedLayer, 'visibility', 'none');
+                        this.className = 'not-active';
+                    } else {
+                        this.className = 'active';
+                        private.setLayoutProperty(privateclickedLayer, 'visibility', 'visible');
+                    }
+                };
+                var privatelayers = document.getElementById('privatemenu');
+
+            };
+        private.on('click', 'private_leaving', function (e) {
+            var privatename = e.features[0].properties.name;
+            var privateyear = e.features[0].properties.year;
+            var privatetotal_leaving = e.features[0].properties.total_leaving;
+            var privatetotalper100k = e.features[0].properties.totalper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_leaving + " people left " + privatename + " which is " + privatetotalper100k + " People per 100,000" + "</h3>")
+                .addTo(private);
+        });
+        // change the icon when you hover it
+        private.on('mouseenter', 'private_leaving', function () {
+            private.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        private.on('mouseleave', 'private_leaving', function () {
+            private.getCanvas().style.cursor = '';
+        });
+
+
+        private.on('click', 'private_evict', function (e) {
+            var privatename = e.features[0].properties.name;
+            var privateyear = e.features[0].properties.year;
+            var privatetotal_evict = e.features[0].properties.evict_or_repossess;
+            var privateevictper100k = e.features[0].properties.evictper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_evict + " people were evicted from " + privatename + " which is " + privateevictper100k + " people per 100,000" + "</h3>")
+                .addTo(private);
+        });
+        // change the icon when you hover it
+        private.on('mouseenter', 'private_evict', function () {
+            private.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        private.on('mouseleave', 'private_evict', function () {
+            private.getCanvas().style.cursor = '';
+        });
+
+        private.on('click', 'private_decant', function (e) {
+            var privatename = e.features[0].properties.name;
+            var privateyear = e.features[0].properties.year;
+            var privatetotal_decant = e.features[0].properties.permanently_decanted;
+            var privatedecantper100k = e.features[0].properties.decantper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_decant + " people were permanently decanted from " + privatename + " which is " + privatedecantper100k + " people per 100,000" + "</h3>")
+                .addTo(private);
+        });
+        // change the icon when you hover it
+        private.on('mouseenter', 'private_decant', function () {
+            private.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        private.on('mouseleave', 'private_decant', function () {
+            private.getCanvas().style.cursor = '';
+        });
+
+
+        private.on('click', 'private_unafford', function (e) {
+            var privatename = e.features[0].properties.name;
+            var privateyear = e.features[0].properties.year;
+            var privatetotal_unafford = e.features[0].properties.unaffordable;
+            var privateunaffordper100k = e.features[0].properties.unafford100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_unafford + " left " + privatename + " because their housing was unaffordable, which is " + privateunaffordper100k + " People per 100,000" + "</h3>")
+                .addTo(private);
+        });
+        // change the icon when you hover it
+        private.on('mouseenter', 'private_unafford', function () {
+            private.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        private.on('mouseleave', 'private_unafford', function () {
+            private.getCanvas().style.cursor = '';
+        });
+        
+        private.on('click', 'private_condition', function (e) {
+            var privatename = e.features[0].properties.name;
+            var privateyear = e.features[0].properties.year;
+            var privatetotal_condition = e.features[0].properties.poor_condition;
+            var privateconditionper100k = e.features[0].properties.poor_condper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_condition + " people left because of poor home condition, " + privatename + " which is " + privateconditionper100k + " People per 100,000" + "</h3>")
+                .addTo(social);
+        });
+        // change the icon when you hover it
+        private.on('mouseenter', 'private_condition', function () {
+            private.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        private.on('mouseleave', 'private_condition', function () {
+            private.getCanvas().style.cursor = '';
+        });
+
+        private.on('click', 'private_overcrowded', function (e) {
+            var privatename = e.features[0].properties.name;
+            var privateyear = e.features[0].properties.year;
+            var privatetotal_over = e.features[0].properties.overcrowded;
+            var privateovercrow100k = e.features[0].properties.overcrowdper100k;
+            // format the popup
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_over + " people left " + privatename + " because of overcrowding which is " + privateovercrow100k + " People per 100,000" + "</h3>")
+                .addTo(private);
+        });
+        // change the icon when you hover it
+        private.on('mouseenter', 'private_overcrowded', function () {
+            private.getCanvas().style.cursor = 'pointer';
+        });
+        // change it back when you leave
+        private.on('mouseleave', 'private_overcrowded', function () {
+            private.getCanvas().style.cursor = '';
+        });
+
+    // add a legend
+    var privatelegendlabels = ['Very Low', 'Low', 'Middle', 'High', 'Very High'];
+        var privatecolors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
+        for (i = 0; i < privatelegendlabels.length; i++) {
+            var privatelayer = privatelegendlabels[i];
+            var privatecolor = privatecolors[i];
+            var privateitem = document.createElement('div');
+            var privatekey = document.createElement('span');
+            privatekey.className = 'privatelegend-key';
+            privatekey.style.backgroundColor = privatecolor;
+
+            var privatevalue = document.createElement('span');
+            privatevalue.innerHTML = privatelayer;
+            privateitem.appendChild(privatekey);
+            privateitem.appendChild(privatevalue);
+            privatelegend.appendChild(privateitem);
+        }
+
+    </script>
+
+    </body>
+
+</html>
