@@ -1,0 +1,197 @@
+body { 
+  overflow: hidden;
+  margin:0; 
+  padding:0; 
+}
+
+body * {
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+h2 {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+h3 {
+font-size: 1em;
+}
+
+p {
+font-size: 0.85em;
+margin: 10px;
+text-align: left;
+}
+
+/**
+* Create a position for the map
+* on the page */
+#social {
+position: absolute;
+top: 0;
+bottom: 0;
+width: 50%;
+}
+#private {
+position: absolute;
+top: 0;
+left: 50%;
+bottom: 0;
+width: 50%;
+}
+
+#divider {
+background-color: gray;
+position: absolute;
+left: 50%;
+top: 0;
+bottom: 0;
+width: 1px;
+z-index: 2;
+}
+
+#console {
+  position: absolute;
+  opacity: .5;
+  width: 200px;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: white;
+}
+
+/**
+* Set rules for how the map overlays
+* (information box and legend) will be displayed
+* on the page. */
+.map-overlay {
+position: absolute;
+bottom: 0;
+right: 0;
+background: rgba(255, 255, 255, 0.8);
+margin-right: 20px;
+padding: 10px 20px;
+font-family: Arial, sans-serif;
+overflow: auto;
+border-radius: 3px;
+}
+
+#features {
+top: 0;
+height: 160px;
+margin-top: 20px;
+margin-left: 10px;
+padding: 10px 20px;
+width: 150px;
+left: 15px;
+
+}
+#features1 {
+top: 0;
+height: 170px;
+margin-top: 20px;
+margin-left: 10px;
+padding: 10px 20px;
+width: 150px;
+height: 150px;
+
+}
+
+.slider {
+-webkit-appearance: none;
+width: 100%;
+height: 15px;
+border-radius: 5px;
+background: #d3d3d3;
+outline: none;
+opacity: 0.7;
+-webkit-transition: .2s;
+transition: opacity .2s;
+}
+
+.slider:hover {
+opacity: 1;
+}
+
+.slider:-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 25px;
+height: 25px;
+border-radius: 50%;
+background: #4CAF50;
+cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+width: 25px;
+height: 25px;
+border-radius: 50%;
+background: #4CAF50;
+cursor: pointer;
+}
+
+  
+#sociallegend {
+padding: 10px;
+left: 10px;
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+line-height: 18px;
+height: 100px;
+margin-bottom: 40px;
+width: 150px;
+}
+
+.sociallegend-key {
+display: inline-block;
+border-radius: 20%;
+width: 10px;
+height: 10px;
+margin-right: 5px;
+}
+
+#privatelegend {
+padding: 10px;
+right: 10px;
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+line-height: 18px;
+height: 100px;
+margin-bottom: 40px;
+width: 150px;
+}
+
+.privatelegend-key {
+display: inline-block;
+border-radius: 20%;
+width: 10px;
+height: 10px;
+margin-right: 5px;
+}
+
+#socialmenu {
+  background: #fff;
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  right: 10px;
+  border-radius: 3px;
+  width: 120px;
+  border: 1px solid rgba(0,0,0,0.4);
+  font-family: 'Open Sans', sans-serif;
+  }
+
+#privatemenu {
+  background: #fff;
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  right: 10px;
+  border-radius: 3px;
+  width: 120px;
+  border: 1px solid rgba(0,0,0,0.4);
+  font-family: 'Open Sans', sans-serif;
+  }
