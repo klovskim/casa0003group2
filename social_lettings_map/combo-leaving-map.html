@@ -16,16 +16,16 @@
     <div id='social' class='map'></div>
     <div id='private' class='map'></div>
     <div id='divider'></div>
-    <nav id="socialmenu"></nav>
-    <div class='map-overlay' id='features'><h2>Social Leavings</h2><div id='pd'><p>Reasons for letting socially-owned social housing</p></div>
+    
+    <div class='map-overlay' id='features'><h3>Reasons for Leaving Prior Accomodation, Socially-Owned Social Housing Residents</h3><div id='pd'></div>
     <div class="map-overlay-inner">
         <h2>Year: <label id='active-year1'>2014</label></h2>
             <input id='slider1' class='row' type='range' min='2014' max='2017' step='1' value='2014' />
         </div>
     </div>
 
-    <nav id="privatemenu"></nav>
-    <div class='map-overlay' id='features1'><h2>Private Leavings</h2><div id='pd'><p>Reasons for letting privately-owned social housing</p></div>
+    
+    <div class='map-overlay' id='features1'><h3>Reasons for Leaving Prior Accomodation, Privately-Owned Social Housing Residents</h3><div id='pd'></div>
     <div class="map-overlay-inner">
         <h2>Year: <label id='active-year2'>2014</label></h2>
             <input id='slider2' class='row' type='range' min='2014' max='2017' step='1' value='2014' />
@@ -34,6 +34,8 @@
 
     <div class='map-overlay' id='sociallegend'></div>
     <div class='map-overlay' id='privatelegend'></div>
+    <nav id="menu"></nav>
+    <nav id="privatemenu"></nav>
 
     <!-- start the script portion -->
     <script>
@@ -115,16 +117,16 @@
             container: 'social',
             style: 'mapbox://styles/mklovski/cjvb0602e09go1fn0zwgps0cn',
             // set the default load location
-            center: [-0.012, 51.493],
-            zoom: 9.5
+            center: [-0.131,51.519],
+            zoom: 8.9
         });
 
         var private = new mapboxgl.Map({
             container: 'private',
             style: 'mapbox://styles/mklovski/cjvb0602e09go1fn0zwgps0cn',
             // set the default load location
-            center: [-0.012, 51.493],
-            zoom: 9.5
+            center: [-0.131,51.519],
+            zoom: 8.9
         });
 
         var maps = syncMaps(social, private);
@@ -166,10 +168,10 @@
                     'fill-color': {
                         property: 'totalper100k',
                         stops: [
-                            [106, '#fef0d9'],
-                            [213, '#fdcc8a'],
-                            [320, '#fc8d59'],
-                            [427, '#e34a33'],
+                            [96.84, '#fef0d9'],
+                            [160.78, '#fdcc8a'],
+                            [243.08, '#fc8d59'],
+                            [409.41, '#e34a33'],
                             [534, '#b30000'],
                         ]
                     },
@@ -195,11 +197,11 @@
                     'fill-color': {
                         property: 'evictper100k',
                         stops: [
-                            [6.7, '#fef0d9'],
-                            [13.4, '#fdcc8a'],
-                            [20.108, '#fc8d59'],
-                            [26.808, '#e34a33'],
-                            [33.5, '#b30000'],
+                            [2.238, '#fef0d9'],
+                            [6.048, '#fdcc8a'],
+                            [13.288, '#fc8d59'],
+                            [22.195, '#e34a33'],
+                            [26.808, '#b30000'],
                         ]
                     },
                 },
@@ -224,11 +226,11 @@
                     'fill-color': {
                         property: 'decantper100k',
                         stops: [
-                            [20, '#fef0d9'],
-                            [40, '#fdcc8a'],
-                            [60, '#fc8d59'],
-                            [80, '#e34a33'],
-                            [93.1387, '#b30000'],
+                            [4.065, '#fef0d9'],
+                            [14.283, '#fdcc8a'],
+                            [30.285, '#fc8d59'],
+                            [47.978, '#e34a33'],
+                            [98.131, '#b30000'],
                         ]
                     },
                 },
@@ -253,10 +255,10 @@
                     'fill-color': {
                         property: 'unafford100k',
                         stops: [
-                            [5.58, '#fef0d9'],
-                            [11.17, '#fdcc8a'],
-                            [16.75, '#fc8d59'],
-                            [22.33, '#e34a33'],
+                            [1.053, '#fef0d9'],
+                            [2.933, '#fdcc8a'],
+                            [6.462, '#fc8d59'],
+                            [13.512, '#e34a33'],
                             [27.933, '#b30000'],
                         ]
                     },
@@ -282,11 +284,11 @@
                     'fill-color': {
                         property: 'poor_condper100k',
                         stops: [
-                            [5.4, '#fef0d9'],
-                            [10.8, '#fdcc8a'],
-                            [16.2, '#fc8d59'],
-                            [21.6, '#e34a33'],
-                            [27.0234, '#b30000'],
+                            [1.277, '#fef0d9'],
+                            [3.683, '#fdcc8a'],
+                            [7.467, '#fc8d59'],
+                            [13.966, '#e34a33'],
+                            [27.023, '#b30000'],
                         ]
                     },
                 },
@@ -311,11 +313,11 @@
                     'fill-color': {
                         property: 'overcrowdper100k',
                         stops: [
-                            [29.1, '#fef0d9'],
-                            [58.2, '#fdcc8a'],
-                            [87.3, '#fc8d59'],
-                            [116.4, '#e34a33'],
-                            [145.518, '#b30000'],
+                            [12.73, '#fef0d9'],
+                            [31.62, '#fdcc8a'],
+                            [53.49, '#fc8d59'],
+                            [85.29, '#e34a33'],
+                            [145.52, '#b30000'],
                         ]
                     },
                 },
@@ -338,32 +340,34 @@
         });
         // END OF SLIDER FUNCTION
 
-            var socialchangelayers = ['social_leaving', 'social_evict', 'social_decant', 'social_unafford', 'social_condition', 'social_overcrowded'];
+        var changelayers = ['social_leaving', 'social_evict', 'social_decant', 'social_unafford', 'social_condition', 'social_overcrowded'];
 
-            for (var i = 0; i < socialchangelayers.length; i++) {
-                var socialid = socialchangelayers[i];
+for (var i = 0; i < changelayers.length; i++) {
+    var id = changelayers[i];
 
-                var link1 = document.createElement('a');
-                link1.href = '#';
-                link1.className = ['active', 'not-active'];
-                link1.textContent = socialid;
-                link1.onclick = function (e) {
-                    var socialclickedLayer = this.textContent;
-                    e.preventDefault();
-                    e.stopPropagation();
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = ['active', 'not-active'];
+    link.textContent = id;
+    link.onclick = function (e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
 
-                    var socialvisibility = social.getLayoutProperty(socialclickedLayer, 'visibility');
+        var visibility = social.getLayoutProperty(clickedLayer, 'visibility');
 
-                    if (socialvisibility === 'visible') {
-                        social.setLayoutProperty(socialclickedLayer, 'visibility', 'none');
-                        this.className = 'not-active';
-                    } else {
-                        this.className = 'active';
-                        social.setLayoutProperty(socialclickedLayer, 'visibility', 'visible');
-                    }
-                };
-                var sociallayers = document.getElementById('socialmenu');
-            }
+        if (visibility === 'visible') {
+            social.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = 'not-active';
+        } else {
+            this.className = 'active';
+            social.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+    };
+
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+}
         social.on('click', 'social_leaving', function (e) {
             var socialname = e.features[0].properties.name;
             var socialyear = e.features[0].properties.year;
@@ -372,7 +376,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_leaving + " people left " + socialname + " which is " + socialtotalper100k + " People per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_leaving + " person(s) left " + socialname + " in total" + "<br>" + socialtotalper100k.toFixed(2) + " total leavings per 100,000" + "</p>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -393,7 +397,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_evict + " people were evicted from " + socialname + " which is " + socialevictper100k + " people per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_evict + " person(s) were evicted from " + socialname + "<br>" + socialevictper100k.toFixed(2) + " evictions per 100,000" + "</p>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -413,7 +417,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_decant + " people were permanently decanted from " + socialname + " which is " + socialdecantper100k + " people per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_decant + " person(s) permanently decanted from " + socialname + "<br>" + socialdecantper100k.toFixed(2) + " decantings per 100,000" + "</p>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -434,7 +438,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_unafford + " left " + socialname + " because their housing was unaffordable, which is " + socialunaffordper100k + " People per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_unafford + " person(s) left " + socialname + " because of unaffordable housing " + "<br>" + socialunaffordper100k.toFixed(2) + " people per 100,000" + "</p>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -455,7 +459,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_condition + " people left because of poor home condition, " + socialname + " which is " + socialconditionper100k + " People per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_condition + " person(s) left " + socialname + " because of poor home condition " + "<br>" + socialconditionper100k.toFixed(2) + " people per 100,000" + "</p>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -477,7 +481,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + socialyear + ", " + socialtotal_over + " people left " + socialname + " because of overcrowding which is " + socialovercrow100k + " People per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_over + " person(s) left " + socialname + " because of overcrowding " + "<br>" + socialovercrow100k.toFixed(2) + " people per 100,000" + "</p>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -545,11 +549,11 @@
                     'fill-color': {
                         property: 'totalper100k',
                         stops: [
-                            [106, '#fef0d9'],
-                            [213, '#fdcc8a'],
-                            [320, '#fc8d59'],
-                            [427, '#e34a33'],
-                            [534, '#b30000'],
+                            [49.5, '#fef0d9'],
+                            [95.65, '#fdcc8a'],
+                            [146.11, '#fc8d59'],
+                            [229.48, '#e34a33'],
+                            [374.76, '#b30000'],
                         ]
                     },
                 },
@@ -574,11 +578,11 @@
                     'fill-color': {
                         property: 'evictper100k',
                         stops: [
-                            [6.7, '#fef0d9'],
-                            [13.4, '#fdcc8a'],
-                            [20.108, '#fc8d59'],
-                            [26.808, '#e34a33'],
-                            [33.5, '#b30000'],
+                            [.6703, '#fef0d9'],
+                            [1.553, '#fdcc8a'],
+                            [3.0792, '#fc8d59'],
+                            [6.6034, '#e34a33'],
+                            [10.9041, '#b30000'],
                         ]
                     },
                 },
@@ -602,11 +606,11 @@
                     'fill-color': {
                         property: 'decantper100k',
                         stops: [
-                            [20, '#fef0d9'],
-                            [40, '#fdcc8a'],
-                            [60, '#fc8d59'],
-                            [80, '#e34a33'],
-                            [93.1387, '#b30000'],
+                            [4.028, '#fef0d9'],
+                            [13.699, '#fdcc8a'],
+                            [28.148, '#fc8d59'],
+                            [45.341, '#e34a33'],
+                            [67.809, '#b30000'],
                         ]
                     },
                 },
@@ -630,11 +634,11 @@
                     'fill-color': {
                         property: 'unaffordper100k',
                         stops: [
-                            [5.58, '#fef0d9'],
-                            [11.17, '#fdcc8a'],
-                            [16.75, '#fc8d59'],
-                            [22.33, '#e34a33'],
-                            [27.933, '#b30000'],
+                            [0, '#fef0d9'],
+                            [0.6703, '#fdcc8a'],
+                            [1.3427, '#fc8d59'],
+                            [2.1555, '#e34a33'],
+                            [3.8639, '#b30000'],
                         ]
                     },
                 },
@@ -686,11 +690,11 @@
                     'fill-color': {
                         property: 'overcrowdper100k',
                         stops: [
-                            [29.1, '#fef0d9'],
-                            [58.2, '#fdcc8a'],
-                            [87.3, '#fc8d59'],
-                            [116.4, '#e34a33'],
-                            [145.518, '#b30000'],
+                            [1.277, '#fef0d9'],
+                            [3.162, '#fdcc8a'],
+                            [5.841, '#fc8d59'],
+                            [10.255, '#e34a33'],
+                            [27.198, '#b30000'],
                         ]
                     },
                 },
@@ -711,33 +715,34 @@
             });
         });
 
-            var privatechangelayers = ['social_leaving', 'social_evict', 'social_decant', 'social_unafford', 'social_condition', 'social_overcrowded'];
+        var changelayers = ['private_leaving', 'private_evict', 'private_decant', 'private_unafford', 'private_condition', 'private_overcrowded'];
 
-            for (var i = 0; i < privatechangelayers.length; i++) {
-                var privateid = privatechangelayers[i];
+for (var i = 0; i < changelayers.length; i++) {
+    var id = changelayers[i];
 
-                var link2 = document.createElement('a');
-                link2.href = '#';
-                link2.className = ['active', 'not-active'];
-                link2.textContent = privateid;
-                link2.onclick = function (e) {
-                    var privateclickedLayer = this.textContent;
-                    e.preventDefault();
-                    e.stopPropagation();
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = ['active', 'not-active'];
+    link.textContent = id;
+    link.onclick = function (e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
 
-                    var privatevisibility = private.getLayoutProperty(privateclickedLayer, 'visibility');
+        var visibility = private.getLayoutProperty(clickedLayer, 'visibility');
 
-                    if (visibility === 'visible') {
-                        private.setLayoutProperty(privateclickedLayer, 'visibility', 'none');
-                        this.className = 'not-active';
-                    } else {
-                        this.className = 'active';
-                        private.setLayoutProperty(privateclickedLayer, 'visibility', 'visible');
-                    }
-                };
-                var privatelayers = document.getElementById('privatemenu');
+        if (visibility === 'visible') {
+            private.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = 'not-active';
+        } else {
+            this.className = 'active';
+            private.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+    };
 
-            };
+    var layers = document.getElementById('privatemenu');
+    layers.appendChild(link);
+}
         private.on('click', 'private_leaving', function (e) {
             var privatename = e.features[0].properties.name;
             var privateyear = e.features[0].properties.year;
@@ -746,7 +751,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_leaving + " people left " + privatename + " which is " + privatetotalper100k + " People per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_leaving + " person(s) left " + privatename + " in total " + "<br>" + privatetotalper100k.toFixed(2) + " people per 100,000" + "</p>")
                 .addTo(private);
         });
         // change the icon when you hover it
@@ -767,7 +772,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_evict + " people were evicted from " + privatename + " which is " + privateevictper100k + " people per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_evict + " person(s) were evicted from " + privatename + "<br>" + privateevictper100k.toFixed(2) + " people per 100,000" + "</p>")
                 .addTo(private);
         });
         // change the icon when you hover it
@@ -787,7 +792,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_decant + " people were permanently decanted from " + privatename + " which is " + privatedecantper100k + " people per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_decant + " person(s) permanently decanted from " + privatename + "<br>" + privatedecantper100k.toFixed(2) + " people per 100,000" + "</p>")
                 .addTo(private);
         });
         // change the icon when you hover it
@@ -804,11 +809,11 @@
             var privatename = e.features[0].properties.name;
             var privateyear = e.features[0].properties.year;
             var privatetotal_unafford = e.features[0].properties.unaffordable;
-            var privateunaffordper100k = e.features[0].properties.unafford100k;
+            var privateunaffordper100k = e.features[0].properties.unaffordper100k;
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_unafford + " left " + privatename + " because their housing was unaffordable, which is " + privateunaffordper100k + " People per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_unafford + " person(s) left " + privatename + " because of unaffordable housing " + "<br>" + privateunaffordper100k.toFixed(2) + " people per 100,000" + "</p>")
                 .addTo(private);
         });
         // change the icon when you hover it
@@ -823,13 +828,13 @@
         private.on('click', 'private_condition', function (e) {
             var privatename = e.features[0].properties.name;
             var privateyear = e.features[0].properties.year;
-            var privatetotal_condition = e.features[0].properties.poor_condition;
-            var privateconditionper100k = e.features[0].properties.poor_condper100k;
+            var privatetotal_cond = e.features[0].properties.poor_condition;
+            var privatepoor_condper100k = e.features[0].properties.poor_condper100k;
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_condition + " people left because of poor home condition, " + privatename + " which is " + privateconditionper100k + " People per 100,000" + "</h3>")
-                .addTo(social);
+                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_cond + " person(s) left " + privatename + " because of poor housing conditions " + "<br>" + privatepoor_condper100k.toFixed(2) + " people per 100,000" + "</p>")
+                .addTo(private);
         });
         // change the icon when you hover it
         private.on('mouseenter', 'private_condition', function () {
@@ -848,7 +853,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + privateyear + ", " + privatetotal_over + " people left " + privatename + " because of overcrowding which is " + privateovercrow100k + " People per 100,000" + "</h3>")
+                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_over + " person(s) left " + privatename + " because of overcrowding " + "<br>" + privateovercrow100k.toFixed(2) + " people per 100,000" + "</p>")
                 .addTo(private);
         });
         // change the icon when you hover it
