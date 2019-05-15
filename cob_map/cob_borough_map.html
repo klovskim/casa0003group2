@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<!-- just as an important note, the borough polygons and borough lines have fields in common that can be used to equal each other, i.e borough-code to borough-code, name to name, etc -->
+
+<head>
+    <!-- standard setup -->
+    <meta charset='utf-8' />
+    <title>Display a map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='cob_borough_map_styles.css' rel='stylesheet' />
+</head>
+
+<body>
+    <div id='map'></div>
+    <div class='map-overlay top'>
+        <div class='map-overlay-inner'>
+            <!-- all the credits and data sources -->
+            <h2>Areas of Origin by London Borough 2004-2017</h2>
+            <p>Select a Borough area to see the inflows from abroad, select the dot for that borough to see the total in
+                that year</p>
+            <p class="credit">Country of Origin Data: <a
+                    href="https://data.london.gov.uk/dataset/country-of-birth">London Datastore</a></p>
+            <!-- slider below -->
+            <h3>Year: <label id='active-year'>2004</label></h3>
+            <input id='slider' class='row' type='range' min='2004' max='2017' step='1' value='2004' />
+        </div>
+        </div>
+        <div class='box-legend' id='legend'></div>
+        
+
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoibWtsb3Zza2kiLCJhIjoiY2l6N2R0azl2MDA1NDJ3cG9uZ2RoMzF5aiJ9.UacgAXrCVFX4BmcbH4oj_w';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mklovski/cjvb0602e09go1fn0zwgps0cn',
+                // set the default load location
+                center: [-0.012, 51.493],
+                zoom: 9.5
+            });
+
+            map.addControl(new mapboxgl.NavigationControl());
+            var dotzoom = 14;
+
+            map.on('load', function () {
+                // adding the polygons. ideally, you click one of these suckers, and it shows the lines associated with it
+                map.addLayer({
+                    id: 'borough_polygons',
+                    type: 'fill',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://mklovski.90q77j05'
+                    },
+                    'source-layer': 'borough_polygons-7viimf',
+                    'layout': {
+                        'visibility': 'visible'
+                    },
+                    paint: {
+                        'fill-opacity': .7,
+                        'fill-color': '#edf3f3',
+                        'fill-outline-color': '#000000'
+                    },
+                });
+
+                // these are the lines showing people coming to boroughs (got a thing for flow data lol)
+                map.addLayer({
+                    id: 'borough_lines',
+                    type: 'line',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://mklovski.64eprrsa'
+                    },
+                    'source-layer': 'borough_migration_lines-2i5nnu',
+                    'layout': {
+                        'visibility': 'none'
+                    },
+                    // match the line color to a "region"
+                    paint: {
+                        'line-color': [
+                            'match',
+                            ['get', 'detailed_origin'],
+                            'European Union EU14', '#1b9e77',
+                            'European Union EU8', '#1b9e77',
+                            'European Union EU2', '#1b9e77',
+                            'European Union Other', '#1b9e77',
+                            'Other Europe', '#fec44f',
+                            'North Africa', '#7570b3',
+                            'Sub-Saharan Africa', '#7570b3',
+                            'North America', '#99420c',
+                            'Central and South America', '#99420c',
+                            'Middle East and Central Asia', '#e55e5e',
+                            'South Asia', '#e55e5e',
+                            'East Asia', '#e55e5e',
+                            'South East Asia', '#e55e5e',
+                            'Oceania', '#3bb2d0',
+                            /* other */ '#ccc'
+                        ],
+                        'line-opacity': 1,
+                        'line-width': [
+                            '/',
+                            ['number', ['get', 'count']],
+                            2]
+                    },
+                });
+
+                map.addLayer({
+                    id: 'total_dots',
+                    type: 'circle',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://mklovski.cfclkok6'
+                    },
+                    'source-layer': 'total_dots-4xi4at',
+                    'layout': {
+                        'visibility': 'visible'
+                    },
+                    paint: {
+                        'circle-radius': [
+                            '/',
+                            ['number', ['get', 'count']],
+                            20],
+                        'circle-color': '#535353',
+                        'circle-opacity': 1
+                    },
+
+                });
+
+                map.addLayer({
+                    id: 'origin_dots',
+                    type: 'circle',
+                    source: {
+                        type: 'vector',
+                        url: 'mapbox://mklovski.4prdo5ek'
+                    },
+                    'source-layer': 'origin_dots-4fc7vn',
+                    'layout': {
+                        'visibility': 'visible'
+                    },
+                    paint: {
+                        'circle-color': [
+                            'match',
+                            ['get', 'people_source'],
+                            'European Union EU14', '#1b9e77',
+                            'European Union EU8', '#1b9e77',
+                            'European Union EU2', '#1b9e77',
+                            'European Union Other', '#1b9e77',
+                            'Other Europe', '#fec44f',
+                            'North Africa', '#7570b3',
+                            'Sub-Saharan Africa', '#7570b3',
+                            'North America', '#99420c',
+                            'Central and South America', '#99420c',
+                            'Middle East and Central Asia', '#e55e5e',
+                            'South Asia', '#e55e5e',
+                            'East Asia', '#e55e5e',
+                            'South East Asia', '#e55e5e',
+                            'Oceania', '#3bb2d0',
+                            /* other */ '#ccc'
+                        ],
+                        'circle-radius': [
+                            '/',
+                            ['number', ['get', 'sum']],
+                            15],
+                        'circle-opacity': 1
+                    }
+                });
+            });
+
+            // set up the popup files
+
+            var name;
+            var year = 2004;
+
+            map.on('zoom', function () {
+                if (map.getZoom() < 7.5) {
+                    map.setLayoutProperty('total_dots', 'visibility', 'none');
+                } else {
+                    map.setLayoutProperty('total_dots', 'visibility', 'visible');
+                }
+            });
+
+            // this bit is the bit that I tried to create to get my things linked. it is bad pseudo-code, plz don't shame me
+
+            document.getElementById('slider').addEventListener('input', function (e) {
+                year = parseInt(e.target.value);
+                dotyear = parseInt(e.target.value);
+                originyear = parseInt(e.target.value);
+                console.log("Current Year", year);
+                map.setFilter('borough_lines', ["all",
+                    ["==", 'year', year],
+                    ["==", 'borough_name', name]]);
+                map.setFilter('total_dots', ['==', ['number', ['get', 'year']], dotyear]);
+                map.setFilter('origin_dots', ['==', ['number', ['get', 'year']], originyear]);
+                document.getElementById('active-year').innerText = year;
+            });
+
+            map.on('click', 'borough_polygons', function (e) {
+                name = e.features[0].properties.name;
+                console.log("Clicked Borough", name);
+                map.setFilter('borough_lines', ["all",
+                    ["==", 'year', year],
+                    ["==", 'borough_name', name]]);
+                map.setLayoutProperty('borough_lines', 'visibility', 'visible');
+            });
+
+            map.on('click', 'borough_lines', function (e) {
+                var detailed_origin = e.features[0].properties.detailed_origin
+                var count = e.features[0].properties.count;
+                var population = e.features[0].properties.population;
+                // format the popup
+                new mapboxgl.Popup()
+                    .setLngLat(e.lngLat)
+                    .setHTML("<h3>" + "In " + year + ", roughly " + count + " per 28,000 people migrated from " + detailed_origin + " to " + name + "</h3>")
+                    .addTo(map);
+            });
+
+            // change the icon when you hover it
+            map.on('mouseenter', 'borough_lines', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            // change it back when you leave
+            map.on('mouseleave', 'borough_lines', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
+            // change the icon when you hover it
+            map.on('mouseenter', 'borough_polygons', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            // change it back when you leave
+            map.on('mouseleave', 'borough_polygons', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
+            map.on('click', 'total_dots', function (e) {
+                var count = e.features[0].properties.count;
+                // format the popup
+                new mapboxgl.Popup()
+                    .setLngLat(e.lngLat)
+                    .setHTML("<h3>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from abroad to " + name + "</h3>")
+                    .addTo(map);
+            });
+
+            // change the icon when you hover it
+            map.on('mouseenter', 'total_dots', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            // change it back when you leave
+            map.on('mouseleave', 'total_dots', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
+            map.on('click', 'origin_dots', function (e) {
+                var count = e.features[0].properties.sum;
+                var people_source = e.features[0].properties.people_source;
+                // format the popup
+                new mapboxgl.Popup()
+                    .setLngLat(e.lngLat)
+                    .setHTML("<h3>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from " + people_source + " to London " + "</h3>")
+                    .addTo(map);
+            });
+
+            // change the icon when you hover it
+            map.on('mouseenter', 'origin_dots', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            // change it back when you leave
+            map.on('mouseleave', 'origin_dots', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
+            // add a legend
+            var legendlabels = ['European Union', 'Other Europe', 'Africa', 'Americas', 'Asia', 'Oceania'];
+            var colors = ['#1b9e77', '#fec44f', '#7570b3', '#99420c', '#e55e5e', '#3bb2d0'];
+            for (i = 0; i < legendlabels.length; i++) {
+                var layer = legendlabels[i];
+                var color = colors[i];
+                var item = document.createElement('div');
+                var key = document.createElement('span');
+                key.className = 'legend-key';
+                key.style.backgroundColor = color;
+                var value = document.createElement('span');
+                value.innerHTML = layer;
+                item.appendChild(key);
+                item.appendChild(value);
+                legend.appendChild(item);
+            }
+        </script>
+</body>
+
+</html>
