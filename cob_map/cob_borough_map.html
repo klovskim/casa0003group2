@@ -14,12 +14,13 @@
 
 <body>
     <div id='map'></div>
+    <button id='flyin'>Zoom to London</button><button id='flyout'>Zoom to The World</button>
+    
     <div class='map-overlay top'>
         <div class='map-overlay-inner'>
             <!-- all the credits and data sources -->
             <h2>Areas of Origin by London Borough 2004-2017</h2>
-            <p>Select a Borough area to see the inflows from abroad, select the dot for that borough to see the total in
-                that year</p>
+            <p>Select a Borough area to see the inflows from abroad.<br> Select a dot to see total flows to a borough.<br> Select a region dot to see total flows from that area to London in a year.</p>
             <p class="credit">Country of Origin Data: <a
                     href="https://data.london.gov.uk/dataset/country-of-birth">London Datastore</a></p>
             <!-- slider below -->
@@ -36,8 +37,24 @@
                 container: 'map',
                 style: 'mapbox://styles/mklovski/cjvb0602e09go1fn0zwgps0cn',
                 // set the default load location
-                center: [-0.012, 51.493],
-                zoom: 9.5
+                center: [-0.124, 51.522],
+                zoom: 9.3
+            });
+
+            document.getElementById('flyin').addEventListener('click', function () {
+                    map.flyTo({
+                        center: [-0.124, 51.522],
+                        zoom: 9.3,
+                        bearing: 0
+                    });
+                });
+
+            document.getElementById('flyout').addEventListener('click', function () {
+                map.flyTo({
+                    center: [15.667,34.452],
+                    zoom: 1.5,
+                    bearing: 0
+                });
             });
 
             map.addControl(new mapboxgl.NavigationControl());
