@@ -15,9 +15,10 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#fullpage').fullpage({
-                anchors: ['introduction', 'first-map', 'second-map', 'third-map', 'fourth-map', 'conclusion'],
-                scrollingSpeed: 1000
+            $('#myPage').fullpage({
+                anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
+                scrollingSpeed: 1000,
+                menu: '#mapsmenu',
             });
         });
 
@@ -25,31 +26,24 @@
 </head>
 
 <body>
-    <div class="container-fluid" id="fullpage">
-        <div class="section">
-            <div class="row first-map"> Some text.
-            </div>
+
+    <div id="myPage">
+
+        <div class="section section1">
+                <iframe src="social_lettings_map/combo-leaving-map.html" height="100%" width="90%"
+                    frameBorder="0" scrolling="yes"></iframe>
         </div>
-        <div class="section">
-            <div class="row second-map"> Some text.
-            </div>
+
+        <div class="section section2">
+                <iframe src="cob_map/cob_borough_map.html" height="100%" width="90%" frameBorder="0"
+                    scrolling="yes"></iframe>
         </div>
-        <div class="section">
-            <div class="row third-map"> Some text.
-            </div>
+
+        <div class="section section3">
+                <iframe src="rent_map/dark.html" height="100%" width="90%" frameBorder="0"
+                    scrolling="yes"></iframe>
         </div>
-        <div class="section">
-            <div class="row fourth-map"> Some text.
-            </div>
-        </div>
-        <div class="section">
-            <div class="row fifth-map"> Some text.
-            </div>
-        </div>
-        <div class="section">
-            <div class="row conclusion"> Some text.
-            </div>
-        </div>
+
     </div>
 
 </body>
