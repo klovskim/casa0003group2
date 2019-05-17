@@ -118,7 +118,7 @@ width: 150px;
 
 .sociallegend-key {
 display: inline-block;
-border-radius: 20%;
+border-radius: 50%;
 width: 10px;
 height: 10px;
 margin-right: 5px;
@@ -136,7 +136,7 @@ width: 150px;
 
 .privatelegend-key {
 display: inline-block;
-border-radius: 20%;
+border-radius: 50%;
 width: 10px;
 height: 10px;
 margin-right: 5px;
