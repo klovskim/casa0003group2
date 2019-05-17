@@ -44,7 +44,7 @@
             center: [-0.124, 51.522],
             zoom: 9.3
         });
-        // create the fly in and fly out buttons
+        // create the fly in and fly out buttons, credit to Zhijia Zhou for these two functions
         document.getElementById('flyin').addEventListener('click', function () {
             map.flyTo({
                 center: [-0.124, 51.522],
@@ -249,7 +249,7 @@
             // create the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + year + ", roughly " + count + " per 28,000 people migrated from " + detailed_origin + " to " + name + "</h3>")
+                .setHTML("<p>" + "In " + year + ", roughly " + count + " per 28,000 people migrated from " + detailed_origin + " to " + name + "</p>")
                 .addTo(map);
         });
 
@@ -276,7 +276,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from abroad to " + name + "</h3>")
+                .setHTML("<p>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from abroad to " + name + "</p>")
                 .addTo(map);
         });
 
@@ -295,7 +295,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<h3>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from " + people_source + " to London " + "</h3>")
+                .setHTML("<p>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from " + people_source + " to London " + "</p>")
                 .addTo(map);
         });
 
