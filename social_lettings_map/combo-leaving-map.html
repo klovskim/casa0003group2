@@ -16,22 +16,26 @@
     <div id='social' class='map'></div>
     <div id='private' class='map'></div>
     <div id='divider'></div>
-    
-    <div class='map-overlay' id='features'><h3>Reasons for Leaving Prior Accomodation, Socially-Owned Social Housing Residents</h3><div id='pd'></div>
-    <div class="map-overlay-inner">
-        <h2>Year: <label id='active-year1'>2014</label></h2>
+
+    <div class='map-overlay' id='features'>
+        <h3>Reasons for Leaving Prior Accomodation, Socially-Owned Social Housing Residents</h3>
+        <div id='pd'></div>
+        <div class="map-overlay-inner">
+            <h2>Year: <label id='active-year1'>2014</label></h2>
             <input id='slider1' class='row' type='range' min='2014' max='2017' step='1' value='2014' />
         </div>
     </div>
 
-    
-    <div class='map-overlay' id='features1'><h3>Reasons for Leaving Prior Accomodation, Privately-Owned Social Housing Residents</h3><div id='pd'></div>
-    <div class="map-overlay-inner">
-        <h2>Year: <label id='active-year2'>2014</label></h2>
+
+    <div class='map-overlay' id='features1'>
+        <h3>Reasons for Leaving Prior Accomodation, Privately-Owned Social Housing Residents</h3>
+        <div id='pd'></div>
+        <div class="map-overlay-inner">
+            <h2>Year: <label id='active-year2'>2014</label></h2>
             <input id='slider2' class='row' type='range' min='2014' max='2017' step='1' value='2014' />
         </div>
-    </div> 
-
+    </div>
+    <!-- dual legends and menus for each -->
     <div class='map-overlay' id='sociallegend'></div>
     <div class='map-overlay' id='privatelegend'></div>
     <nav id="menu"></nav>
@@ -41,11 +45,9 @@
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoibWtsb3Zza2kiLCJhIjoiY2l6N2R0azl2MDA1NDJ3cG9uZ2RoMzF5aiJ9.UacgAXrCVFX4BmcbH4oj_w';
 
-        // add nav control
-
         // clone map function
-
         function moveToMapPosition(master, clones) {
+            // this makes both move at once, rather than individually
             var center = master.getCenter();
             var zoom = master.getZoom();
             var bearing = master.getBearing();
@@ -61,30 +63,20 @@
             });
         }
 
-        // Sync movements of two maps.
-        //
-        // All interactions that result in movement end up firing
-        // a "move" event. The trick here, though, is to
-        // ensure that movements don't cycle from one map
-        // to the other and back again, because such a cycle
-        // - could cause an infinite loop
-        // - prematurely halts prolonged movements like
-        //   double-click zooming, box-zooming, and flying
+        // Sync movements of two maps (credit to Dan Zhang here)
         function syncMaps() {
             var maps;
-            var argLen = arguments.length;
-            if (argLen === 1) {
+            var argument_length = arguments.length;
+            if (argument_length === 1) {
                 maps = arguments[0];
             } else {
                 maps = [];
-                for (var i = 0; i < argLen; i++) {
+                for (var i = 0; i < argument_length; i++) {
                     maps.push(arguments[i]);
                 }
             }
 
-            //   credit to this section goes to Dan Zhang
-            // Create all the movement functions, because if they're created every time
-            // they wouldn't be the same and couldn't be removed.
+            // again, credit to dan zhang here, continuing the logic to get them to move at once
             var fns = [];
             maps.forEach(function (map, index) {
                 fns[index] = sync.bind(null, map, maps.filter(function (o, i) { return i !== index; }));
@@ -102,8 +94,7 @@
                 });
             }
 
-            // When one map moves, we turn off the movement listeners
-            // on all the maps, move it, then turn the listeners on again
+            // toggling the listeners based on if the map is moving or not
             function sync(master, clones) {
                 off();
                 moveToMapPosition(master, clones);
@@ -117,7 +108,7 @@
             container: 'social',
             style: 'mapbox://styles/mklovski/cjvb0602e09go1fn0zwgps0cn',
             // set the default load location
-            center: [-0.131,51.519],
+            center: [-0.131, 51.519],
             zoom: 8.9
         });
 
@@ -125,12 +116,15 @@
             container: 'private',
             style: 'mapbox://styles/mklovski/cjvb0602e09go1fn0zwgps0cn',
             // set the default load location
-            center: [-0.131,51.519],
+            center: [-0.131, 51.519],
             zoom: 8.9
         });
 
+        // set maps to both maps combined
         var maps = syncMaps(social, private);
 
+
+        // load the boundary layer
         social.on('load', function () {
             social.addLayer({
                 id: 'gla_boundary',
@@ -150,6 +144,7 @@
                 }
             });
 
+            // add the multitude of leaving layers
             // adding the totals
             social.addLayer({
                 id: 'social_leaving',
@@ -165,6 +160,7 @@
                 // style the colors
                 paint: {
                     'fill-opacity': .85,
+                    // color of layers based on the rate per 100k of the event
                     'fill-color': {
                         property: 'totalper100k',
                         stops: [
@@ -176,6 +172,7 @@
                         ]
                     },
                 },
+                // start just showing the 2014 year for all (modified by slider)
                 filter: ['==', ['number', ['get', 'year']], 2014]
             });
 
@@ -324,50 +321,54 @@
                 filter: ['==', ['number', ['get', 'year']], 2014]
             });
 
-            //   THE ACTUAL SLIDER FUNCTION HERE
+            //   slider function here for the first map
             document.getElementById('slider1').addEventListener('input', function (e) {
+                // set the distinct year variable for this map
                 var socialyear = parseInt(e.target.value);
-                // update the map
+                // update the map for each layer
                 social.setFilter('social_leaving', ['==', ['number', ['get', 'year']], socialyear]);
                 social.setFilter('social_evict', ['==', ['number', ['get', 'year']], socialyear]);
                 social.setFilter('social_decant', ['==', ['number', ['get', 'year']], socialyear]);
                 social.setFilter('social_unafford', ['==', ['number', ['get', 'year']], socialyear]);
                 social.setFilter('social_condition', ['==', ['number', ['get', 'year']], socialyear]);
                 social.setFilter('social_overcrowded', ['==', ['number', ['get', 'year']], socialyear]);
-                // update text in the UI
+                // update the text above the slider each time
                 document.getElementById('active-year1').innerText = socialyear;
             });
         });
-        // END OF SLIDER FUNCTION
 
+        // creating the layer selection menu, first with a changelayers variable outside of a function
         var changelayers = ['social_leaving', 'social_evict', 'social_decant', 'social_unafford', 'social_condition', 'social_overcrowded'];
 
-for (var i = 0; i < changelayers.length; i++) {
-    var id = changelayers[i];
+        for (var i = 0; i < changelayers.length; i++) {
+            var id = changelayers[i];
 
-    var link = document.createElement('a');
-    link.href = '#';
-    link.className = ['active', 'not-active'];
-    link.textContent = id;
-    link.onclick = function (e) {
-        var clickedLayer = this.textContent;
-        e.preventDefault();
-        e.stopPropagation();
+            var link = document.createElement('a');
+            link.href = '#';
+            // helps set the style for active button
+            link.className = ['active', 'not-active'];
+            link.textContent = id;
+            link.onclick = function (e) {
+                var clickedLayer = this.textContent;
+                e.preventDefault();
+                e.stopPropagation();
+                //  setting the visibility for each layer as a variable
+                var visibility = social.getLayoutProperty(clickedLayer, 'visibility');
 
-        var visibility = social.getLayoutProperty(clickedLayer, 'visibility');
-
-        if (visibility === 'visible') {
-            social.setLayoutProperty(clickedLayer, 'visibility', 'none');
-            this.className = 'not-active';
-        } else {
-            this.className = 'active';
-            social.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                if (visibility === 'visible') {
+                    social.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                    this.className = 'not-active';
+                } else {
+                    this.className = 'active';
+                    social.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                }
+            };
+            // update the actual menu
+            var layers = document.getElementById('menu');
+            layers.appendChild(link);
         }
-    };
 
-    var layers = document.getElementById('menu');
-    layers.appendChild(link);
-}
+        // create popup when a borough is clicked
         social.on('click', 'social_leaving', function (e) {
             var socialname = e.features[0].properties.name;
             var socialyear = e.features[0].properties.year;
@@ -388,7 +389,7 @@ for (var i = 0; i < changelayers.length; i++) {
             social.getCanvas().style.cursor = '';
         });
 
-
+        // repeat the above process for each layer
         social.on('click', 'social_evict', function (e) {
             var socialname = e.features[0].properties.name;
             var socialyear = e.features[0].properties.year;
@@ -493,7 +494,7 @@ for (var i = 0; i < changelayers.length; i++) {
             social.getCanvas().style.cursor = '';
         });
 
-        // add a legend
+        // add a legend for the social map side of things
         var sociallegendlabels = ['Very Low', 'Low', 'Middle', 'High', 'Very High'];
         var socialcolors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
         for (i = 0; i < sociallegendlabels.length; i++) {
@@ -510,6 +511,8 @@ for (var i = 0; i < changelayers.length; i++) {
             socialitem.appendChild(socialvalue);
             sociallegend.appendChild(socialitem);
         }
+
+        // all of the above repeated again for the privately owned housing map!!!
 
         private.on('load', function () {
 
@@ -717,32 +720,32 @@ for (var i = 0; i < changelayers.length; i++) {
 
         var changelayers = ['private_leaving', 'private_evict', 'private_decant', 'private_unafford', 'private_condition', 'private_overcrowded'];
 
-for (var i = 0; i < changelayers.length; i++) {
-    var id = changelayers[i];
+        for (var i = 0; i < changelayers.length; i++) {
+            var id = changelayers[i];
 
-    var link = document.createElement('a');
-    link.href = '#';
-    link.className = ['active', 'not-active'];
-    link.textContent = id;
-    link.onclick = function (e) {
-        var clickedLayer = this.textContent;
-        e.preventDefault();
-        e.stopPropagation();
+            var link = document.createElement('a');
+            link.href = '#';
+            link.className = ['active', 'not-active'];
+            link.textContent = id;
+            link.onclick = function (e) {
+                var clickedLayer = this.textContent;
+                e.preventDefault();
+                e.stopPropagation();
 
-        var visibility = private.getLayoutProperty(clickedLayer, 'visibility');
+                var visibility = private.getLayoutProperty(clickedLayer, 'visibility');
 
-        if (visibility === 'visible') {
-            private.setLayoutProperty(clickedLayer, 'visibility', 'none');
-            this.className = 'not-active';
-        } else {
-            this.className = 'active';
-            private.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                if (visibility === 'visible') {
+                    private.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                    this.className = 'not-active';
+                } else {
+                    this.className = 'active';
+                    private.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                }
+            };
+
+            var layers = document.getElementById('privatemenu');
+            layers.appendChild(link);
         }
-    };
-
-    var layers = document.getElementById('privatemenu');
-    layers.appendChild(link);
-}
         private.on('click', 'private_leaving', function (e) {
             var privatename = e.features[0].properties.name;
             var privateyear = e.features[0].properties.year;
@@ -824,7 +827,7 @@ for (var i = 0; i < changelayers.length; i++) {
         private.on('mouseleave', 'private_unafford', function () {
             private.getCanvas().style.cursor = '';
         });
-        
+
         private.on('click', 'private_condition', function (e) {
             var privatename = e.features[0].properties.name;
             var privateyear = e.features[0].properties.year;
@@ -865,8 +868,8 @@ for (var i = 0; i < changelayers.length; i++) {
             private.getCanvas().style.cursor = '';
         });
 
-    // add a legend
-    var privatelegendlabels = ['Very Low', 'Low', 'Middle', 'High', 'Very High'];
+        // add a legend for the private housing map
+        var privatelegendlabels = ['Very Low', 'Low', 'Middle', 'High', 'Very High'];
         var privatecolors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
         for (i = 0; i < privatelegendlabels.length; i++) {
             var privatelayer = privatelegendlabels[i];

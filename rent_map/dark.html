@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset='utf-8' />
   <title>Display a map</title>
@@ -11,25 +12,28 @@
       margin: 0;
       padding: 0;
     }
+
     #map {
       position: absolute;
       top: 0;
       bottom: 0;
       width: 100%;
     }
+
     h1 {
       font-size: 16px;
       line-height: 30px;
       color: black;
       font-family: Helvetica;
     }
+
     h2 {
       font-size: 14px;
       line-height: 20px;
-      margin-bottom: 10px；
-      color: black;
+      margin-bottom: 10px； color: black;
       font-family: Helvetica;
     }
+
     a {
       text-decoration: none;
       color: #2dc4b2;
@@ -44,33 +48,40 @@
       background-color: white;
       opacity: 0.7;
     }
+
     .session {
       margin-bottom: 20px;
       color: #2dc4b2;
     }
+
     .row {
       height: 12px;
       width: 100%；
     }
+
     .colors {
       background: linear-gradient(to right, #2dc4b2, #3bb3c3, #669ec4, #8b88b6, #a2719b, #aa5e79);
       margin-bottom: 5px;
     }
+
     .label {
       width: 15%;
       display: inline-block;
       text-align: center;
       text-color: 'rgb(199,199,199,100)'
     }
+
     .mapboxgl-popup {
       max-width: 400px;
       font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     }
-    p{
+
+    p {
       color: black
     }
   </style>
 </head>
+
 <body>
 
 
@@ -87,8 +98,7 @@
       font-size: 12px;
       text-align: center;
       color: black;
-      background: white
-      background-opacity: 0.7;
+      background: white background-opacity: 0.7;
     }
   </style>
 
@@ -96,7 +106,7 @@
 
 
   <div id='map'></div>
-  <br/>
+  <br />
   <button id='fly'>Fly</button>
   <div id='console'>
     <h1>Private Own Social Housing Rent</h1>
@@ -123,7 +133,7 @@
       <div class='row' id='filters'>
         <input id='all' type='radio' name='toggle' value='all' checked='checked'>
         <label for='all'>Weekly Rent</label>
-        <input id='Weekly' type='radio' name='toggle' value='Weekly' >
+        <input id='Weekly' type='radio' name='toggle' value='Weekly'>
         <label for='Weekly'>Service Charge</label>
       </div>
     </div>
@@ -139,199 +149,200 @@
     });
 
     document.getElementById('fly').addEventListener('click', function () {
-// Fly to a random location by offsetting the point -74.50, 40
-// by up to 5 degrees.
-map.flyTo({
-  center: [
-  -0.14,
-  51.51],
-  zoom: 11,
-  bearing: 0
-});
-});
+      // Fly to a random location by offsetting the point -74.50, 40
+      // by up to 5 degrees.
+      map.flyTo({
+        center: [
+          -0.14,
+          51.51],
+        zoom: 11,
+        bearing: 0
+      });
+    });
 
-    map.on('load', function() {
+    map.on('load', function () {
 
       map.addLayer({
         id: 'price-heatmap',
         type: 'heatmap',
         source: {
           type: 'vector',
-  url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
-},
-  'source-layer': 'hebing-8twnae', // name of tilesets
-  'layout': {
-    'visibility': 'visible'
-  },
-  "maxzoom": 9,
-  "paint": {
-    // Increase the heatmap weight based on frequency and rent
-    "heatmap-weight": [
-    "interpolate",
-    ["linear"],
-    ["get", "value"],
-    71, 0,
-    169, 1
-    ],
-  // Increase the heatmap color weight weight by zoom level
-  // heatmap-intensity is a multiplier on top of heatmap-weight
-  "heatmap-intensity": [
-  "interpolate",
-  ["linear"],
-  ["zoom"],
-  0, 1,
-  9, 3
-  ],
-  // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-  // Begin color ramp at 0-stop with a 0-transparancy color
-  // to create a blur-like effect.
-  "heatmap-color": [
-  "interpolate",
-  ["linear"],
-  ["heatmap-density"],
-  0, "rgba(33,102,172,0)",
-  0.2, "rgb(103,169,207)",
-  0.4, "rgb(209,229,240)",
-  0.6, "rgb(253,219,199)",
-  0.8, "rgb(239,138,98)",
-  1, "rgb(178,24,43)"
-  ],
-  // Adjust the heatmap radius by zoom level
-  "heatmap-radius": [
-  "interpolate",
-  ["linear"],
-  ["zoom"],
-  0, 2,
-  9, 20
-  ],
-  // Transition from heatmap to circle layer by zoom level
-  "heatmap-opacity": [
-  "interpolate",
-  ["linear"],
-  ["zoom"],
-  7, 1,
-  9, 0
-  ],
-}
-}, 'waterway-label');
+          url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'hebing-8twnae', // name of tilesets
+        'layout': {
+          'visibility': 'visible'
+        },
+        "maxzoom": 9,
+        "paint": {
+          // Increase the heatmap weight based on frequency and rent
+          "heatmap-weight": [
+            "interpolate",
+            ["linear"],
+            ["get", "value"],
+            71, 0,
+            169, 1
+          ],
+          // Increase the heatmap color weight weight by zoom level
+          // heatmap-intensity is a multiplier on top of heatmap-weight
+          "heatmap-intensity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            0, 1,
+            9, 3
+          ],
+          // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+          // Begin color ramp at 0-stop with a 0-transparancy color
+          // to create a blur-like effect.
+          "heatmap-color": [
+            "interpolate",
+            ["linear"],
+            ["heatmap-density"],
+            0, "rgba(33,102,172,0)",
+            0.2, "rgb(103,169,207)",
+            0.4, "rgb(209,229,240)",
+            0.6, "rgb(253,219,199)",
+            0.8, "rgb(239,138,98)",
+            1, "rgb(178,24,43)"
+          ],
+          // Adjust the heatmap radius by zoom level
+          "heatmap-radius": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            0, 2,
+            9, 20
+          ],
+          // Transition from heatmap to circle layer by zoom level
+          "heatmap-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            7, 1,
+            9, 0
+          ],
+        }
+      }, 'waterway-label');
 
       map.addLayer({
         id: 'price-circle',
         type: 'circle',
         source: {
           type: 'vector',
-  url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
-},
-  'source-layer': 'hebing-8twnae', // name of tilesets
-  'layout': {
-    'visibility': 'visible'
-  },
-  minzoom: 7,
-  paint: {
-    'circle-radius': [
-    'interpolate',
-    ['linear'],
-    ['number', ['get', 'value']],
-    71, 4,
-    147, 24
-    ],
-    'circle-color': [
-    'interpolate',
-    ['linear'],
-    ['number', ['get', 'value']],
-    71, '#2DC4B2',
-    86, '#3BB3C3',
-    101, '#669EC4',
-    116, '#8B88B6',
-    131, '#A2719B',
-    147, '#AA5E79'
-    ],
-    'circle-opacity': 0.8
-  }
-});
+          url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'hebing-8twnae', // name of tilesets
+        'layout': {
+          'visibility': 'visible'
+        },
+        minzoom: 7,
+        paint: {
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['number', ['get', 'value']],
+            71, 4,
+            147, 24
+          ],
+          'circle-color': [
+            'interpolate',
+            ['linear'],
+            ['number', ['get', 'value']],
+            71, '#2DC4B2',
+            86, '#3BB3C3',
+            101, '#669EC4',
+            116, '#8B88B6',
+            131, '#A2719B',
+            147, '#AA5E79'
+          ],
+          'circle-opacity': 0.8
+        }
+      });
 
       map.addLayer({
         id: 'price-fill',
         type: 'fill',
         source: {
           type: 'vector',
-  url: 'mapbox://joannazhou.9x7okull' // Your Mapbox tileset Map ID
-},
-  'source-layer': 'shapefiledata-91x1z8', // name of tilesets
-  'layout': {
-    'visibility': 'visible'
-  },
-  paint: {
-    'fill-color': 'rgba(254, 254, 254, 0)',
-  }
-});
+          url: 'mapbox://joannazhou.9x7okull' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'shapefiledata-91x1z8', // name of tilesets
+        'layout': {
+          'visibility': 'visible'
+        },
+        paint: {
+          'fill-color': 'rgba(254, 254, 254, 0)',
+        }
+      });
 
       map.addLayer({
         id: 'price-labels',
         type: 'symbol',
         source: {
           type: 'vector',
-    url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
-  },
-    'source-layer': 'hebing-8twnae', // name of tilesets
-    'layout': {
-      'text-field': '£{value}',
-      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-      'text-size': 12
-    },
-    'paint': {
-      'text-color': 'rgba(0,0,0,0.5)'
-    }
-  });
+          url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'hebing-8twnae', // name of tilesets
+        'layout': {
+          'text-field': '£{value}',
+          'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+          'text-size': 12
+        },
+        'paint': {
+          'text-color': 'rgba(0,0,0,0.5)'
+        }
+      });
 
       filter: ['==', ['number', ['get', 'year']], 2014]
 
-      document.getElementById('slider').addEventListener('input', function(e) {
+      document.getElementById('slider').addEventListener('input', function (e) {
         var year = parseInt(e.target.value);
-  // update the map
-  map.setFilter('price-circle', ['==', ['number', ['get', 'year']], year]);
-  map.setFilter('price-heatmap', ['==', ['number', ['get', 'year']], year]);
-  map.setFilter('price-labels', ['==', ['number', ['get', 'year']], year]);
-  // update text in the UI
-  document.getElementById('active-year').innerText = year;
-});
+        // update the map
+        map.setFilter('price-circle', ['==', ['number', ['get', 'year']], year]);
+        map.setFilter('price-heatmap', ['==', ['number', ['get', 'year']], year]);
+        map.setFilter('price-labels', ['==', ['number', ['get', 'year']], year]);
+        // update text in the UI
+        document.getElementById('active-year').innerText = year;
+      });
 
-      document.getElementById('filters').addEventListener('change', function(e) {
+      document.getElementById('filters').addEventListener('change', function (e) {
         var type = e.target.value;
-  // update the map filter
-  if (type === 'all') {
-    filterType = ['!=', ['string', ['get', 'typr']], 'placeholder'];
-  } else if (type === 'Weekly') {
-    filterType = ['match', ['get', 'typr'], ['rent mean'], false, true];
-  } else {
-    console.log('error');
-  }
-  map.setFilter('price-heatmap', ['all', filterType]);
-  map.setFilter('price-circle', ['all', filterType]);
-  map.setFilter('price-labels', ['all', filterType]);
-});
+        // update the map filter
+        if (type === 'all') {
+          filterType = ['!=', ['string', ['get', 'typr']], 'placeholder'];
+        } else if (type === 'Weekly') {
+          filterType = ['match', ['get', 'typr'], ['rent mean'], false, true];
+        } else {
+          console.log('error');
+        }
+        map.setFilter('price-heatmap', ['all', filterType]);
+        map.setFilter('price-circle', ['all', filterType]);
+        map.setFilter('price-labels', ['all', filterType]);
+      });
 
 
-// When a click event occurs on a feature in the states layer, open a popup at the
-// location of the click, with description HTML from its properties.
-map.on('click', 'price-fill', function (e) {
-  new mapboxgl.Popup()
-  .setLngLat(e.lngLat)
-  .setHTML(e.features[0].properties.lad18nm)
-  .addTo(map);
-});
+      // When a click event occurs on a feature in the states layer, open a popup at the
+      // location of the click, with description HTML from its properties.
+      map.on('click', 'price-fill', function (e) {
+        new mapboxgl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(e.features[0].properties.lad18nm)
+          .addTo(map);
+      });
 
-// Change the cursor to a pointer when the mouse is over the states layer.
-map.on('mouseenter', 'price-fill', function () {
-  map.getCanvas().style.cursor = 'pointer';
-});
+      // Change the cursor to a pointer when the mouse is over the states layer.
+      map.on('mouseenter', 'price-fill', function () {
+        map.getCanvas().style.cursor = 'pointer';
+      });
 
-// Change it back to a pointer when it leaves.
-map.on('mouseleave', 'price-fill', function () {
-  map.getCanvas().style.cursor = '';
-});
-});
-</script>
+      // Change it back to a pointer when it leaves.
+      map.on('mouseleave', 'price-fill', function () {
+        map.getCanvas().style.cursor = '';
+      });
+    });
+  </script>
 
 </body>
+
 </html>
