@@ -8,6 +8,7 @@
 		    top: 0;
 		    right: 0;
 		    padding: 10px;
+            opacity: 0.85; 
 		}
 
       .map-overlay.left {
@@ -49,6 +50,7 @@
     border-radius: 13px;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
     padding: 10px;
+    opacity: 0.85;
 }
 
 .legend-box .title {
@@ -62,7 +64,7 @@
   height:15px;
   width:20%;
   text-align:center;
-  font-size:9px;
+  font-size:13px;
   color:#808080;
   padding-top:2px;
   }
@@ -104,6 +106,7 @@
   background: #E6B71E;
   cursor: pointer;
 }
+
 .mapboxgl-popup-content {
         position: relative;
         background: #dbdbdb;
@@ -119,7 +122,7 @@
         height: 0;
         border: 10px solid transparent;
         z-index: 1;
-    }      
+    }          
   </style>
 </head>
 <body>
@@ -144,7 +147,7 @@
     <label>3.1</label>
    <br><br>
     <span style='background:#00BACF;'></span><b>&nbsp Net housing additions</b><span style='background:#00BACF;'></span><br>
-    <span style='background:#50DB00;'></span><b>&nbsp % Affordable housing </b><span style='background:#50DB00;'></span><br>    
+    <span style='background:#005876;'></span><b>&nbsp % Affordable housing </b><span style='background:#005876;'></span><br>    
 </div>
 
     
@@ -174,7 +177,7 @@
                     <option value="6" label="2017">
                   </datalist>
                 </td>
-              </tr></table> <label>&nbsp;2011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2017</label>
+              </tr></table> <label>&nbsp;2011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2017</label>
                 <p class="credit">&copy; Thomas Visscher 2019&nbsp;<a href="https://data.london.gov.uk/dataset/net-additional-dwellings-borough">Download Datasets</a>.</p>
             </div>
           </div>
