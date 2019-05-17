@@ -231,7 +231,6 @@
 
         on();
       }
-
       on();
 
     //module.exports = syncMaps;
@@ -311,6 +310,23 @@
       var zoomThreshold = 8.5;
 
       // fly zooms added
+
+
+      document.getElementById('flybutton').addEventListener('click', function () {
+
+        inflowmap.flyTo({
+          center: [
+            -0.904133,
+            54.060395],
+          zoom: 5.28,
+          bearing: 0
+        });
+      });
+
+
+      inflowmap.on('load', function () {
+
+        var years = ['12', '13', '14', '15', '16', '17']
 
 
       document.getElementById('flybutton').addEventListener('click', function () {
