@@ -2,13 +2,14 @@
     #map { position:absolute; top:0; bottom:0; width:100%; }
       .map-overlay {
 		    font: 12px/20px 'Helvetica', Arial, Helvetica, sans-serif;
+            color: #c7c7c7;
             border-radius: 13px;
 		    position: absolute;
 		    width: 25%;
 		    top: 0;
 		    right: 0;
 		    padding: 10px;
-            opacity: 0.85; 
+            opacity: 0.95; 
 		}
 
       .map-overlay.left {
@@ -17,7 +18,7 @@
           }
       
       .map-overlay .map-overlay-inner {
-		    background-color: #dbdbdb;
+		    background-color: #282828;
 		    box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
 		    border-radius: 13px;
 		    padding: 10px;
@@ -25,7 +26,7 @@
 		}
       
       .map-overlay .map-overlay-inner-right {
-		    background-color: #dbdbdb;
+		    background-color: #282828;
 		    box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
 		    border-radius: 13px;
 		    padding: 10px;
@@ -46,11 +47,12 @@
 
 .legend-box {
     font: 15px/20px 'Helvetica', Arial, Helvetica, sans-serif;
-    background: #dbdbdb;
+    color: #c7c7c7;
+    background: #282828;
     border-radius: 13px;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
     padding: 10px;
-    opacity: 0.85;
+    opacity: 0.95;
 }
 
 .legend-box .title {
@@ -59,13 +61,14 @@
 
 .legend label,
 .legend span {
+  color: #c7c7c7
   display:block;
   float:left;
   height:15px;
   width:20%;
   text-align:center;
   font-size:13px;
-  color:#808080;
+  color:#c7c7c7;
   padding-top:2px;
   }
       
@@ -78,7 +81,7 @@
   width: 100%;
   height: 15px;
   border-radius: 5px;
-  background: #bababa;
+  background: #c7c7c7;
   outline: none;
   opacity: 0.5;
   -webkit-transition: .2s;
@@ -92,8 +95,8 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #E6B71E;
   cursor: pointer;
@@ -109,20 +112,34 @@
 
 .mapboxgl-popup-content {
         position: relative;
-        background: #dbdbdb;
+        background: #282828;
         opacity: 0.95;
         border-radius: 3px;
         box-shadow: 0 1px 2px rgba(0,0,0,0.10);
         padding: 10px 10px 15px;
         pointer-events: auto;
+        color: #c7c7c7
     }
-.mapboxgl-popup-tip {
-        opacity: 0.7;
-        width: 0;
-        height: 0;
-        border: 10px solid transparent;
-        z-index: 1;
-    }          
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+    border-bottom-color: #282828;
+    opacity: 0.95;
+    }
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+    border-top-color: #282828;
+    opacity: 0.95;
+    }
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: #282828;
+    opacity: 0.95;
+    }
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: #282828;
+    opacity: 0.95;
+    }         
   </style>
 </head>
 <body>
@@ -163,7 +180,7 @@
 <div class='map-overlay left' id='features'>
     <div class="map-overlay-inner" id = 'sliderbox'>
     <h2>Is London's meeting the demand for new housing? </h2>
-     <h2>Year: <label id='slider-value'>2011</label></h2>
+     <h2>Year: <label id='slider-value'><span style='color:#00BACF;'></span>2011</label></h2>
      <table><tr><td>
          <label id='year'></label>
       <input id='slider' type='range' class='slider' min='0' max='6' step='1' value='0' list='tickmarks' />
