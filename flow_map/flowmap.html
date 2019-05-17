@@ -1,369 +1,397 @@
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset='utf-8' />
-      <title>London Flowmap</title>
-      <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-      <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+<!DOCTYPE html>
+<html>
 
-      <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
-        
-      <link rel="stylesheet" href="stylesheet.css" />
+<head>
+  <meta charset='utf-8' />
+  <title>London Flowmap</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
 
-    </head>
-    <body>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
 
-    <div id='inflow' class='map'>
+  <link rel="stylesheet" href="stylesheet.css" />
 
+</head>
+
+<body>
+
+  <div id='inflow' class='map'>
+
+  </div>
+
+
+
+  <div id='inflow-legend' class='legend'>
+    <h4>Inflow Population</h4>
+    <div><span style='background-color: #f7fafa'></span>0</div>
+    <div><span style='background-color: #edf3f3'></span>1000</div>
+    <div><span style='background-color: #afc9ca'></span>100000</div>
+    <div><span style='background-color: #729fa2'></span>20000</div>
+    <div><span style='background-color: #456769'></span>30000</div>
+    <div><span style='background-color: #1d2b2c'></span>40000</div>
+  </div>
+
+  <div id='outflow-legend' class='legend1'>
+    <h4>Outflow Population</h4>
+    <div><span style='background-color: #e9dbc0'></span>0</div>
+    <div><span style='background-color: #ceb075'></span>1000</div>
+    <div><span style='background-color: #a3803a'></span>100000</div>
+    <div><span style='background-color: #715928'></span>20000</div>
+    <div><span style='background-color: #3f3116'></span>30000</div>
+    <div><span style='background-color: #0d0a05'></span>40000</div>
+  </div>
+
+  <div id='netflow-legend' class='legend2'>
+    <h4>Netflow Population</h4>
+    <div><span style='background-color: #b2182b'></span>-10000</div>
+    <div><span style='background-color: #ef8a62'></span>-6000</div>
+    <div><span style='background-color: #fddbc7'></span>-4000</div>
+    <div><span style='background-color: #d1e5f0'></span>0</div>
+    <div><span style='background-color: #67a9cf'></span>2000</div>
+    <div><span style='background-color: #2166ac'></span>3000</div>
+  </div>
+
+  <div id='outflow' class='map'>
+  </div>
+  <div id='divider'></div>
+  <div class='map-overlay' id='features'>
+    <h1>London Inflow</h1>
+    <div id='pd'>
+      <p>Hover over a borough or zoom!</p>
     </div>
-        
-
-        
-    <div id='inflow-legend' class='legend'>
-      <h4>Inflow Population</h4>
-      <div><span style='background-color: #f7fafa'></span>0</div>
-      <div><span style='background-color: #edf3f3'></span>1000</div>
-      <div><span style='background-color: #afc9ca'></span>100000</div>
-      <div><span style='background-color: #729fa2'></span>20000</div>
-      <div><span style='background-color: #456769'></span>30000</div>
-      <div><span style='background-color: #1d2b2c'></span>40000</div>
-    </div>
-
-    <div id='outflow-legend' class='legend1'>
-      <h4>Outflow Population</h4>
-      <div><span style='background-color: #e9dbc0'></span>0</div>
-      <div><span style='background-color: #ceb075'></span>1000</div>
-      <div><span style='background-color: #a3803a'></span>100000</div>
-      <div><span style='background-color: #715928'></span>20000</div>
-      <div><span style='background-color: #3f3116'></span>30000</div>
-      <div><span style='background-color: #0d0a05'></span>40000</div>
-    </div>
-
-    <div id='netflow-legend' class='legend2'>
-            <h4>Netflow Population</h4>
-            <div><span style='background-color: #b2182b'></span>-10000</div>
-            <div><span style='background-color: #ef8a62'></span>-6000</div>
-            <div><span style='background-color: #fddbc7'></span>-4000</div>
-            <div><span style='background-color: #d1e5f0'></span>0</div>
-            <div><span style='background-color: #67a9cf'></span>2000</div>
-            <div><span style='background-color: #2166ac'></span>3000</div>
-            </div>
-
-    <div id='outflow' class='map'>
-    </div>
-    <div id='divider'></div>
-    <div class='map-overlay' id='features'><h1>London Inflow</h1><div id='pd'><p>Hover over a borough or zoom!</p></div>
-    <div class="map-overlay-inner" id = 'inflowoverlay'>
-     <h2>Year: <label id='year'>2012</label></h2>
-     <table><tr><td>
-      <input id='slider' type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
-      <datalist id="tickmarks">
-        <option value="0" label="2012">
-          <option value="1">
-            <option value="2">
+    <div class="map-overlay-inner" id='inflowoverlay'>
+      <h2>Year: <label id='year'>2012</label></h2>
+      <table>
+        <tr>
+          <td>
+            <input id='slider' type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
+            <datalist id="tickmarks">
+              <option value="0" label="2012">
+              <option value="1">
+              <option value="2">
               <option value="3">
-                <option value="4" label="2016">
-                  <option value="5" label="2017">
-                  </datalist>
-                </td>
-              </tr></table> 
-            </div>
-    <div id = 'flowmapyear'><h2>Year: 2017</h2></div>
-          </div>
+              <option value="4" label="2016">
+              <option value="5" label="2017">
+            </datalist>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div id='flowmapyear'>
+      <h2>Year: 2017</h2>
+    </div>
+  </div>
 
 
-        <button id = 'button'>NET FLOWS</button>
-        <button id = 'flybutton'>FLOW MAP</button>
-        
-          <div class='map-overlay' id='features1'><h1>London Outflow</h1><div id='ph'><p>Hover over a borough or zoom!</p></div>
-          <div id = 'flowmapyear2'><h2>Year: 2017</h2></div>
-                </div>
+  <button id='button'>NET FLOWS</button>
+  <button id='flybutton'>FLOW MAP</button>
 
-        
-        
-        <div class='map-overlay-net' id='features2'><h1>London Netflow</h1><div id='pz'><p>Hover over a borough!</p></div>
-        <div class="map-overlay-inner">
-           <h2> Year: <label id='year3'>2012</label></h2>
-           <table><tr><td>
+  <div class='map-overlay' id='features1'>
+    <h1>London Outflow</h1>
+    <div id='ph'>
+      <p>Hover over a borough or zoom!</p>
+    </div>
+    <div id='flowmapyear2'>
+      <h2>Year: 2017</h2>
+    </div>
+  </div>
+
+
+
+  <div class='map-overlay-net' id='features2'>
+    <h1>London Netflow</h1>
+    <div id='pz'>
+      <p>Hover over a borough!</p>
+    </div>
+    <div class="map-overlay-inner">
+      <h2> Year: <label id='year3'>2012</label></h2>
+      <table>
+        <tr>
+          <td>
             <input id='slider3' type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
             <datalist id="tickmarks">
               <option value="0" label="2012">
-                <option value="1">
-                  <option value="2">
-                    <option value="3">
-                      <option value="4" label="2016">
-                        <option value="5" label="2017">
-                        </datalist>
-                      </td>
-                    </tr></table> 
-                  </div>
-            
-            
-            
-
-                <script>
-                  mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuemhhbmc2MDI4IiwiYSI6ImNqbnl3cjA3NDAxa2Iza21xNTh0ZHJmanEifQ.-f1bD67sihexMWPoxNjZbw';
+              <option value="1">
+              <option value="2">
+              <option value="3">
+              <option value="4" label="2016">
+              <option value="5" label="2017">
+            </datalist>
+          </td>
+        </tr>
+      </table>
+    </div>
 
 
-                  function moveToMapPosition (master, clones) {
-                    var center = master.getCenter();
-                    var zoom = master.getZoom();
-                    var bearing = master.getBearing();
-                    var pitch = master.getPitch();
 
-                    clones.forEach(function (clone) {
-                      clone.jumpTo({
-                        center: center,
-                        zoom: zoom,
-                        bearing: bearing,
-                        pitch: pitch
-                      });
-                    });
-                  }
 
-    // Sync movements of two maps.
-    //
-    // All interactions that result in movement end up firing
-    // a "move" event. The trick here, though, is to
-    // ensure that movements don't cycle from one map
-    // to the other and back again, because such a cycle
-    // - could cause an infinite loop
-    // - prematurely halts prolonged movements like
-    //   double-click zooming, box-zooming, and flying
-    function syncMaps () {
-      var maps;
-      var argLen = arguments.length;
-      if (argLen === 1) {
-        maps = arguments[0];
-      } else {
-        maps = [];
-        for (var i = 0; i < argLen; i++) {
-          maps.push(arguments[i]);
+    <script>
+      mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuemhhbmc2MDI4IiwiYSI6ImNqbnl3cjA3NDAxa2Iza21xNTh0ZHJmanEifQ.-f1bD67sihexMWPoxNjZbw';
+
+
+      function moveToMapPosition(master, clones) {
+        var center = master.getCenter();
+        var zoom = master.getZoom();
+        var bearing = master.getBearing();
+        var pitch = master.getPitch();
+
+        clones.forEach(function (clone) {
+          clone.jumpTo({
+            center: center,
+            zoom: zoom,
+            bearing: bearing,
+            pitch: pitch
+          });
+        });
+      }
+
+      // Sync movements of two maps.
+      //
+      // All interactions that result in movement end up firing
+      // a "move" event. The trick here, though, is to
+      // ensure that movements don't cycle from one map
+      // to the other and back again, because such a cycle
+      // - could cause an infinite loop
+      // - prematurely halts prolonged movements like
+      //   double-click zooming, box-zooming, and flying
+      function syncMaps() {
+        var maps;
+        var argLen = arguments.length;
+        if (argLen === 1) {
+          maps = arguments[0];
+        } else {
+          maps = [];
+          for (var i = 0; i < argLen; i++) {
+            maps.push(arguments[i]);
+          }
         }
-      }
 
-      // Create all the movement functions, because if they're created every time
-      // they wouldn't be the same and couldn't be removed.
-      var fns = [];
-      maps.forEach(function (map, index) {
-        fns[index] = sync.bind(null, map, maps.filter(function (o, i) { return i !== index; }));
-      });
-
-      function on () {
+        // Create all the movement functions, because if they're created every time
+        // they wouldn't be the same and couldn't be removed.
+        var fns = [];
         maps.forEach(function (map, index) {
-          map.on('move', fns[index]);
+          fns[index] = sync.bind(null, map, maps.filter(function (o, i) { return i !== index; }));
         });
-      }
 
-      function off () {
-        maps.forEach(function (map, index) {
-          map.off('move', fns[index]);
-        });
-      }
+        function on() {
+          maps.forEach(function (map, index) {
+            map.on('move', fns[index]);
+          });
+        }
 
-      // When one map moves, we turn off the movement listeners
-      // on all the maps, move it, then turn the listeners on again
-      function sync (master, clones) {
-        off();
-        moveToMapPosition(master, clones);
+        function off() {
+          maps.forEach(function (map, index) {
+            map.off('move', fns[index]);
+          });
+        }
+
+        // When one map moves, we turn off the movement listeners
+        // on all the maps, move it, then turn the listeners on again
+        function sync(master, clones) {
+          off();
+          moveToMapPosition(master, clones);
+          on();
+        }
+
         on();
       }
 
-      on();
-    }
-
-    //module.exports = syncMaps;
+      //module.exports = syncMaps;
 
 
-    var inflowmap = new mapboxgl.Map({
-      container: 'inflow',
-      style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
-      center: [-0.013715, 51.502331],
-      zoom: 8.5
-    });
-    //mapbox://styles/danzhang6028/cjv3vh8a00wd01foijlgt2myv
-    //mapbox://styles/danzhang6028/cjv3y5p9e0fkj1frme5lbjfed
+      var inflowmap = new mapboxgl.Map({
+        container: 'inflow',
+        style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
+        center: [-0.013715, 51.502331],
+        zoom: 8.5
+      });
+      //mapbox://styles/danzhang6028/cjv3vh8a00wd01foijlgt2myv
+      //mapbox://styles/danzhang6028/cjv3y5p9e0fkj1frme5lbjfed
 
-    var outflowmap = new mapboxgl.Map({
-      container: 'outflow',
-      style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
-      center: [-0.013715, 51.502331],
-      zoom: 8.5
-    });
-                    
-    // sync maps
-    var mapp = syncMaps(inflowmap, outflowmap);
+      var outflowmap = new mapboxgl.Map({
+        container: 'outflow',
+        style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
+        center: [-0.013715, 51.502331],
+        zoom: 8.5
+      });
 
-    var zoomThreshold = 8.5;
-    
-    // fly zooms added
-                    
-              
-    document.getElementById('flybutton').addEventListener('click', function () {
-   
-       inflowmap.flyTo({
-            center: [
-                -0.904133,
-                54.060395],
-                zoom: 5.28,
-                bearing: 0
-            });
-        });   
-                    
-                    
-    inflowmap.on('load', function() {
+      // sync maps
+      var mapp = syncMaps(inflowmap, outflowmap);
 
-      var years = ['12','13','14','15','16','17']
+      var zoomThreshold = 8.5;
+
+      // fly zooms added
+
+
+      document.getElementById('flybutton').addEventListener('click', function () {
+
+        inflowmap.flyTo({
+          center: [
+            -0.904133,
+            54.060395],
+          zoom: 5.28,
+          bearing: 0
+        });
+      });
+
+
+      inflowmap.on('load', function () {
+
+        var years = ['12', '13', '14', '15', '16', '17']
 
         //LEGEND 
         //var layers = ['0-1000', '1000-100000', '100000-20000', '20000-30000', '30000-40000', ];
         //var colors = ['#edf3f3', '#afc9ca', '#729fa2', '#456769', '#1d2b2c'];
 
         //for (i = 0; i < layers.length; i++) {
-            //var layer = layers[i];
-            //var color = colors[i];
-            //var item = document.createElement('div');
-            //var key = document.createElement('span');
-            //key.className = 'legend-key';
-            //key.style.backgroundColor = color;
+        //var layer = layers[i];
+        //var color = colors[i];
+        //var item = document.createElement('div');
+        //var key = document.createElement('span');
+        //key.className = 'legend-key';
+        //key.style.backgroundColor = color;
 
-            //var value = document.createElement('span');
-            //value.innerHTML = layer;
-            //item.appendChild(key);
-            //item.appendChild(value);
-            //legend.appendChild(item);
+        //var value = document.createElement('span');
+        //value.innerHTML = layer;
+        //item.appendChild(key);
+        //item.appendChild(value);
+        //legend.appendChild(item);
         //}
 
-      // function for inflow slider
+        // function for inflow slider
         function setYear(year) {
-                    // Set the label to the correct year
-                    document.getElementById('year').textContent = years[year];
+          // Set the label to the correct year
+          document.getElementById('year').textContent = years[year];
 
-                    var pp = inflowmap.getPaintProperty('InflowMapLayer','fill-color');
+          var pp = inflowmap.getPaintProperty('InflowMapLayer', 'fill-color');
 
-                    console.log(pp);
-                    pp.property = "inflow_" + years[year];
+          console.log(pp);
+          pp.property = "inflow_" + years[year];
 
-                    inflowmap.setPaintProperty('InflowMapLayer','fill-color',pp);
+          inflowmap.setPaintProperty('InflowMapLayer', 'fill-color', pp);
 
-                    console.log(inflowmap.getPaintProperty('InflowMapLayer','fill-color'));
+          console.log(inflowmap.getPaintProperty('InflowMapLayer', 'fill-color'));
 
-                    inflowmap.setLayoutProperty('InflowMapLayer', 'visibility', 'none');
-                    inflowmap.setLayoutProperty('InflowMapLayer', 'visibility', 'visible');  
-                  }
+          inflowmap.setLayoutProperty('InflowMapLayer', 'visibility', 'none');
+          inflowmap.setLayoutProperty('InflowMapLayer', 'visibility', 'visible');
+        }
 
         // function for netflow slider 
         function netsetYear(year) {
-                    // Set the label to the correct year
-                    document.getElementById('year3').textContent = years[year];
+          // Set the label to the correct year
+          document.getElementById('year3').textContent = years[year];
 
-                    var pp = inflowmap.getPaintProperty('netflowLayer','fill-color');
+          var pp = inflowmap.getPaintProperty('netflowLayer', 'fill-color');
 
-                    console.log(pp);
-                    pp.property = "net_" + years[year];
+          console.log(pp);
+          pp.property = "net_" + years[year];
 
-                    inflowmap.setPaintProperty('netflowLayer','fill-color',pp);
+          inflowmap.setPaintProperty('netflowLayer', 'fill-color', pp);
 
-                    console.log(inflowmap.getPaintProperty('netflowLayer','fill-color'));
+          console.log(inflowmap.getPaintProperty('netflowLayer', 'fill-color'));
 
-                    inflowmap.setLayoutProperty('netflowLayer', 'visibility', 'none');
-                    inflowmap.setLayoutProperty('netflowLayer', 'visibility', 'visible');  
-                  }
+          inflowmap.setLayoutProperty('netflowLayer', 'visibility', 'none');
+          inflowmap.setLayoutProperty('netflowLayer', 'visibility', 'visible');
+        }
 
         // add inflow layer
-                  inflowmap.addLayer({
-                    id: 'InflowMapLayer',
-                    type: 'fill',
-                    source: {
-                      type: 'vector',
-                url: 'mapbox://danzhang6028.9ok9uwzo' // Your Mapbox tileset Map ID
-              },
-              'source-layer': 'allyear_inoutflow-7ttqnz',
-              'minzoom':zoomThreshold,
-              'layout': {
-                'visibility': 'visible'
-              },
-              paint: {
-                'fill-color': {
-                  property: 'inflow_12',
-                  stops:[
-                  [0, '#f7fafa'],
-                  [1000, '#edf3f3'],
-                  [10000, '#afc9ca'],
-                  [20000, '#729fa2'],
-                  [30000, '#456769'],
-                  [40000, '#1d2b2c'],]},
-                  'fill-opacity': 1}
-                },'settlement-label');
+        inflowmap.addLayer({
+          id: 'InflowMapLayer',
+          type: 'fill',
+          source: {
+            type: 'vector',
+            url: 'mapbox://danzhang6028.9ok9uwzo' // Your Mapbox tileset Map ID
+          },
+          'source-layer': 'allyear_inoutflow-7ttqnz',
+          'minzoom': zoomThreshold,
+          'layout': {
+            'visibility': 'visible'
+          },
+          paint: {
+            'fill-color': {
+              property: 'inflow_12',
+              stops: [
+                [0, '#f7fafa'],
+                [1000, '#edf3f3'],
+                [10000, '#afc9ca'],
+                [20000, '#729fa2'],
+                [30000, '#456769'],
+                [40000, '#1d2b2c'],]
+            },
+            'fill-opacity': 1
+          }
+        }, 'settlement-label');
 
 
-                  inflowmap.addLayer({
-                    id: 'inflow-border',
-                    type: 'line',
-                    source: {
-                      type: 'vector',
-                url: 'mapbox://danzhang6028.9p6p3l55' // Your Mapbox tileset Map ID
-              },
-            'source-layer': 'inflow_2017-a8wu8h', // name of tilesets
-            'layout': {},
-            'paint': {
-              "line-color": "white",
-              "line-width": 1
-            }
-          });
+        inflowmap.addLayer({
+          id: 'inflow-border',
+          type: 'line',
+          source: {
+            type: 'vector',
+            url: 'mapbox://danzhang6028.9p6p3l55' // Your Mapbox tileset Map ID
+          },
+          'source-layer': 'inflow_2017-a8wu8h', // name of tilesets
+          'layout': {},
+          'paint': {
+            "line-color": "white",
+            "line-width": 1
+          }
+        });
 
         //load netflow map
-                 inflowmap.addLayer({
-                    id: 'netflowLayer',
-                    type: 'fill',
-                    source: {
-                      type: 'vector',
-                url: 'mapbox://danzhang6028.9ok9uwzo' // Your Mapbox tileset Map ID
-              },
-              'source-layer': 'allyear_inoutflow-7ttqnz',
-              'minzoom':zoomThreshold,
-              'layout': {
-                'visibility': 'none'
-              },
-              paint: {
-                'fill-color': {
-                  property: 'net_12',
-                  stops:[
-                  [-10000, '#b2182b'],
-                  [-6000, '#ef8a62'],
-                  [-4000, '#fddbc7'],
-                  [0, '#d1e5f0'],
-                  [2000, '#67a9cf'],
-                  [3000, '#2166ac'],]},
-                  'fill-opacity': 1}
-                },'settlement-label');
+        inflowmap.addLayer({
+          id: 'netflowLayer',
+          type: 'fill',
+          source: {
+            type: 'vector',
+            url: 'mapbox://danzhang6028.9ok9uwzo' // Your Mapbox tileset Map ID
+          },
+          'source-layer': 'allyear_inoutflow-7ttqnz',
+          'minzoom': zoomThreshold,
+          'layout': {
+            'visibility': 'none'
+          },
+          paint: {
+            'fill-color': {
+              property: 'net_12',
+              stops: [
+                [-10000, '#b2182b'],
+                [-6000, '#ef8a62'],
+                [-4000, '#fddbc7'],
+                [0, '#d1e5f0'],
+                [2000, '#67a9cf'],
+                [3000, '#2166ac'],]
+            },
+            'fill-opacity': 1
+          }
+        }, 'settlement-label');
 
 
 
         //inflow map
         inflowmap.addLayer({
-          'id':'inflowline',
-          'type':'line',
-          'source':{
+          'id': 'inflowline',
+          'type': 'line',
+          'source': {
             'type': 'vector',
-            'url':'mapbox://danzhang6028.0xz622oe' 
+            'url': 'mapbox://danzhang6028.0xz622oe'
           },
-          'source-layer':'inflow_lines_top10-3pemmq',
-          'maxzoom':zoomThreshold,
+          'source-layer': 'inflow_lines_top10-3pemmq',
+          'maxzoom': zoomThreshold,
           'layout': {
             'visibility': 'visible'
           },
-          'paint':{
-            'line-opacity':0.30,
+          'paint': {
+            'line-opacity': 0.30,
             'line-color': '#8fd6e6',
-            'line-width':{
-              property:'summed_mov',
-              stops:[
-              [5, 1],
-              [206, 2],
-              [408, 5],
-              [810.945,10],]
-            }  
+            'line-width': {
+              property: 'summed_mov',
+              stops: [
+                [5, 1],
+                [206, 2],
+                [408, 5],
+                [810.945, 10],]
+            }
           },
         });
 
@@ -372,22 +400,22 @@
           type: 'circle',
           source: {
             type: 'vector',
-                      url: 'mapbox://danzhang6028.aswbk2r2' // Your Mapbox tileset Map ID
-                    },
-                    'source-layer': 'inflow_Rank10_des-9htdz0', // name of tilesets
-                    'maxzoom':zoomThreshold,
-                    'layout': {
-                      'visibility': 'visible'
-                    },
-                    paint: {
-                      'circle-color': 'white',
-                      'circle-opacity': 1,
-                      'circle-radius': {
-                        'base': 6,
-                        'stops': [[0, 2], [8,5]]
-                      }
-                    }    
-                  });
+            url: 'mapbox://danzhang6028.aswbk2r2' // Your Mapbox tileset Map ID
+          },
+          'source-layer': 'inflow_Rank10_des-9htdz0', // name of tilesets
+          'maxzoom': zoomThreshold,
+          'layout': {
+            'visibility': 'visible'
+          },
+          paint: {
+            'circle-color': 'white',
+            'circle-opacity': 1,
+            'circle-radius': {
+              'base': 6,
+              'stops': [[0, 2], [8, 5]]
+            }
+          }
+        });
 
 
         inflowmap.addLayer({
@@ -395,49 +423,49 @@
           type: 'circle',
           source: {
             type: 'vector',
-                      url: 'mapbox://danzhang6028.8yuzjqeh' // Your Mapbox tileset Map ID
-                    },
-                    'source-layer': 'INFLOW_DESTINATION_MOVES-d65r3p', // name of tilesets
-                    'maxzoom':zoomThreshold,
-                    'layout': {
-                      'visibility': 'visible'
-                    },
-                    paint: {
-                      'circle-color': "#fbf88d",
-                      'circle-opacity': 0.7,
-                      'circle-radius': {
-                            property: 'summed_mov',// add "1960" year data to the map
-                            type:'exponential',
-                            'stops': [[5, 2], [4695, 10]]
-                          }
-                        }    
-                      });
+            url: 'mapbox://danzhang6028.8yuzjqeh' // Your Mapbox tileset Map ID
+          },
+          'source-layer': 'INFLOW_DESTINATION_MOVES-d65r3p', // name of tilesets
+          'maxzoom': zoomThreshold,
+          'layout': {
+            'visibility': 'visible'
+          },
+          paint: {
+            'circle-color': "#fbf88d",
+            'circle-opacity': 0.7,
+            'circle-radius': {
+              property: 'summed_mov',// add "1960" year data to the map
+              type: 'exponential',
+              'stops': [[5, 2], [4695, 10]]
+            }
+          }
+        });
 
 
 
 
         inflowmap.addLayer({
-         id: 'inflow-border1',
-         type: 'line',
-         source: {
-          type: 'vector',
-                    url: 'mapbox://danzhang6028.9p6p3l55' // Your Mapbox tileset Map ID
-                  },
+          id: 'inflow-border1',
+          type: 'line',
+          source: {
+            type: 'vector',
+            url: 'mapbox://danzhang6028.9p6p3l55' // Your Mapbox tileset Map ID
+          },
 
-              'source-layer': 'inflow_2017-a8wu8h', // name of tilesets
-              'maxzoom':zoomThreshold,
-              'layout': {},
-              'paint': {
-                'line-opacity':0.8,
-                "line-color": "white",
-                "line-width": 0.5
-              }
-            });
+          'source-layer': 'inflow_2017-a8wu8h', // name of tilesets
+          'maxzoom': zoomThreshold,
+          'layout': {},
+          'paint': {
+            'line-opacity': 0.8,
+            "line-color": "white",
+            "line-width": 0.5
+          }
+        });
 
 
         // show legend based on zoom level
         var inflowLegendEl = document.getElementById('inflow-legend');
-        inflowmap.on('zoom', function() {
+        inflowmap.on('zoom', function () {
           if (inflowmap.getZoom() > zoomThreshold) {
             inflowLegendEl.style.display = 'block';
           } else {
@@ -447,32 +475,32 @@
 
         // ADD POPUP WINDOW 
         // origination popup window 
-        var mypopup = new mapboxgl.Popup({closeButton: false}); 
+        var mypopup = new mapboxgl.Popup({ closeButton: false });
 
         inflowmap.on('mouseover', 'inflow_origination', function (e) {
           mypopup
-          .setLngLat(e.features[0].geometry.coordinates)
-          .setHTML("<h3>" + e.features[0].properties.outflow_na + "</h3><p>"+'Total Outflows: '
-           +e.features[0].properties.summed_mov +'</p>' 
-                                    ).addTo(inflowmap); // add table on popup box
+            .setLngLat(e.features[0].geometry.coordinates)
+            .setHTML("<h3>" + e.features[0].properties.outflow_na + "</h3><p>" + 'Total Outflows: '
+              + e.features[0].properties.summed_mov + '</p>'
+            ).addTo(inflowmap); // add table on popup box
         });
         inflowmap.on('mouseenter', 'inflow_origination', function () {
           inflowmap.getCanvas().style.cursor = 'pointer';
         });
 
-                // Change it back to a pointer when it leaves and remove the popup window.
-                inflowmap.on('mouseleave', 'inflow_origination', function () {
-                  inflowmap.getCanvas().style.cursor = '';
-                  mypopup.remove();
-                });
+        // Change it back to a pointer when it leaves and remove the popup window.
+        inflowmap.on('mouseleave', 'inflow_origination', function () {
+          inflowmap.getCanvas().style.cursor = '';
+          mypopup.remove();
+        });
 
 
         // destination popup window
         inflowmap.on('mouseover', 'inflow_destination', function (e) {
           mypopup
-          .setLngLat(e.features[0].geometry.coordinates)
-          .setHTML("<h3>" + e.features[0].properties.inflow_nam + "</h3>" + "<table id = 'tablepop'><tr><th class = 'title'>Origin Rank</th><th>Rank1</th><th>Rank2</th><th>Rank3</th></tr><tr class = 'rate'><td class = 'title'>LA Name</td><td>"+ e.features[0].properties['Rank1_name'] + "</td><td>" +e.features[0].properties['Rank2_name'] +"</td><td>" +e.features[0].properties['Rank3_name'] +"</td></tr><tr class = 'moves'><td class = 'title'>LA Moves</td><td>"+ e.features[0].properties['Rank1_move'] + "</td><td>" +e.features[0].properties['Rank2_move'] +"</td><td>" +e.features[0].properties['Rank3_move'] + "</td></tr></table>"
-                                    ).addTo(inflowmap); // add table on popup box
+            .setLngLat(e.features[0].geometry.coordinates)
+            .setHTML("<h3>" + e.features[0].properties.inflow_nam + "</h3>" + "<table id = 'tablepop'><tr><th class = 'title'>Origin Rank</th><th>Rank1</th><th>Rank2</th><th>Rank3</th></tr><tr class = 'rate'><td class = 'title'>LA Name</td><td>" + e.features[0].properties['Rank1_name'] + "</td><td>" + e.features[0].properties['Rank2_name'] + "</td><td>" + e.features[0].properties['Rank3_name'] + "</td></tr><tr class = 'moves'><td class = 'title'>LA Moves</td><td>" + e.features[0].properties['Rank1_move'] + "</td><td>" + e.features[0].properties['Rank2_move'] + "</td><td>" + e.features[0].properties['Rank3_move'] + "</td></tr></table>"
+            ).addTo(inflowmap); // add table on popup box
         });
 
 
@@ -480,18 +508,18 @@
           inflowmap.getCanvas().style.cursor = 'pointer';
         });
 
-                // Change it back to a pointer when it leaves and remove the popup window.
-                inflowmap.on('mouseleave', 'inflow_destination', function () {
-                  inflowmap.getCanvas().style.cursor = '';
-                  mypopup.remove();
-                });
+        // Change it back to a pointer when it leaves and remove the popup window.
+        inflowmap.on('mouseleave', 'inflow_destination', function () {
+          inflowmap.getCanvas().style.cursor = '';
+          mypopup.remove();
+        });
 
         //add the choropleth map information
-        inflowmap.on('mousemove','inflowline', function(e) {
+        inflowmap.on('mousemove', 'inflowline', function (e) {
           var features = e.features
 
           if (features.length > 0) {
-            document.getElementById('pd').innerHTML = '<h3>' + features[0].properties.outflow_na + '</h3><h3>to</h3>' + '<h3>'+ features[0].properties.inflow_nam +'</h3><p><strong><em>' +features[0].properties.summed_mov +'</strong> moves </em></p>';
+            document.getElementById('pd').innerHTML = '<h3>' + features[0].properties.outflow_na + '</h3><h3>to</h3>' + '<h3>' + features[0].properties.inflow_nam + '</h3><p><strong><em>' + features[0].properties.summed_mov + '</strong> moves </em></p>';
           } else {
             document.getElementById('pd').innerHTML = '<p>Hover over a line!</p>';
           }
@@ -504,19 +532,19 @@
         //end of inflow map
 
         // inflow information on title
-        inflowmap.on('mousemove',"InflowMapLayer",function(e) {
+        inflowmap.on('mousemove', "InflowMapLayer", function (e) {
           var infl = e.features
           if (infl.length > 0) {
-           document.getElementById('pd').innerHTML = '<h2><strong>' + infl[0].properties.la_name + '</strong></h2><p><strong><em>' + infl[0].properties.inflow_12 + '</strong> people come in 2012</br><strong>' + infl[0].properties.inflow_13 + '</strong> people come in 2013</br><strong>'+ infl[0].properties.inflow_14 +'</strong> people come in 2014</br><strong>'+ infl[0].properties.inflow_15 +'</strong> people come in 2015</br><strong>'+ infl[0].properties.inflow_16 +'</strong> people come in 2016</br><strong>'+ infl[0].properties.inflow_17 +'</strong> people come in 2017</br><strong></em></p>';
-         } else {
-          document.getElementById('pd').innerHTML = '<p>Hover over a borough!</p>';
-        }
-            //show border        
-            inflowmap.setFilter("inflow-border", ["==", "la_name", infl[0].properties.la_name]);
+            document.getElementById('pd').innerHTML = '<h2><strong>' + infl[0].properties.la_name + '</strong></h2><p><strong><em>' + infl[0].properties.inflow_12 + '</strong> people come in 2012</br><strong>' + infl[0].properties.inflow_13 + '</strong> people come in 2013</br><strong>' + infl[0].properties.inflow_14 + '</strong> people come in 2014</br><strong>' + infl[0].properties.inflow_15 + '</strong> people come in 2015</br><strong>' + infl[0].properties.inflow_16 + '</strong> people come in 2016</br><strong>' + infl[0].properties.inflow_17 + '</strong> people come in 2017</br><strong></em></p>';
+          } else {
+            document.getElementById('pd').innerHTML = '<p>Hover over a borough!</p>';
+          }
+          //show border        
+          inflowmap.setFilter("inflow-border", ["==", "la_name", infl[0].properties.la_name]);
 
 
-          });
-        document.getElementById('slider').addEventListener('input', function(e) {
+        });
+        document.getElementById('slider').addEventListener('input', function (e) {
           var year = parseInt(e.target.value);
           setYear(year);
         });
@@ -527,61 +555,61 @@
 
         link.onclick = function (e) {
 
-        var clickedLayer = 'netflowLayer';
-        e.preventDefault();
-        e.stopPropagation();
+          var clickedLayer = 'netflowLayer';
+          e.preventDefault();
+          e.stopPropagation();
 
-        var visibility = inflowmap.getLayoutProperty(clickedLayer, 'visibility');
+          var visibility = inflowmap.getLayoutProperty(clickedLayer, 'visibility');
 
-        if (visibility === 'visible') {
+          if (visibility === 'visible') {
             inflowmap.setLayoutProperty(clickedLayer, 'visibility', 'none');
             this.className = '';
-        } else {
+          } else {
             this.className = 'active';
             inflowmap.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-        };
-            // show and hide netflow titles 
-            var x = document.getElementById("features2");
-        if (x.style.display === "none" || x.style.display === "") {
+          };
+          // show and hide netflow titles 
+          var x = document.getElementById("features2");
+          if (x.style.display === "none" || x.style.display === "") {
             x.style.display = "block";
-        } else {
+          } else {
             x.style.display = "none";
-        };
+          };
 
-            // show and hide netflow legend
+          // show and hide netflow legend
 
-            var y = document.getElementById("netflow-legend");
-        if (y.style.display === "none" || y.style.display === "") {
+          var y = document.getElementById("netflow-legend");
+          if (y.style.display === "none" || y.style.display === "") {
             y.style.display = "block";
-        } else {
+          } else {
             y.style.display = "none";
-        }
+          }
 
 
         };
 
         // show netflow infoemation on title window
 
-        inflowmap.on('mousemove',"netflowLayer",function(e) {
+        inflowmap.on('mousemove', "netflowLayer", function (e) {
           if (e.features.length > 0) {
-           document.getElementById('pz').innerHTML = '<h2><strong>' + e.features[0].properties.la_name + '</strong></h2><p><strong><em>' + e.features[0].properties.net_12 + '</strong> net flows in 2012</br><strong>' + e.features[0].properties.net_13 + '</strong> net flows in 2013</br><strong>'+ e.features[0].properties.net_14 +'</strong> net flows in 2014</br><strong>'+ e.features[0].properties.net_15 +'</strong> net flows in 2015</br><strong>'+ e.features[0].properties.net_16 +'</strong> net flows in 2016</br><strong>'+ e.features[0].properties.net_17 +'</strong> net flows in 2017</br><strong></em></p>';
-         } else {
-          document.getElementById('pz').innerHTML = '<p>Hover over a borough!</p>';
-        }
-            //show border        
-            inflowmap.setFilter("inflow-border", ["==", "la_name", e.features[0].properties.la_name]);
+            document.getElementById('pz').innerHTML = '<h2><strong>' + e.features[0].properties.la_name + '</strong></h2><p><strong><em>' + e.features[0].properties.net_12 + '</strong> net flows in 2012</br><strong>' + e.features[0].properties.net_13 + '</strong> net flows in 2013</br><strong>' + e.features[0].properties.net_14 + '</strong> net flows in 2014</br><strong>' + e.features[0].properties.net_15 + '</strong> net flows in 2015</br><strong>' + e.features[0].properties.net_16 + '</strong> net flows in 2016</br><strong>' + e.features[0].properties.net_17 + '</strong> net flows in 2017</br><strong></em></p>';
+          } else {
+            document.getElementById('pz').innerHTML = '<p>Hover over a borough!</p>';
+          }
+          //show border        
+          inflowmap.setFilter("inflow-border", ["==", "la_name", e.features[0].properties.la_name]);
 
-            // add time slider event
-            document.getElementById('slider3').addEventListener('input', function(e) {
-          var year = parseInt(e.target.value);
-          netsetYear(year);
-        });
-
+          // add time slider event
+          document.getElementById('slider3').addEventListener('input', function (e) {
+            var year = parseInt(e.target.value);
+            netsetYear(year);
           });
 
-         // show botton based on zoom level
+        });
+
+        // show botton based on zoom level
         var buttonEl = document.getElementById('button');
-        inflowmap.on('zoom', function() {
+        inflowmap.on('zoom', function () {
           if (inflowmap.getZoom() > zoomThreshold) {
             buttonEl.style.display = 'block';
           } else {
@@ -591,7 +619,7 @@
 
         // show slider based on zoom level
         var sliderEl = document.getElementById('inflowoverlay');
-        inflowmap.on('zoom', function() {
+        inflowmap.on('zoom', function () {
           if (inflowmap.getZoom() > zoomThreshold) {
             sliderEl.style.display = 'block';
           } else {
@@ -602,87 +630,89 @@
 
         // show flowmap year based on zoom level
         var flowmapyearEl = document.getElementById('flowmapyear');
-        inflowmap.on('zoom', function() {
+        inflowmap.on('zoom', function () {
           if (inflowmap.getZoom() > zoomThreshold) {
             flowmapyearEl.style.display = 'none';
           } else {
             flowmapyearEl.style.display = 'block';
           }
         });
-        
-
-        });
 
 
+      });
 
 
-    //OUTFLOW LOAD
-    outflowmap.on('load', function () {
 
 
-      var years = ['12','13','14','15','16','17']
+      //OUTFLOW LOAD
+      outflowmap.on('load', function () {
+
+
+        var years = ['12', '13', '14', '15', '16', '17']
 
         //var layers = ['0-1000', '1000-100000', '100000-20000', '20000-30000', '30000-40000', ];
         //var colors = ['#ceb075', '#a3803a', '#715928', '#3f3116', '#0d0a05'];
 
         //for (i = 0; i < layers.length; i++) {
-            //var layer = layers[i];
-            //var color = colors[i];
-            //var item = document.createElement('div');
-            //var key = document.createElement('span');
-            //key.className = 'legendoutflow-key';
-            //key.style.backgroundColor = color;
+        //var layer = layers[i];
+        //var color = colors[i];
+        //var item = document.createElement('div');
+        //var key = document.createElement('span');
+        //key.className = 'legendoutflow-key';
+        //key.style.backgroundColor = color;
 
-            //var value = document.createElement('span');
-            //value.innerHTML = layer;
-            //item.appendChild(key);
-            //item.appendChild(value);
-            //legendoutflow.appendChild(item);
-       //}
+        //var value = document.createElement('span');
+        //value.innerHTML = layer;
+        //item.appendChild(key);
+        //item.appendChild(value);
+        //legendoutflow.appendChild(item);
+        //}
 
-       function setYear(year) {
-                    // Set the label to the correct year
-                    document.getElementById('year').textContent = years[year];
+        function setYear(year) {
+          // Set the label to the correct year
+          document.getElementById('year').textContent = years[year];
 
-                    var pp = outflowmap.getPaintProperty('outflowMapLayer','fill-color');
+          var pp = outflowmap.getPaintProperty('outflowMapLayer', 'fill-color');
 
-                    console.log(pp);
-                    pp.property = "outflow_" + years[year];
+          console.log(pp);
+          pp.property = "outflow_" + years[year];
 
-                    outflowmap.setPaintProperty('outflowMapLayer','fill-color',pp);
+          outflowmap.setPaintProperty('outflowMapLayer', 'fill-color', pp);
 
-                    console.log(outflowmap.getPaintProperty('outflowMapLayer','fill-color'));
+          console.log(outflowmap.getPaintProperty('outflowMapLayer', 'fill-color'));
 
-                    outflowmap.setLayoutProperty('outflowMapLayer', 'visibility', 'none');
-                    outflowmap.setLayoutProperty('outflowMapLayer', 'visibility', 'visible');  
-                  }
+          outflowmap.setLayoutProperty('outflowMapLayer', 'visibility', 'none');
+          outflowmap.setLayoutProperty('outflowMapLayer', 'visibility', 'visible');
+        }
 
 
-                  outflowmap.addLayer({
-                    id: 'outflowMapLayer',
-                    type: 'fill',
-                    source: {
-                      type: 'vector',
-                url: 'mapbox://danzhang6028.9ok9uwzo' // Your Mapbox tileset Map ID
-              },
-            'source-layer': 'allyear_inoutflow-7ttqnz', // name of tilesets
-            'minzoom':zoomThreshold,
-            'layout': {
-                // starting view
-                'visibility': 'visible'
-              },
-              paint: {
-                'fill-color': {
-                  property: 'outflow_12',
-                  stops:[
-                  [0, '#e9dbc0'],
-                  [1000, '#ceb075'],
-                  [10000, '#a3803a'],
-                  [20000, '#715928'],
-                  [30000, '#3f3116'],
-                  [40000, '#0d0a05'],]},
-                  'fill-opacity': 1}
-                },'settlement-label');
+        outflowmap.addLayer({
+          id: 'outflowMapLayer',
+          type: 'fill',
+          source: {
+            type: 'vector',
+            url: 'mapbox://danzhang6028.9ok9uwzo' // Your Mapbox tileset Map ID
+          },
+          'source-layer': 'allyear_inoutflow-7ttqnz', // name of tilesets
+          'minzoom': zoomThreshold,
+          'layout': {
+            // starting view
+            'visibility': 'visible'
+          },
+          paint: {
+            'fill-color': {
+              property: 'outflow_12',
+              stops: [
+                [0, '#e9dbc0'],
+                [1000, '#ceb075'],
+                [10000, '#a3803a'],
+                [20000, '#715928'],
+                [30000, '#3f3116'],
+                [40000, '#0d0a05'],]
+            },
+            'fill-opacity': 1
+          }
+        }, 'settlement-label');
 
 
         //add border layer for hover effect
@@ -691,43 +721,44 @@
           type: 'line',
           source: {
             type: 'vector',
-                url: 'mapbox://danzhang6028.9p6p3l55' // Your Mapbox tileset Map ID
-              },
-            'source-layer': 'inflow_2017-a8wu8h', // name of tilesets
-            'layout': {},
-            'paint': {
-              "line-color": "white",
-              "line-width": 1
-            }
-          });
+            url: 'mapbox://danzhang6028.9p6p3l55' // Your Mapbox tileset Map ID
+          },
+          'source-layer': 'inflow_2017-a8wu8h', // name of tilesets
+          'layout': {},
+          'paint': {
+            "line-color": "white",
+            "line-width": 1
+          }
+        });
 
 
         //outflow map 
         outflowmap.addLayer({
-          'id':'outflowline',
-          'type':'line',
-          'source':{
+          'id': 'outflowline',
+          'type': 'line',
+          'source': {
             'type': 'vector',
-            'url':'mapbox://danzhang6028.bzc1xpnm' 
+            'url': 'mapbox://danzhang6028.bzc1xpnm'
           },
-          'source-layer':'outflow_lines_top10_withScotl-06lgoy',
-          'maxzoom':zoomThreshold,
+          'source-layer': 'outflow_lines_top10_withScotl-06lgoy',
+          'maxzoom': zoomThreshold,
           'layout': {
             'visibility': 'visible'
           },
-          'paint':{
-            'line-opacity':0.28,
+          'paint': {
+            'line-opacity': 0.28,
             'line-color': '#d1a771',
-            'line-width':{
-              property:'summed_mov',
-              stops:[
-              [4.824, 1],
-              [500, 2],
-              [911, 5],
-              [1061,10],
-              [1816.99, 15],]}  
-            },
-          });
+            'line-width': {
+              property: 'summed_mov',
+              stops: [
+                [4.824, 1],
+                [500, 2],
+                [911, 5],
+                [1061, 10],
+                [1816.99, 15],]
+            }
+          },
+        });
 
 
         outflowmap.addLayer({
@@ -735,25 +766,25 @@
           type: 'circle',
           source: {
             type: 'vector',
-                      url: 'mapbox://danzhang6028.801i5p7y' // Your Mapbox tileset Map ID
-                    },
-                    'source-layer': 'outflow_destination_wihScol-altj6p', // name of tilesets
-                    'maxzoom':zoomThreshold,
-                    'layout': {
-                      'visibility': 'visible'
-                    },
-                    paint: {
-                      'circle-color': 'white',
-                      'circle-opacity': 0.7,
-                      'circle-radius': {
-                            property: 'summed_mov',// add "1960" year data to the map
-                            type:'exponential',
-                            'stops': [
-                            [5, 3], 
-                            [6946, 13]]
-                          }
-                        }    
-                      });
+            url: 'mapbox://danzhang6028.801i5p7y' // Your Mapbox tileset Map ID
+          },
+          'source-layer': 'outflow_destination_wihScol-altj6p', // name of tilesets
+          'maxzoom': zoomThreshold,
+          'layout': {
+            'visibility': 'visible'
+          },
+          paint: {
+            'circle-color': 'white',
+            'circle-opacity': 0.7,
+            'circle-radius': {
+              property: 'summed_mov',// add "1960" year data to the map
+              type: 'exponential',
+              'stops': [
+                [5, 3],
+                [6946, 13]]
+            }
+          }
+        });
 
 
         outflowmap.addLayer({
@@ -761,44 +792,44 @@
           type: 'circle',
           source: {
             type: 'vector',
-                      url: 'mapbox://danzhang6028.7p66xs7s' // Your Mapbox tileset Map ID
-                    },
-                    'source-layer': 'OUTFLOW_RANK10-2ffxov', // name of tilesets
-                    'maxzoom':zoomThreshold,
-                    'layout': {
-                      'visibility': 'visible'
-                    },
-                    paint: {
-                      'circle-color': '#fbf88d',
-                      'circle-opacity': 0.7,
-                      'circle-radius': {
-                        'base': 2,
-                        'stops': [[0, 2], [8, 5]]
-                      }
-                    }    
-                  });
+            url: 'mapbox://danzhang6028.7p66xs7s' // Your Mapbox tileset Map ID
+          },
+          'source-layer': 'OUTFLOW_RANK10-2ffxov', // name of tilesets
+          'maxzoom': zoomThreshold,
+          'layout': {
+            'visibility': 'visible'
+          },
+          paint: {
+            'circle-color': '#fbf88d',
+            'circle-opacity': 0.7,
+            'circle-radius': {
+              'base': 2,
+              'stops': [[0, 2], [8, 5]]
+            }
+          }
+        });
 
         outflowmap.addLayer({
-         id: 'outflow-border1',
-         type: 'line',
-         source: {
-          type: 'vector',
-                    url: 'mapbox://danzhang6028.9p6p3l55' // Your Mapbox tileset Map ID
-                  },
+          id: 'outflow-border1',
+          type: 'line',
+          source: {
+            type: 'vector',
+            url: 'mapbox://danzhang6028.9p6p3l55' // Your Mapbox tileset Map ID
+          },
 
-              'source-layer': 'inflow_2017-a8wu8h', // name of tilesets
-              'maxzoom':zoomThreshold,
-              'layout': {},
-              'paint': {
-                'line-opacity':0.8,
-                "line-color": "white",
-                "line-width": 0.5
-              }
-            });
+          'source-layer': 'inflow_2017-a8wu8h', // name of tilesets
+          'maxzoom': zoomThreshold,
+          'layout': {},
+          'paint': {
+            'line-opacity': 0.8,
+            "line-color": "white",
+            "line-width": 0.5
+          }
+        });
 
 
         var outflowLegendEl = document.getElementById('outflow-legend');
-        outflowmap.on('zoom', function() {
+        outflowmap.on('zoom', function () {
           if (outflowmap.getZoom() > zoomThreshold) {
             outflowLegendEl.style.display = 'block';
           } else {
@@ -808,57 +839,57 @@
 
         // ADD POPUP WINDOW 
         // origination popup window 
-        var mypopup = new mapboxgl.Popup({closeButton: false}); 
+        var mypopup = new mapboxgl.Popup({ closeButton: false });
 
         outflowmap.on('mouseover', 'outflow_destination', function (e) {
           mypopup
-          .setLngLat(e.features[0].geometry.coordinates)
-          .setHTML("<h3>" + e.features[0].properties.inflow_nam + "</h3>" 
-           + '<p>' + 'Total Inflows: ' + e.features[0].properties.summed_mov +'</p>'
-                                    ).addTo(outflowmap); // add table on popup box
+            .setLngLat(e.features[0].geometry.coordinates)
+            .setHTML("<h3>" + e.features[0].properties.inflow_nam + "</h3>"
+              + '<p>' + 'Total Inflows: ' + e.features[0].properties.summed_mov + '</p>'
+            ).addTo(outflowmap); // add table on popup box
         });
         outflowmap.on('mouseenter', 'outflow_destination', function () {
           outflowmap.getCanvas().style.cursor = 'pointer';
         });
 
-                // Change it back to a pointer when it leaves and remove the popup window.
-                outflowmap.on('mouseleave', 'outflow_destination', function () {
-                  outflowmap.getCanvas().style.cursor = '';
-                  mypopup.remove();
-                });
+        // Change it back to a pointer when it leaves and remove the popup window.
+        outflowmap.on('mouseleave', 'outflow_destination', function () {
+          outflowmap.getCanvas().style.cursor = '';
+          mypopup.remove();
+        });
 
 
         // destination popup window
         outflowmap.on('mouseover', 'outflow_origination', function (e) {
           mypopup
-          .setLngLat(e.features[0].geometry.coordinates)
-          .setHTML("<h3>" + e.features[0].properties.outflow_na + "</h3>" + "<table id = 'tablepop'><tr><th class = 'title'>Destination Rank</th><th>Rank1</th><th>Rank2</th><th>Rank3</th></tr><tr class = 'rate'><td class = 'title'>LA name</td><td>"+  e.features[0].properties['Rank1_name'] + "</td><td>" 
-            +e.features[0].properties['Rank2_name'] +"</td><td>" 
-            +e.features[0].properties['Rank3_name'] + "</td></tr><tr class = 'moves'><td class = 'title'>LA Moves</td><td>"+ 
-            e.features[0].properties['Rank1_move'] + "</td><td>" 
-            +e.features[0].properties['Rank2_move'] +"</td><td>" 
-            +e.features[0].properties['Rank3_move'] + "</td></tr></table>"
-                                    ).addTo(outflowmap); // add table on popup box
+            .setLngLat(e.features[0].geometry.coordinates)
+            .setHTML("<h3>" + e.features[0].properties.outflow_na + "</h3>" + "<table id = 'tablepop'><tr><th class = 'title'>Destination Rank</th><th>Rank1</th><th>Rank2</th><th>Rank3</th></tr><tr class = 'rate'><td class = 'title'>LA name</td><td>" + e.features[0].properties['Rank1_name'] + "</td><td>"
+              + e.features[0].properties['Rank2_name'] + "</td><td>"
+              + e.features[0].properties['Rank3_name'] + "</td></tr><tr class = 'moves'><td class = 'title'>LA Moves</td><td>" +
+              e.features[0].properties['Rank1_move'] + "</td><td>"
+              + e.features[0].properties['Rank2_move'] + "</td><td>"
+              + e.features[0].properties['Rank3_move'] + "</td></tr></table>"
+            ).addTo(outflowmap); // add table on popup box
         });
         outflowmap.on('mouseenter', 'outflow_origination', function () {
           outflowmap.getCanvas().style.cursor = 'pointer';
         });
 
-                // Change it back to a pointer when it leaves and remove the popup window.
-                outflowmap.on('mouseleave', 'outflow_origination', function () {
-                  outflowmap.getCanvas().style.cursor = '';
-                  mypopup.remove();
-                });
+        // Change it back to a pointer when it leaves and remove the popup window.
+        outflowmap.on('mouseleave', 'outflow_origination', function () {
+          outflowmap.getCanvas().style.cursor = '';
+          mypopup.remove();
+        });
 
 
 
         // OUTFLOW MAP INFORMATION
-        outflowmap.on('mousemove','outflowline', function(e) {
+        outflowmap.on('mousemove', 'outflowline', function (e) {
 
           var features = e.features
 
           if (features.length > 0) {
-            document.getElementById('ph').innerHTML = '<h3>' + features[0].properties.outflow_na + '</h3><h3>to</h3>' + '<h3>'+ features[0].properties.inflow_nam +'</h3><p><strong><em>' +features[0].properties.summed_mov +'</strong> moves </em></p>';
+            document.getElementById('ph').innerHTML = '<h3>' + features[0].properties.outflow_na + '</h3><h3>to</h3>' + '<h3>' + features[0].properties.inflow_nam + '</h3><p><strong><em>' + features[0].properties.summed_mov + '</strong> moves </em></p>';
           } else {
             document.getElementById('ph').innerHTML = '<p>Hover over a line!</p>';
           }
@@ -867,51 +898,51 @@
         //outflowmap end
 
 
-        document.getElementById('slider').addEventListener('input', function(e) {
+        document.getElementById('slider').addEventListener('input', function (e) {
           var year = parseInt(e.target.value);
           setYear(year);
         });
-        
+
         //document.getElementById('slider2').addEventListener('input', function(e) {
-          //var year = parseInt(e.target.value);
-          //setYear(year);
+        //var year = parseInt(e.target.value);
+        //setYear(year);
         //});
 
-        outflowmap.on('mousemove','outflowMapLayer', function(e) {
-         var outfl = e.features
+        outflowmap.on('mousemove', 'outflowMapLayer', function (e) {
+          var outfl = e.features
 
-         if (outfl.length > 0) {
-          document.getElementById('ph').innerHTML = '<h2><strong>' + outfl[0].properties.la_name + '</strong></h2><p><strong><em>' + outfl[0].properties.outflow_12 + '</strong> people out in 2012 </br><strong>' + outfl[0].properties.outflow_13 + '</strong> people out in 2013</br><strong>'+ outfl[0].properties.outflow_14 +'</strong> people out in 2014</br><strong>'+ outfl[0].properties.outflow_15 +'</strong> people out in 2015</br><strong>'+ outfl[0].properties.outflow_16 +'</strong> people out in 2016</br><strong>'+ outfl[0].properties.outflow_17 +'</strong> people out in 2017</br><strong></em></p>';
-        } else {
-          document.getElementById('ph').innerHTML = '<p>Hover over a borough!</p>';
-        }
+          if (outfl.length > 0) {
+            document.getElementById('ph').innerHTML = '<h2><strong>' + outfl[0].properties.la_name + '</strong></h2><p><strong><em>' + outfl[0].properties.outflow_12 + '</strong> people out in 2012 </br><strong>' + outfl[0].properties.outflow_13 + '</strong> people out in 2013</br><strong>' + outfl[0].properties.outflow_14 + '</strong> people out in 2014</br><strong>' + outfl[0].properties.outflow_15 + '</strong> people out in 2015</br><strong>' + outfl[0].properties.outflow_16 + '</strong> people out in 2016</br><strong>' + outfl[0].properties.outflow_17 + '</strong> people out in 2017</br><strong></em></p>';
+          } else {
+            document.getElementById('ph').innerHTML = '<p>Hover over a borough!</p>';
+          }
 
-        outflowmap.setFilter("outflow-border", ["==", "la_name", outfl[0].properties.la_name]);
+          outflowmap.setFilter("outflow-border", ["==", "la_name", outfl[0].properties.la_name]);
 
-      }); 
+        });
 
-        inflowmap.on("mouseleave",'InflowMapLayer', function () {
+        inflowmap.on("mouseleave", 'InflowMapLayer', function () {
           inflowmap.setFilter("inflow-border", ["==", "la_name", ""]);
         });
 
 
-        outflowmap.on("mouseleave",'outflowMapLayer', function () {
+        outflowmap.on("mouseleave", 'outflowMapLayer', function () {
           outflowmap.setFilter("outflow-border", ["==", "la_name", ""]);
         });
 
         // show slider based on zoom level
         //var outflowsliderEl = document.getElementById('outflowoverlay');
-       // outflowmap.on('zoom', function() {
-          //if (outflowmap.getZoom() > zoomThreshold) {
-            //outflowsliderEl.style.display = 'block';
-          //} else {
-           // outflowsliderEl.style.display = 'none';
-         // }
+        // outflowmap.on('zoom', function() {
+        //if (outflowmap.getZoom() > zoomThreshold) {
+        //outflowsliderEl.style.display = 'block';
+        //} else {
+        // outflowsliderEl.style.display = 'none';
+        // }
         //});
 
         // show outflow map year based on zoom level
         var flowmapyearEl = document.getElementById('flowmapyear2');
-        outflowmap.on('zoom', function() {
+        outflowmap.on('zoom', function () {
           if (outflowmap.getZoom() > zoomThreshold) {
             flowmapyearEl.style.display = 'none';
           } else {
@@ -920,9 +951,10 @@
         });
 
       });
-                    
+
     //outflowmap.addControl(new mapboxgl.NavigationControl());
     </script>
 
-    </body>
-    </html>
+</body>
+
+</html>
