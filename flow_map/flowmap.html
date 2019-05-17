@@ -103,6 +103,42 @@
     <div id='pz'>
       <p>Hover over a borough!</p>
     </div>
+    <div id='divider'></div>
+    <div class='map-overlay' id='features'><h1>London Inflow</h1><div id='pd'><p>Hover over a borough or zoom!</p></div>
+    <div class="map-overlay-inner" id = 'inflowoverlay'>
+     <h2>Year: <label id='year'>2012</label></h2>
+     <table><tr><td>
+      <input id='slider' type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
+      <datalist id="tickmarks">
+        <option value="0" label="2012">
+          <option value="1">
+            <option value="2">
+              <option value="3">
+                <option value="4" label="2016">
+                  <option value="5" label="2017">
+                  </datalist>
+                </td>
+              </tr></table> 
+            </div>
+    <div id = 'flowmapyear'><h2>Year: 2017</h2></div>
+          </div>
+
+
+        <button id = 'button'>NET FLOWS</button>
+        <button id = 'flybutton'>FLOW MAP</button>
+        
+        <button id = 'chorobutton'>London Borough</button>
+        
+          <div class='map-overlay' id='features1'><h1>London Outflow</h1><div id='ph'><p>Hover over a borough or zoom!</p></div>
+          <div id = 'flowmapyear2'><h2>Year: 2017</h2></div>
+                </div>
+
+        
+        
+        <div class='map-overlay-net' id='features2'><h1>London Netflow</h1><div id='pz'><p>Hover over a borough!</p></div>
+        <div class="map-overlay-inner">
+           <h2> Year: <label id='year3'>2012</label></h2>
+           <table><tr><td>
     <div class="map-overlay-inner">
       <h2> Year: <label id='year3'>2012</label></h2>
       <table>
@@ -196,6 +232,60 @@
         on();
       }
 
+      on();
+
+    //module.exports = syncMaps;
+
+
+    var inflowmap = new mapboxgl.Map({
+      container: 'inflow',
+      style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
+      center: [-0.131404, 51.570888],
+      zoom: 8.5
+    });
+    //mapbox://styles/danzhang6028/cjv3vh8a00wd01foijlgt2myv
+    //mapbox://styles/danzhang6028/cjv3y5p9e0fkj1frme5lbjfed
+
+    var outflowmap = new mapboxgl.Map({
+      container: 'outflow',
+      style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
+      center: [-0.131404, 51.570888],
+      zoom: 8.5
+    });
+                    
+    // sync maps
+    var mapp = syncMaps(inflowmap, outflowmap);
+
+    var zoomThreshold = 8.5;
+    
+    // fly zooms added
+                    
+    //fly to flow map          
+    document.getElementById('flybutton').addEventListener('click', function () {
+   
+       inflowmap.flyTo({
+            center: [
+                -0.904133,
+                54.060395],
+                zoom: 5.28,
+                bearing: 0
+            });
+        });   
+    // fly to choropleth map   
+    document.getElementById('chorobutton').addEventListener('click', function () {
+   
+       inflowmap.flyTo({
+            center: [
+                -0.131404, 51.570888],
+                zoom: 8.6,
+                bearing: 0
+            });
+        }); 
+       
+    // load inflow map functions
+    inflowmap.on('load', function() {
+
+      var years = ['12','13','14','15','16','17']
       //module.exports = syncMaps;
 
 
@@ -238,7 +328,6 @@
       inflowmap.on('load', function () {
 
         var years = ['12', '13', '14', '15', '16', '17']
-
         //LEGEND 
         //var layers = ['0-1000', '1000-100000', '100000-20000', '20000-30000', '30000-40000', ];
         //var colors = ['#edf3f3', '#afc9ca', '#729fa2', '#456769', '#1d2b2c'];
@@ -640,13 +729,36 @@
 
 
       });
+        
+        // show flowmap button based on zoon level
+        var flowmapbuttonEl = document.getElementById('flybutton');
+        inflowmap.on('zoom', function() {
+          if (inflowmap.getZoom() > zoomThreshold) {
+            flowmapbuttonEl.style.display = 'block';
+          } else {
+            flowmapbuttonEl.style.display = 'none';
+          }
+        });
+        
+        // show choropleth map button based on zoon level
+        var chorobuttonEl = document.getElementById('chorobutton');
+        inflowmap.on('zoom', function() {
+          if (inflowmap.getZoom() > zoomThreshold) {
+            chorobuttonEl.style.display = 'none';
+          } else {
+            chorobuttonEl.style.display = 'block';
+          }
+        });
 
+      });
 
 
 
       //OUTFLOW LOAD
       outflowmap.on('load', function () {
 
+      //OUTFLOW LOAD
+      outflowmap.on('load', function () {
 
         var years = ['12', '13', '14', '15', '16', '17']
 
@@ -950,6 +1062,7 @@
           }
         });
 
+      });
       });
 
     //outflowmap.addControl(new mapboxgl.NavigationControl());
