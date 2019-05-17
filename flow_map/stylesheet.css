@@ -15,8 +15,8 @@
           h1{
             margin: 10px;
             font-size: 16px;
-            color: black;
-            font-family: Trebuchet MS, sans-serif;
+            color: #c7c7c7;
+            font-family:Helvetica, sans-serif;
 
           }
 
@@ -24,23 +24,23 @@
           h2{
             margin: 10px;
             font-size: 14px;
-            color: black;
-            font-family: Trebuchet MS, sans-serif;
+            color: #c7c7c7;
+            font-family: Helvetica, sans-serif;
 
           }
           h3 {
             margin: 10px;
             font-size: 14px;
-            color: black;
-            font-family: Trebuchet MS, sans-serif;
+            color: #c7c7c7;
+            font-family: Helvetica, sans-serif;
           }
 
           p {
             font-size: 12px;
             margin: 10px;
             text-align: left;
-            color: black;
-            font-family: Trebuchet MS, sans-serif;
+            color: #c7c7c7;
+            font-family: Helvetica, sans-serif;
           }
 
         /**
@@ -78,11 +78,14 @@
           position: absolute;
           bottom: 0;
           right: 0;
-          background: rgba(255, 255, 255, 0.8);
+          background: #282828;
           margin-right: 20px;
-          font-family: Trebuchet MS, sans-serif;
+          font-family: Helvetica, sans-serif;
           overflow: auto;
           border-radius: 3px;
+          border-width: 3px;
+          opacity: 0.9;
+          border-color: white;
         }
 
         .map-overlay-net{
@@ -91,7 +94,7 @@
             right: 0;
             background: rgba(255, 255, 255,1);
             margin-right: 20px;
-            font-family: Trebuchet MS, sans-serif;
+            font-family: Helvetica, sans-serif;
             overflow: auto;
             border-radius: 3px;    
               }      
@@ -133,14 +136,17 @@
           position: absolute;
           display: none;
         }
-        .slider {
+        .slidecontainer {
+            width: 100%;
+        }
+         .slider {
           -webkit-appearance: none;
           width: 100%;
           height: 15px;
           border-radius: 5px;
-          background: #d3d3d3;
+          background: dark;
           outline: none;
-          opacity: 0.7;
+          opacity: 0.5;
           -webkit-transition: .2s;
           transition: opacity .2s;
         }
@@ -149,8 +155,23 @@
           opacity: 1;
         }
 
+        .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #729fa2;
+        cursor: pointer;
+        }
 
-
+        .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: #729fa2;
+        cursor: pointer;
+        }
 
         #button {
             background: #202020;
@@ -177,7 +198,7 @@
             border-radius:  18px;
             border: 2px solid #606060;
             color: white;
-            font-family: "Trebuchet MS";
+            font-family: "Helvetica";
             font-size: 14px;
             position: absolute;
             left: 10px;
@@ -196,7 +217,7 @@
             border-radius:  15px;
             border: 2px solid #606060;
             color: white;
-            font-family: "Trebuchet MS";
+            font-family: "Helvetica";
             font-size: 14px;
             position: absolute;
             left: 10px;
@@ -244,7 +265,7 @@
           }
 
         #table,th,td {
-          font-family: Trebuchet MS, sans-serif;
+          font-family: Helvetica, sans-serif;
           color: black;
           border-collapse:collapse;
           width: 100%;
