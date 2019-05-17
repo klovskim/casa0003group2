@@ -549,10 +549,10 @@ i {
 
 /* POP UP STYLE */
 
-mapboxgl-popup-content {
+.mapboxgl-popup-content {
   position: relative;
   border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.10);
   padding: 10px 10px 15px;
   pointer-events: auto;
 }
@@ -612,6 +612,11 @@ mapboxgl-popup-content {
     color: #2dc4b2;
   }
 
+  .row {
+    height: 12px;
+    width: 100%;
+  }
+
   .slidecontainer {
     width: 100%;
   }
@@ -637,7 +642,7 @@ mapboxgl-popup-content {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #729fa2;
+    background: #fddbc7;
     cursor: pointer;
   }
 
@@ -645,7 +650,7 @@ mapboxgl-popup-content {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #729fa2;
+    background: #fddbc7;
     cursor: pointer;
   }
 
@@ -659,13 +664,6 @@ mapboxgl-popup-content {
     display: inline-block;
     text-align: center;
     text-color: 'rgb(199,199,199,100)'
-  }
-
-  .mapboxgl-popup {
-    position: absolute;
-    max-width: 400px;
-    font: 12px/20px, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    background: rgba(255, 255, 255, 0.7);
   }
 
   p{
@@ -733,9 +731,9 @@ mapboxgl-popup-content {
     <p>Data source: The average Social own social housing rent in UK from 2014 to 2016</p><a href=""></a>
     <div class='session'>
       <h2>Total rent</h2>
-      <div class='slider colors'>
+      <div class='row colors'>
       </div>
-      <div class='slider labels'>
+      <div class='row labels'>
         <div class='label'>0</div>
         <div class='label'>0.2</div>
         <div class='label'>0.4</div>
@@ -808,10 +806,10 @@ mapboxgl-popup-content {
 
     values.sort();
 
-    var layers = ['<90', '90-100', '100-110', '110-120', '120-130', '140>'];
+    var layers = ['<87', '87-97', '97-110', '110-127', '127>'];
 
 // TEST with http://www.0to255.com/17146E
-var colors = ['#fff', '#e4d4b3', '#caaa68', '#977735', '#4b3b1b', '#0d0a04']; 
+var colors = ['#e0cda7', '#ceb175', '#c19b4f', '#a3813a', '#715928']; 
 
 for (i = 0; i < layers.length; i++) {
   var layer = layers[i];
@@ -1001,12 +999,11 @@ map.on('load', function() {
           'interpolate',
           ['linear'],
           ['number', ['get', 'social']],
-          90, '#e0cda7',
-          100, '#ceb175',
-          110, '#c19b4f',
-          120, '#a3813a',
-          130, '#715928',
-          140, '#4b3b1b'
+          71, '#e0cda7',
+          87, '#ceb175',
+          97, '#c19b4f',
+          110, '#a3813a',
+          127, '#715928'
           ],
         }
       });   
@@ -1041,12 +1038,11 @@ map.on('load', function() {
             'interpolate',
             ['linear'],
             ['number', ['get', 'private']],
-            90, '#e0cda7',
-            100, '#ceb175',
-            110, '#c19b4f',
-            120, '#a3813a',
-            130, '#715928',
-            140, '#4b3b1b'
+            71, '#e0cda7',
+            87, '#ceb175',
+            97, '#c19b4f',
+            110, '#a3813a',
+            127, '#715928'
             ]
           }
         }); 
@@ -1240,6 +1236,7 @@ map.flyTo({
   bearing: 0
 });
 });
+
 
 var zoomThreshold = 5.3;
 
