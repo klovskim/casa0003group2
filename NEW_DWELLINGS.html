@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>London Housing 2011-2017</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+      .map-overlay {
+		    font: 12px/20px 'Helvetica', Arial, Helvetica, sans-serif;
+            border-radius: 13px;
+		    position: absolute;
+		    width: 25%;
+		    top: 0;
+		    right: 0;
+		    padding: 10px;
+		}
+
+      .map-overlay.left {
+		    top: unset;
+            left: 0;
+          }
+      
+      .map-overlay .map-overlay-inner {
+		    background-color: #dbdbdb;
+		    box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+		    border-radius: 13px;
+		    padding: 10px;
+		    margin-bottom: 10px;
+		}
+      
+      .map-overlay .map-overlay-inner-right {
+		    background-color: #dbdbdb;
+		    box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+		    border-radius: 13px;
+		    padding: 10px;
+		    margin-bottom: 10px;
+            font: 10px/17px 'Helvetica', Arial, Helvetica, sans-serif;
+		}
+      
+      		.map-overlay table {
+		    border: none;
+		    width: 100%;
+		}
+
+		.map-overlay h2 {
+		    line-height: 24px;
+		    display: block;
+		    margin: 0 0 10px;
+		}
+
+.legend-box {
+    font: 15px/20px 'Helvetica', Arial, Helvetica, sans-serif;
+    background: #dbdbdb;
+    border-radius: 13px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    padding: 10px;
+}
+
+.legend-box .title {
+	margin-bottom:5px;
+}
+
+.legend label,
+.legend span {
+  display:block;
+  float:left;
+  height:15px;
+  width:20%;
+  text-align:center;
+  font-size:9px;
+  color:#808080;
+  padding-top:2px;
+  }
+      
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;
+  background: #bababa;
+  outline: none;
+  opacity: 0.5;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #E6B71E;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #E6B71E;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+
+
+
+<!-- Set the display of this container to none so we can
+     add it programmatically to `legendControl` -->
+<div style="z-index:9999; position:absolute; bottom:24px; right: 10px;" id='legend' class="legend-box">
+  <div class="title"><strong>Average number of People per Dwelling 2011-2017</strong></div>
+  <nav class='legend clearfix'>
+    <span style='background:#FFFFB8;'></span>
+    <span style='background:#E6B71E;'></span>
+    <span style='background:#CA8323;'></span>
+    <span style='background:#A25626;'></span>
+    <span style='background:#723122;'></span>
+   <br>
+    <label>1.2</label>
+    <label>2.3</label>
+    <label>2.5</label>
+    <label>2.7</label>
+    <label>3.1</label>
+   <br><br>
+    <span style='background:#00BACF;'></span><b>&nbsp Net housing additions</b><span style='background:#00BACF;'></span><br>
+    <span style='background:#50DB00;'></span><b>&nbsp % Affordable housing </b><span style='background:#50DB00;'></span><br>    
+</div>
+
+    
+<div id='map'></div>
+
+    
+<div class='map-overlay'>
+    <div class='map-overlay-inner-right'>
+        <h3 id="countryname"></h3>
+	</div>
+</div>
+    
+<div class='map-overlay left' id='features'>
+    <div class="map-overlay-inner" id = 'sliderbox'>
+    <h2>Is London's meeting the demand for new housing? </h2>
+     <h2>Year: <label id='slider-value'>2011</label></h2>
+     <table><tr><td>
+         <label id='year'></label>
+      <input id='slider' type='range' class='slider' min='0' max='6' step='1' value='0' list='tickmarks' />
+      <datalist id="tickmarks">
+        <option value="0" label="2011">
+          <option value="1" label="2012">
+            <option value="2" label="2013">
+              <option value="3" label="2014">
+                <option value="4" label="2015">
+                  <option value="5" label="2016">
+                    <option value="6" label="2017">
+                  </datalist>
+                </td>
+              </tr></table> <label>&nbsp;2011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2017</label>
+                <p class="credit">&copy; Thomas Visscher 2019&nbsp;<a href="https://data.london.gov.uk/dataset/net-additional-dwellings-borough">Download Datasets</a>.</p>
+            </div>
+          </div>
+
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiemNmdHR2aSIsImEiOiJjanF6M2lzaDIwNzNsNDRxcTZzenpkdjljIn0.6OsiHRYHDijMjxxu9o4QEQ';
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/zcfttvi/cjvotgpeb0pcm1cob25kj5q1o',
+  center: [-0.15, 51.45],
+  zoom: 10,
+  pitch: 50
+});
+    
+    
+var years = ['2011','2012','2013','2014','2015','2016','2017'];
+    
+function filterBy(selyear) {
+ 
+var filters = ['==', 'year', selyear];
+ 
+// Set the label to the year
+document.getElementById('slider-value').textContent = years[selyear];
+}
+
+    
+
+
+map.on('load', function() {
+    
+    map.setLight({color: "#fff", intensity: 0.50, position: [2, 215, 30]});
+//    map.addControl(new mapboxgl.NavigationControl());
+
+    
+    
+     //-----------------------------------------------------------------------------
+     // Load people per dwelling 1 -----
+      map.addLayer({
+        'id': 'dwelling1',
+        type: 'fill',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tileset
+        paint: {
+            'fill-color': {
+                property: 'person_per',
+                type: 'exponential',
+                stops: [
+                    [1.35, '#FFFFB8'],
+                    [2.3, '#E6B71E'],
+                    [2.48, '#CA8323'],
+                    [2.67, '#A25626'],
+                    [3.01, '#723122']]
+            },
+            'fill-opacity': 0.75,
+            'fill-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+     //-----------------------------------------------------------------------------
+     // Load people per dwelling 2 -----
+      map.addLayer({
+        'id': 'dwelling2',
+        type: 'fill',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tileset
+        paint: {
+            'fill-color': {
+                property: 'person_p_1',
+                type: 'exponential',
+                stops: [
+                    [1.38, '#FFFFB8'],
+                    [2.32, '#E6B71E'],
+                    [2.51, '#CA8323'],
+                    [2.69, '#A25626'],
+                    [3.02, '#723122']]
+            },
+            'fill-opacity': 0,
+            'fill-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+     //-----------------------------------------------------------------------------
+     // Load people per dwelling 3 -----
+      map.addLayer({
+        'id': 'dwelling3',
+        type: 'fill',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tileset
+        paint: {
+            'fill-color': {
+                property: 'person_p_2',
+                type: 'exponential',
+                stops: [
+                    [1.37, '#FFFFB8'],
+                    [2.38, '#E6B71E'],
+                    [2.54, '#CA8323'],
+                    [2.7, '#A25626'],
+                    [3.04, '#723122']]
+            },
+            'fill-opacity': 0,
+            'fill-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+     //-----------------------------------------------------------------------------
+     // Load people per dwelling 4 -----
+      map.addLayer({
+        'id': 'dwelling4',
+        type: 'fill',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tileset
+        paint: {
+            'fill-color': {
+                property: 'person_p_3',
+                type: 'exponential',
+                stops: [
+                    [1.35, '#FFFFB8'],
+                    [2.41, '#E6B71E'],
+                    [2.58, '#CA8323'],
+                    [2.7, '#A25626'],
+                    [3.04, '#723122']]
+            },
+            'fill-opacity': 0,
+            'fill-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+     //-----------------------------------------------------------------------------
+     // Load people per dwelling 5 -----
+      map.addLayer({
+        'id': 'dwelling5',
+        type: 'fill',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tileset
+        paint: {
+            'fill-color': {
+                property: 'person_p_4',
+                type: 'exponential',
+                stops: [
+                    [1.41, '#FFFFB8'],
+                    [2.41, '#E6B71E'],
+                    [2.56, '#CA8323'],
+                    [2.7, '#A25626'],
+                    [3.06, '#723122']]
+            },
+            'fill-opacity': 0,
+            'fill-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+
+     //-----------------------------------------------------------------------------
+     // Load people per dwelling 6 -----
+      map.addLayer({
+        'id': 'dwelling6',
+        type: 'fill',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tileset
+        paint: {
+            'fill-color': {
+                property: 'person_p_5',
+                type: 'exponential',
+                stops: [
+                    [1.49, '#FFFFB8'],
+                    [2.41, '#E6B71E'],
+                    [2.56, '#CA8323'],
+                    [2.7, '#A25626'],
+                    [3.09, '#723122']]
+            },
+            'fill-opacity': 0,
+            'fill-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+     //-----------------------------------------------------------------------------
+     // Load people per dwelling 7 -----
+      map.addLayer({
+        'id': 'dwelling7',
+        type: 'fill',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tileset
+        paint: {
+            'fill-color': {
+                property: 'person_p_6',
+                type: 'exponential',
+                stops: [
+                    [1.21, '#FFFFB8'],
+                    [2.41, '#E6B71E'],
+                    [2.56, '#CA8323'],
+                    [2.7, '#A25626'],
+                    [3.09, '#723122']]
+            },
+            'fill-opacity': 0,
+            'fill-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load borough highlights
+      map.addLayer({
+        'id': 'highlights',
+        'type': 'line',
+        'layout': {
+            'visibility': 'visible'
+        },
+        paint: {
+            'line-color': '#fff',
+            'line-width': 2,
+            'line-opacity': 1,
+            },
+          'source': {
+                'type': 'vector',
+                'url': 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tileset
+        filter: ['==','borough_na','empty']
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load borough outlines
+      map.addLayer({
+        'id': 'Outlines',
+        'type': 'line',
+        'layout': {
+            'visibility': 'visible'
+        },
+        paint: {
+            'line-color': '#cfcfcf',
+            'line-width': 0.5,
+            'line-opacity': 0.5,
+            },
+          'source': {
+                'type': 'vector',
+                'url': 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tileset
+      });
+
+    //-----------------------------------------------------------------------------
+    // Load net additions 1
+      map.addLayer({
+        'id': 'net1',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7t5wskw7' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALnet-3v3s8w', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwelling_1',
+                type: 'exponential',
+                stops: [
+                    [10, '#00BACF'],
+                    [1870, '#00BACF']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_1'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 1,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load net additions 2
+      map.addLayer({
+        'id': 'net2',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7t5wskw7' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALnet-3v3s8w', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwelling_2',
+                type: 'exponential',
+                stops: [
+                    [18, '#00BACF'],
+                    [2875, '#00BACF']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_2'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load net additions 3
+      map.addLayer({
+        'id': 'net3',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7t5wskw7' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALnet-3v3s8w', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwelling_3',
+                type: 'exponential',
+                stops: [
+                    [35, '#00BACF'],
+                    [1798, '#00BACF']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_3'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load net additions 4
+      map.addLayer({
+        'id': 'net4',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7t5wskw7' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALnet-3v3s8w', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwelling_4',
+                type: 'exponential',
+                stops: [
+                    [149, '#00BACF'],
+                    [1969, '#00BACF']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_4'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load net additions 5
+      map.addLayer({
+        'id': 'net5',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7t5wskw7' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALnet-3v3s8w', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwelling_5',
+                type: 'exponential',
+                stops: [
+                    [133, '#00BACF'],
+                    [2050, '#00BACF']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_5'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load net additions 6
+      map.addLayer({
+        'id': 'net6',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7t5wskw7' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALnet-3v3s8w', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwelling_6',
+                type: 'exponential',
+                stops: [
+                    [7, '#00BACF'],
+                    [2738, '#00BACF']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_6'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load net additions7
+      map.addLayer({
+        'id': 'net7',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7t5wskw7' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'FINALnet-3v3s8w', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwelling_7',
+                type: 'exponential',
+                stops: [
+                    [7, '#00BACF'],
+                    [4827, '#00BACF']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_7'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load affordable housing 1
+      map.addLayer({
+        'id': 'afford1',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7pouhlzd' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'Export_FINALafford-5rv3qp', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwelling_8',
+                type: 'exponential',
+                stops: [
+                    [0, '#50DB00'],
+                    [1362, '#50DB00']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_8'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 1,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load affordable housing 2
+      map.addLayer({
+        'id': 'afford2',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7pouhlzd' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'Export_FINALafford-5rv3qp', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwelling_9',
+                type: 'exponential',
+                stops: [
+                    [0, '#50DB00'],
+                    [1812, '#50DB00']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_9'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load affordable housing 3
+      map.addLayer({
+        'id': 'afford3',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7pouhlzd' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'Export_FINALafford-5rv3qp', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwellin_10',
+                type: 'exponential',
+                stops: [
+                    [10, '#50DB00'],
+                    [684, '#50DB00']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_10'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load affordable housing 4
+      map.addLayer({
+        'id': 'afford4',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7pouhlzd' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'Export_FINALafford-5rv3qp', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwellin_11',
+                type: 'exponential',
+                stops: [
+                    [10, '#50DB00'],
+                    [1360, '#50DB00']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_11'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load affordable housing 5
+      map.addLayer({
+        'id': 'afford5',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7pouhlzd' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'Export_FINALafford-5rv3qp', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwellin_12',
+                type: 'exponential',
+                stops: [
+                    [40, '#50DB00'],
+                    [1325, '#50DB00']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_12'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load affordable housing 6
+      map.addLayer({
+        'id': 'afford6',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7pouhlzd' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'Export_FINALafford-5rv3qp', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwellin_13',
+                type: 'exponential',
+                stops: [
+                    [0, '#50DB00'],
+                    [641, '#50DB00']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_13'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+    
+    //-----------------------------------------------------------------------------
+    // Load affordable housing 7
+      map.addLayer({
+        'id': 'afford7',
+        type: 'fill-extrusion',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.7pouhlzd' // Your Mapbox tileset Map ID
+        },
+        'source-layer': 'Export_FINALafford-5rv3qp', // name of tileset
+        paint: {
+            'fill-extrusion-color': {
+                property: 'Dwellin_14',
+                type: 'exponential',
+                stops: [
+                    [0, '#50DB00'],
+                    [1085, '#50DB00']]
+            },
+            'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_14'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
+            'fill-extrusion-opacity': 0,
+            'fill-extrusion-opacity-transition': {  //Opacity transition adds a delay when changing the opacity for a smooth layer change effect
+                 duration: 0,
+                 delay: 0
+             }
+            }
+      });
+
+
+    //-----------------------------------------------------------------------------
+    // Load borough names
+      map.addLayer({
+        'id': 'borough_labels',
+		'type': 'symbol',
+        source: {
+          type: 'vector',
+          url: 'mapbox://zcfttvi.2jxgoi4h' // Your Mapbox tileset Map ID
+        },
+		'source-layer': 'FINALBOROUGH2-4u2vjo', // name of tilesets
+		'layout': {
+			'text-field': '{borough_na}',
+			'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+			'text-size': 14
+		},
+		'paint': {
+			'text-color': 'rgba(0,0,0,0.8)',
+			'text-halo-color': '#fff',
+			'text-halo-width': 1
+		}
+      });
+    
+
+//------- Display year selected by slider
+
+filterBy(0);
+document.getElementById('slider').addEventListener('input', function(e) {
+var inputyear = e.target.value;
+filterBy(inputyear);
+});    
+
+    
+});    
+    
+//----End of country layers
+    
+
+
+    
+
+    
+//-------------------------------------------
+//LAYER SWITCHES
+    
+//HIGHLIGHTING_________    
+    
+map.on('mousemove', function(e) {
+  var la = map.queryRenderedFeatures(e.point, {
+    layers: ['dwelling1']
+  });
+    
+if (la.length==1) {
+
+map.setFilter('highlights', ['==','borough_na',la[0].properties.borough_na]);
+console.log(la[0].properties.borough_na);
+document.getElementById('countryname').innerHTML = document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_6 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_6 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_6 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_6;
+console.log(la[0].id);
+console.log(la);
+
+} else {
+map.setFilter('highlights', ['==','borough_na','null']);
+console.log('No features');
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of 'affordable housing'.<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+}
+});
+    
+    
+    
+// Click borough for info_________
+    
+
+map.on('click', 'dwelling1', function (e) {
+if (document.getElementById('slider-value').textContent == "2011") {
+var borough = e.features[0].properties.borough_na;
+var additions = e.features[0].properties.net_additi;
+var afford = e.features[0].properties.affordable;
+var persons = e.features[0].properties.person_per;
+var dwellings = e.features[0].properties.all_dwelli;
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.addTo(map);
+}
+else if (document.getElementById('slider-value').textContent == "2012") {
+var borough = e.features[0].properties.borough_na;
+var additions = e.features[0].properties.net_addi_1;
+var afford = e.features[0].properties.affordab_1;
+var persons = e.features[0].properties.person_p_1;
+var dwellings = e.features[0].properties.all_dwel_1;
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.addTo(map);}
+else if (document.getElementById('slider-value').textContent == "2013") {
+var borough = e.features[0].properties.borough_na;
+var additions = e.features[0].properties.net_addi_2;
+var afford = e.features[0].properties.affordab_2;
+var persons = e.features[0].properties.person_p_2;
+var dwellings = e.features[0].properties.all_dwel_2;
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.addTo(map);}
+else if (document.getElementById('slider-value').textContent == "2014") {
+var borough = e.features[0].properties.borough_na;
+var additions = e.features[0].properties.net_addi_3;
+var afford = e.features[0].properties.affordab_3;
+var persons = e.features[0].properties.person_p_3;
+var dwellings = e.features[0].properties.all_dwel_3;
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.addTo(map);}
+else if (document.getElementById('slider-value').textContent == "2015") {
+var borough = e.features[0].properties.borough_na;
+var additions = e.features[0].properties.net_addi_4;
+var afford = e.features[0].properties.affordab_4;
+var persons = e.features[0].properties.person_p_4;
+var dwellings = e.features[0].properties.all_dwel_4;
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.addTo(map);}
+else if (document.getElementById('slider-value').textContent == "2016") {
+var borough = e.features[0].properties.borough_na;
+var additions = e.features[0].properties.net_addi_5;
+var afford = e.features[0].properties.affordab_5;
+var persons = e.features[0].properties.person_p_5;
+var dwellings = e.features[0].properties.all_dwel_5;
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.addTo(map);}
+else if (document.getElementById('slider-value').textContent == "2017") {
+var borough = e.features[0].properties.borough_na;
+var additions = e.features[0].properties.net_addi_6;
+var afford = e.features[0].properties.affordab_6;
+var persons = e.features[0].properties.person_p_6;
+var dwellings = e.features[0].properties.all_dwel_6;
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.addTo(map);}
+});
+
+
+    
+//CHANGE POINTER_________ 
+    
+    
+map.on('mouseenter', 'dwelling1', function () {
+map.getCanvas().style.cursor = 'pointer';
+});
+ 
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'dwelling1', function () {
+map.getCanvas().style.cursor = '';
+});
+    
+document.getElementById('legend').style.visibility = "visible";
+
+
+//Event listener for layer switch 1 - 2011
+document.getElementById('slider').addEventListener('input', function(e) {
+var inputyear = e.target.value;
+if (inputyear == 0) {
+document.getElementById('legend').style.visibility = "visible";
+map.setPaintProperty('dwelling1','fill-opacity',0.75);
+map.setPaintProperty('dwelling2','fill-opacity',0);
+map.setPaintProperty('dwelling3','fill-opacity',0);
+map.setPaintProperty('dwelling4','fill-opacity',0);
+map.setPaintProperty('dwelling5','fill-opacity',0);
+map.setPaintProperty('dwelling6','fill-opacity',0);
+map.setPaintProperty('dwelling7','fill-opacity',0);
+map.setPaintProperty('net1','fill-extrusion-opacity',1);
+map.setPaintProperty('net2','fill-extrusion-opacity',0);
+map.setPaintProperty('net3','fill-extrusion-opacity',0);
+map.setPaintProperty('net4','fill-extrusion-opacity',0);
+map.setPaintProperty('net5','fill-extrusion-opacity',0);
+map.setPaintProperty('net6','fill-extrusion-opacity',0);
+map.setPaintProperty('net7','fill-extrusion-opacity',0);
+map.setPaintProperty('afford1','fill-extrusion-opacity',1);
+map.setPaintProperty('afford2','fill-extrusion-opacity',0);
+map.setPaintProperty('afford3','fill-extrusion-opacity',0);
+map.setPaintProperty('afford4','fill-extrusion-opacity',0);
+map.setPaintProperty('afford5','fill-extrusion-opacity',0);
+map.setPaintProperty('afford6','fill-extrusion-opacity',0);
+map.setPaintProperty('afford7','fill-extrusion-opacity',0);
+map.on('mousemove', function(e) {
+  var la = map.queryRenderedFeatures(e.point, {
+    layers: ['dwelling1']
+  });
+
+if (la.length==1) {
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_additi + '<br>Affordable Housing additions: ' + la[0].properties.affordable + '<br>Average Persons per Dwelling: ' + la[0].properties.person_per + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwelli;
+}
+    
+    else {
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of 'affordable housing'.<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+}
+});
+}
+else{}
+});
+     
+
+//Event listener for layer switch 2 2012
+document.getElementById('slider').addEventListener('input', function(e) {
+var inputyear = e.target.value;
+if (inputyear == 1) {
+document.getElementById('legend').style.visibility = "visible";
+map.setPaintProperty('dwelling1','fill-opacity',0);
+map.setPaintProperty('dwelling2','fill-opacity',0.75);
+map.setPaintProperty('dwelling3','fill-opacity',0);
+map.setPaintProperty('dwelling4','fill-opacity',0);
+map.setPaintProperty('dwelling5','fill-opacity',0);
+map.setPaintProperty('dwelling6','fill-opacity',0);
+map.setPaintProperty('dwelling7','fill-opacity',0);
+map.setPaintProperty('net1','fill-extrusion-opacity',0);
+map.setPaintProperty('net2','fill-extrusion-opacity',1);
+map.setPaintProperty('net3','fill-extrusion-opacity',0);
+map.setPaintProperty('net4','fill-extrusion-opacity',0);
+map.setPaintProperty('net5','fill-extrusion-opacity',0);
+map.setPaintProperty('net6','fill-extrusion-opacity',0);
+map.setPaintProperty('net7','fill-extrusion-opacity',0);
+map.setPaintProperty('afford1','fill-extrusion-opacity',0);
+map.setPaintProperty('afford2','fill-extrusion-opacity',1);
+map.setPaintProperty('afford3','fill-extrusion-opacity',0);
+map.setPaintProperty('afford4','fill-extrusion-opacity',0);
+map.setPaintProperty('afford5','fill-extrusion-opacity',0);
+map.setPaintProperty('afford6','fill-extrusion-opacity',0);
+map.setPaintProperty('afford7','fill-extrusion-opacity',0);
+map.on('mousemove', function(e) {
+  var la = map.queryRenderedFeatures(e.point, {
+    layers: ['dwelling1']
+  });
+
+if (la.length==1) {
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_1 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_1 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_1 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_1;
+}
+    
+    else {
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of 'affordable housing'.<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+}
+});
+}
+else{}
+});
+
+//Event listener for layer switch 3 - Country of Birth
+document.getElementById('slider').addEventListener('input', function(e) {
+var inputyear = e.target.value;
+if (inputyear == 2) {
+document.getElementById('legend').style.visibility = "visible";
+map.setPaintProperty('dwelling1','fill-opacity',0);
+map.setPaintProperty('dwelling2','fill-opacity',0);
+map.setPaintProperty('dwelling3','fill-opacity',0.75);
+map.setPaintProperty('dwelling4','fill-opacity',0);
+map.setPaintProperty('dwelling5','fill-opacity',0);
+map.setPaintProperty('dwelling6','fill-opacity',0);
+map.setPaintProperty('dwelling7','fill-opacity',0);
+map.setPaintProperty('net1','fill-extrusion-opacity',0);
+map.setPaintProperty('net2','fill-extrusion-opacity',0);
+map.setPaintProperty('net3','fill-extrusion-opacity',1);
+map.setPaintProperty('net4','fill-extrusion-opacity',0);
+map.setPaintProperty('net5','fill-extrusion-opacity',0);
+map.setPaintProperty('net6','fill-extrusion-opacity',0);
+map.setPaintProperty('net7','fill-extrusion-opacity',0);
+map.setPaintProperty('afford1','fill-extrusion-opacity',0);
+map.setPaintProperty('afford2','fill-extrusion-opacity',0);
+map.setPaintProperty('afford3','fill-extrusion-opacity',1);
+map.setPaintProperty('afford4','fill-extrusion-opacity',0);
+map.setPaintProperty('afford5','fill-extrusion-opacity',0);
+map.setPaintProperty('afford6','fill-extrusion-opacity',0);
+map.setPaintProperty('afford7','fill-extrusion-opacity',0);
+map.on('mousemove', function(e) {
+  var la = map.queryRenderedFeatures(e.point, {
+    layers: ['dwelling1']
+  });
+
+if (la.length==1) {
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_2 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_2 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_2 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_2;
+}
+    
+    else {
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of 'affordable housing'.<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+}
+});
+}
+else{}
+});
+    
+//Event listener for layer switch 4 - Without English
+document.getElementById('slider').addEventListener('input', function(e) {
+var inputyear = e.target.value;
+if (inputyear == 3) {
+document.getElementById('legend').style.visibility = "visible";
+map.setPaintProperty('dwelling1','fill-opacity',0);
+map.setPaintProperty('dwelling2','fill-opacity',0);
+map.setPaintProperty('dwelling3','fill-opacity',0);
+map.setPaintProperty('dwelling4','fill-opacity',0.75);
+map.setPaintProperty('dwelling5','fill-opacity',0);
+map.setPaintProperty('dwelling6','fill-opacity',0);
+map.setPaintProperty('dwelling7','fill-opacity',0);
+map.setPaintProperty('net1','fill-extrusion-opacity',0);
+map.setPaintProperty('net2','fill-extrusion-opacity',0);
+map.setPaintProperty('net3','fill-extrusion-opacity',0);
+map.setPaintProperty('net4','fill-extrusion-opacity',1);
+map.setPaintProperty('net5','fill-extrusion-opacity',0);
+map.setPaintProperty('net6','fill-extrusion-opacity',0);
+map.setPaintProperty('net7','fill-extrusion-opacity',0);
+map.setPaintProperty('afford1','fill-extrusion-opacity',0);
+map.setPaintProperty('afford2','fill-extrusion-opacity',0);
+map.setPaintProperty('afford3','fill-extrusion-opacity',0);
+map.setPaintProperty('afford4','fill-extrusion-opacity',1);
+map.setPaintProperty('afford5','fill-extrusion-opacity',0);
+map.setPaintProperty('afford6','fill-extrusion-opacity',0);
+map.setPaintProperty('afford7','fill-extrusion-opacity',0);
+map.on('mousemove', function(e) {
+  var la = map.queryRenderedFeatures(e.point, {
+    layers: ['dwelling1']
+  });
+
+if (la.length==1) {
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_3 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_3 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_3 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_3;
+}
+    
+    else {
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of 'affordable housing'.<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+}
+});
+}
+else{}
+});
+    
+//Event listener for layer switch 5 - Car availability
+document.getElementById('slider').addEventListener('input', function(e) {
+var inputyear = e.target.value;
+if (inputyear == 4) {
+document.getElementById('legend').style.visibility = "visible";
+map.setPaintProperty('dwelling1','fill-opacity',0);
+map.setPaintProperty('dwelling2','fill-opacity',0);
+map.setPaintProperty('dwelling3','fill-opacity',0);
+map.setPaintProperty('dwelling4','fill-opacity',0);
+map.setPaintProperty('dwelling5','fill-opacity',0.75);
+map.setPaintProperty('dwelling6','fill-opacity',0);
+map.setPaintProperty('dwelling7','fill-opacity',0);
+map.setPaintProperty('net1','fill-extrusion-opacity',0);
+map.setPaintProperty('net2','fill-extrusion-opacity',0);
+map.setPaintProperty('net3','fill-extrusion-opacity',0);
+map.setPaintProperty('net4','fill-extrusion-opacity',0);
+map.setPaintProperty('net5','fill-extrusion-opacity',1);
+map.setPaintProperty('net6','fill-extrusion-opacity',0);
+map.setPaintProperty('net7','fill-extrusion-opacity',0);
+map.setPaintProperty('afford1','fill-extrusion-opacity',0);
+map.setPaintProperty('afford2','fill-extrusion-opacity',0);
+map.setPaintProperty('afford3','fill-extrusion-opacity',0);
+map.setPaintProperty('afford4','fill-extrusion-opacity',0);
+map.setPaintProperty('afford5','fill-extrusion-opacity',1);
+map.setPaintProperty('afford6','fill-extrusion-opacity',0);
+map.setPaintProperty('afford7','fill-extrusion-opacity',0);
+map.on('mousemove', function(e) {
+  var la = map.queryRenderedFeatures(e.point, {
+    layers: ['dwelling1']
+  });
+
+if (la.length==1) {
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_4 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_4 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_4 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_4;
+}
+    
+    else {
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of 'affordable housing'.<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+}
+});
+}
+else{}
+});
+    
+//Event listener for layer switch 6 - House ownership
+document.getElementById('slider').addEventListener('input', function(e) {
+var inputyear = e.target.value;
+if (inputyear == 5) {
+document.getElementById('legend').style.visibility = "visible";
+map.setPaintProperty('dwelling1','fill-opacity',0);
+map.setPaintProperty('dwelling2','fill-opacity',0);
+map.setPaintProperty('dwelling3','fill-opacity',0);
+map.setPaintProperty('dwelling4','fill-opacity',0);
+map.setPaintProperty('dwelling5','fill-opacity',0);
+map.setPaintProperty('dwelling6','fill-opacity',0.75);
+map.setPaintProperty('dwelling7','fill-opacity',0);
+map.setPaintProperty('net1','fill-extrusion-opacity',0);
+map.setPaintProperty('net2','fill-extrusion-opacity',0);
+map.setPaintProperty('net3','fill-extrusion-opacity',0);
+map.setPaintProperty('net4','fill-extrusion-opacity',0);
+map.setPaintProperty('net5','fill-extrusion-opacity',0);
+map.setPaintProperty('net6','fill-extrusion-opacity',1);
+map.setPaintProperty('net7','fill-extrusion-opacity',0);
+map.setPaintProperty('afford1','fill-extrusion-opacity',0);
+map.setPaintProperty('afford2','fill-extrusion-opacity',0);
+map.setPaintProperty('afford3','fill-extrusion-opacity',0);
+map.setPaintProperty('afford4','fill-extrusion-opacity',0);
+map.setPaintProperty('afford5','fill-extrusion-opacity',0);
+map.setPaintProperty('afford6','fill-extrusion-opacity',1);
+map.setPaintProperty('afford7','fill-extrusion-opacity',0);
+map.on('mousemove', function(e) {
+  var la = map.queryRenderedFeatures(e.point, {
+    layers: ['dwelling1']
+  });
+
+if (la.length==1) {
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_5 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_5 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_5 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_5;
+}
+    
+    else {
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of 'affordable housing'.<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+}
+});
+}
+else{}
+});
+    
+//Event listener for layer switch 7 - Daily activity limited
+document.getElementById('slider').addEventListener('input', function(e) {
+var inputyear = e.target.value;
+if (inputyear == 6) {
+document.getElementById('legend').style.visibility = "visible";
+map.setPaintProperty('dwelling1','fill-opacity',0);
+map.setPaintProperty('dwelling2','fill-opacity',0);
+map.setPaintProperty('dwelling3','fill-opacity',0);
+map.setPaintProperty('dwelling4','fill-opacity',0);
+map.setPaintProperty('dwelling5','fill-opacity',0);
+map.setPaintProperty('dwelling6','fill-opacity',0);
+map.setPaintProperty('dwelling7','fill-opacity',0.75);
+map.setPaintProperty('net1','fill-extrusion-opacity',0);
+map.setPaintProperty('net2','fill-extrusion-opacity',0);
+map.setPaintProperty('net3','fill-extrusion-opacity',0);
+map.setPaintProperty('net4','fill-extrusion-opacity',0);
+map.setPaintProperty('net5','fill-extrusion-opacity',0);
+map.setPaintProperty('net6','fill-extrusion-opacity',0);
+map.setPaintProperty('net7','fill-extrusion-opacity',1);
+map.setPaintProperty('afford1','fill-extrusion-opacity',0);
+map.setPaintProperty('afford2','fill-extrusion-opacity',0);
+map.setPaintProperty('afford3','fill-extrusion-opacity',0);
+map.setPaintProperty('afford4','fill-extrusion-opacity',0);
+map.setPaintProperty('afford5','fill-extrusion-opacity',0);
+map.setPaintProperty('afford6','fill-extrusion-opacity',0);
+map.setPaintProperty('afford7','fill-extrusion-opacity',1);
+map.on('mousemove', function(e) {
+  var la = map.queryRenderedFeatures(e.point, {
+    layers: ['dwelling1']
+  });
+
+if (la.length==1) {
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_6 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_6 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_6 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_6;
+}
+    
+    else {
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of 'affordable housing'.<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+}
+});
+}
+else{}
+});
+
+    
+//------------END---------- 
+    
+</script>
+</body>
+</html>
