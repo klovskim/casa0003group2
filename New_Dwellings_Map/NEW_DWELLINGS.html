@@ -11,13 +11,14 @@
     #map { position:absolute; top:0; bottom:0; width:100%; }
       .map-overlay {
 		    font: 12px/20px 'Helvetica', Arial, Helvetica, sans-serif;
+            color: #c7c7c7;
             border-radius: 13px;
 		    position: absolute;
 		    width: 25%;
 		    top: 0;
 		    right: 0;
 		    padding: 10px;
-            opacity: 0.85; 
+            opacity: 0.95; 
 		}
 
       .map-overlay.left {
@@ -26,7 +27,7 @@
           }
       
       .map-overlay .map-overlay-inner {
-		    background-color: #dbdbdb;
+		    background-color: #282828;
 		    box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
 		    border-radius: 13px;
 		    padding: 10px;
@@ -34,7 +35,7 @@
 		}
       
       .map-overlay .map-overlay-inner-right {
-		    background-color: #dbdbdb;
+		    background-color: #282828;
 		    box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
 		    border-radius: 13px;
 		    padding: 10px;
@@ -55,11 +56,12 @@
 
 .legend-box {
     font: 15px/20px 'Helvetica', Arial, Helvetica, sans-serif;
-    background: #dbdbdb;
+    color: #c7c7c7;
+    background: #282828;
     border-radius: 13px;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
     padding: 10px;
-    opacity: 0.85;
+    opacity: 0.95;
 }
 
 .legend-box .title {
@@ -68,13 +70,14 @@
 
 .legend label,
 .legend span {
+  color: #c7c7c7
   display:block;
   float:left;
   height:15px;
   width:20%;
   text-align:center;
-  font-size:9px;
-  color:#808080;
+  font-size:13px;
+  color:#c7c7c7;
   padding-top:2px;
   }
       
@@ -87,7 +90,7 @@
   width: 100%;
   height: 15px;
   border-radius: 5px;
-  background: #bababa;
+  background: #c7c7c7;
   outline: none;
   opacity: 0.5;
   -webkit-transition: .2s;
@@ -101,8 +104,8 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: #E6B71E;
   cursor: pointer;
@@ -118,20 +121,34 @@
 
 .mapboxgl-popup-content {
         position: relative;
-        background: #dbdbdb;
+        background: #282828;
         opacity: 0.95;
         border-radius: 3px;
         box-shadow: 0 1px 2px rgba(0,0,0,0.10);
         padding: 10px 10px 15px;
         pointer-events: auto;
+        color: #c7c7c7
     }
-.mapboxgl-popup-tip {
-        opacity: 0.7;
-        width: 0;
-        height: 0;
-        border: 10px solid transparent;
-        z-index: 1;
-    }          
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+    border-bottom-color: #282828;
+    opacity: 0.95;
+    }
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+    border-top-color: #282828;
+    opacity: 0.95;
+    }
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: #282828;
+    opacity: 0.95;
+    }
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: #282828;
+    opacity: 0.95;
+    }         
   </style>
 </head>
 <body>
@@ -156,7 +173,7 @@
     <label>3.1</label>
    <br><br>
     <span style='background:#00BACF;'></span><b>&nbsp Net housing additions</b><span style='background:#00BACF;'></span><br>
-    <span style='background:#50DB00;'></span><b>&nbsp % Affordable housing </b><span style='background:#50DB00;'></span><br>    
+    <span style='background:#005876;'></span><b>&nbsp % Affordable housing </b><span style='background:#005876;'></span><br>    
 </div>
 
     
@@ -172,7 +189,7 @@
 <div class='map-overlay left' id='features'>
     <div class="map-overlay-inner" id = 'sliderbox'>
     <h2>Is London's meeting the demand for new housing? </h2>
-     <h2>Year: <label id='slider-value'>2011</label></h2>
+     <h2>Year: <label id='slider-value'><span style='color:#00BACF;'></span>2011</label></h2>
      <table><tr><td>
          <label id='year'></label>
       <input id='slider' type='range' class='slider' min='0' max='6' step='1' value='0' list='tickmarks' />
@@ -186,7 +203,7 @@
                     <option value="6" label="2017">
                   </datalist>
                 </td>
-              </tr></table> <label>&nbsp;2011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2017</label>
+              </tr></table> <label>&nbsp;2011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2017</label>
                 <p class="credit">&copy; Thomas Visscher 2019&nbsp;<a href="https://data.london.gov.uk/dataset/net-additional-dwellings-borough">Download Datasets</a>.</p>
             </div>
           </div>
@@ -670,8 +687,8 @@ map.on('load', function() {
                 property: 'Dwelling_8',
                 type: 'exponential',
                 stops: [
-                    [0, '#50DB00'],
-                    [1362, '#50DB00']]
+                    [0, '#005876'],
+                    [1362, '#005876']]
             },
             'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_8'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
             'fill-extrusion-opacity': 1,
@@ -697,8 +714,8 @@ map.on('load', function() {
                 property: 'Dwelling_9',
                 type: 'exponential',
                 stops: [
-                    [0, '#50DB00'],
-                    [1812, '#50DB00']]
+                    [0, '#005876'],
+                    [1812, '#005876']]
             },
             'fill-extrusion-height': ['*', ['number', ['get', 'Dwelling_9'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
             'fill-extrusion-opacity': 0,
@@ -724,8 +741,8 @@ map.on('load', function() {
                 property: 'Dwellin_10',
                 type: 'exponential',
                 stops: [
-                    [10, '#50DB00'],
-                    [684, '#50DB00']]
+                    [10, '#005876'],
+                    [684, '#005876']]
             },
             'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_10'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
             'fill-extrusion-opacity': 0,
@@ -751,8 +768,8 @@ map.on('load', function() {
                 property: 'Dwellin_11',
                 type: 'exponential',
                 stops: [
-                    [10, '#50DB00'],
-                    [1360, '#50DB00']]
+                    [10, '#005876'],
+                    [1360, '#005876']]
             },
             'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_11'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
             'fill-extrusion-opacity': 0,
@@ -778,8 +795,8 @@ map.on('load', function() {
                 property: 'Dwellin_12',
                 type: 'exponential',
                 stops: [
-                    [40, '#50DB00'],
-                    [1325, '#50DB00']]
+                    [40, '#005876'],
+                    [1325, '#005876']]
             },
             'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_12'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
             'fill-extrusion-opacity': 0,
@@ -805,8 +822,8 @@ map.on('load', function() {
                 property: 'Dwellin_13',
                 type: 'exponential',
                 stops: [
-                    [0, '#50DB00'],
-                    [641, '#50DB00']]
+                    [0, '#005876'],
+                    [641, '#005876']]
             },
             'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_13'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
             'fill-extrusion-opacity': 0,
@@ -832,8 +849,8 @@ map.on('load', function() {
                 property: 'Dwellin_14',
                 type: 'exponential',
                 stops: [
-                    [0, '#50DB00'],
-                    [1085, '#50DB00']]
+                    [0, '#005876'],
+                    [1085, '#005876']]
             },
             'fill-extrusion-height': ['*', ['number', ['get', 'Dwellin_14'], 2], 2],  //expression that controls the extrusion height based on employment attribute Emp2011
             'fill-extrusion-opacity': 0,
@@ -907,7 +924,7 @@ console.log(la);
 } else {
 map.setFilter('highlights', ['==','borough_na','null']);
 console.log('No features');
-document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of affordable housing. Affordable housing  according to the Mayor's office is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
 }
 });
     
@@ -1043,7 +1060,7 @@ document.getElementById('countryname').innerHTML = la[0].properties.borough_na.f
 }
     
     else {
-document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of affordable housing. Affordable housing  according to the Mayor's office is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
 }
 });
 }
@@ -1087,7 +1104,7 @@ document.getElementById('countryname').innerHTML = la[0].properties.borough_na.f
 }
     
     else {
-document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of affordable housing. Affordable housing  according to the Mayor's office is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
 }
 });
 }
@@ -1130,7 +1147,7 @@ document.getElementById('countryname').innerHTML = la[0].properties.borough_na.f
 }
     
     else {
-document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of affordable housing. Affordable housing  according to the Mayor's office is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
 }
 });
 }
@@ -1173,7 +1190,7 @@ document.getElementById('countryname').innerHTML = la[0].properties.borough_na.f
 }
     
     else {
-document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of affordable housing. Affordable housing  according to the Mayor's office is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
 }
 });
 }
@@ -1216,7 +1233,7 @@ document.getElementById('countryname').innerHTML = la[0].properties.borough_na.f
 }
     
     else {
-document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of affordable housing. Affordable housing  according to the Mayor's office is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
 }
 });
 }
@@ -1259,7 +1276,7 @@ document.getElementById('countryname').innerHTML = la[0].properties.borough_na.f
 }
     
     else {
-document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of affordable housing. Affordable housing  according to the Mayor's office is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
 }
 });
 }
@@ -1302,7 +1319,7 @@ document.getElementById('countryname').innerHTML = la[0].properties.borough_na.f
 }
     
     else {
-document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The bar graphs in each borough represent the net dwelling additions for that year, colourised green by the proportion of affordable housing. Affordable housing  according to the Mayor's office is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
 }
 });
 }
