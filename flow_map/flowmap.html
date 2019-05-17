@@ -75,6 +75,8 @@
         <button id = 'button'>NET FLOWS</button>
         <button id = 'flybutton'>FLOW MAP</button>
         
+        <button id = 'chorobutton'>London Borough</button>
+        
           <div class='map-overlay' id='features1'><h1>London Outflow</h1><div id='ph'><p>Hover over a borough or zoom!</p></div>
           <div id = 'flowmapyear2'><h2>Year: 2017</h2></div>
                 </div>
@@ -178,7 +180,7 @@
     var inflowmap = new mapboxgl.Map({
       container: 'inflow',
       style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
-      center: [-0.013715, 51.502331],
+      center: [-0.131404, 51.570888],
       zoom: 8.5
     });
     //mapbox://styles/danzhang6028/cjv3vh8a00wd01foijlgt2myv
@@ -187,7 +189,7 @@
     var outflowmap = new mapboxgl.Map({
       container: 'outflow',
       style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
-      center: [-0.013715, 51.502331],
+      center: [-0.131404, 51.570888],
       zoom: 8.5
     });
                     
@@ -198,7 +200,7 @@
     
     // fly zooms added
                     
-              
+    //fly to flow map          
     document.getElementById('flybutton').addEventListener('click', function () {
    
        inflowmap.flyTo({
@@ -209,8 +211,18 @@
                 bearing: 0
             });
         });   
-                    
-                    
+    // fly to choropleth map   
+    document.getElementById('chorobutton').addEventListener('click', function () {
+   
+       inflowmap.flyTo({
+            center: [
+                -0.131404, 51.570888],
+                zoom: 8.6,
+                bearing: 0
+            });
+        }); 
+       
+    // load inflow map functions
     inflowmap.on('load', function() {
 
       var years = ['12','13','14','15','16','17']
@@ -607,6 +619,26 @@
             flowmapyearEl.style.display = 'none';
           } else {
             flowmapyearEl.style.display = 'block';
+          }
+        });
+        
+        // show flowmap button based on zoon level
+        var flowmapbuttonEl = document.getElementById('flybutton');
+        inflowmap.on('zoom', function() {
+          if (inflowmap.getZoom() > zoomThreshold) {
+            flowmapbuttonEl.style.display = 'block';
+          } else {
+            flowmapbuttonEl.style.display = 'none';
+          }
+        });
+        
+        // show choropleth map button based on zoon level
+        var chorobuttonEl = document.getElementById('chorobutton');
+        inflowmap.on('zoom', function() {
+          if (inflowmap.getZoom() > zoomThreshold) {
+            chorobuttonEl.style.display = 'none';
+          } else {
+            chorobuttonEl.style.display = 'block';
           }
         });
         
