@@ -52,7 +52,7 @@
     <div id='outflow' class='map'>
     </div>
     <div id='divider'></div>
-    <div class='map-overlay' id='features'><h1>London Inflow</h1><div id='pd'><p>Hover over a borough or zoom!</p></div>
+    <div class='map-overlay' id='features'><h1>London Inflow</h1><div id='pd'><h2>Hover over a borough or zoom!</h2></div>
     <div class="map-overlay-inner" id = 'inflowoverlay'>
      <h2>Year: <label id='year'>2012</label></h2>
      <table><tr><td>
@@ -77,7 +77,7 @@
         
         <button id = 'chorobutton'>London Borough</button>
         
-          <div class='map-overlay' id='features1'><h1>London Outflow</h1><div id='ph'><p>Hover over a borough or zoom!</p></div>
+          <div class='map-overlay' id='features1'><h1>London Outflow</h1><div id='ph'><h2>Hover over a borough or zoom!</h2></div>
           <div id = 'flowmapyear2'><h2>Year: 2017</h2></div>
                 </div>
 
@@ -87,7 +87,7 @@
         <div class="map-overlay-inner">
            <h2> Year: <label id='year3'>2012</label></h2>
            <table><tr><td>
-            <input id='slider3' type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
+            <input id='slider3' class="slider" type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
             <datalist id="tickmarks">
               <option value="0" label="2012">
                 <option value="1">
@@ -446,7 +446,7 @@
         inflowmap.on('mouseover', 'inflow_origination', function (e) {
           mypopup
           .setLngLat(e.features[0].geometry.coordinates)
-          .setHTML("<h3>" + e.features[0].properties.outflow_na + "</h3><p>"+'Total Outflows: '
+          .setHTML("<h2>" + e.features[0].properties.outflow_na + "</h2><p>"+'Total Outflows: '
            +e.features[0].properties.summed_mov +'</p>' 
                                     ).addTo(inflowmap); // add table on popup box
         });
@@ -465,7 +465,7 @@
         inflowmap.on('mouseover', 'inflow_destination', function (e) {
           mypopup
           .setLngLat(e.features[0].geometry.coordinates)
-          .setHTML("<h3>" + e.features[0].properties.inflow_nam + "</h3>" + "<table id = 'tablepop'><tr><th class = 'title'>Origin Rank</th><th>Rank1</th><th>Rank2</th><th>Rank3</th></tr><tr class = 'rate'><td class = 'title'>LA Name</td><td>"+ e.features[0].properties['Rank1_name'] + "</td><td>" +e.features[0].properties['Rank2_name'] +"</td><td>" +e.features[0].properties['Rank3_name'] +"</td></tr><tr class = 'moves'><td class = 'title'>LA Moves</td><td>"+ e.features[0].properties['Rank1_move'] + "</td><td>" +e.features[0].properties['Rank2_move'] +"</td><td>" +e.features[0].properties['Rank3_move'] + "</td></tr></table>"
+          .setHTML("<h2>" + e.features[0].properties.inflow_nam + "</h2>" + "<table id = 'tablepop'><tr><th class = 'title'>Origin Rank</th><th>Rank1</th><th>Rank2</th><th>Rank3</th></tr><tr class = 'rate'><td class = 'title'>LA Name</td><td>"+ e.features[0].properties['Rank1_name'] + "</td><td>" +e.features[0].properties['Rank2_name'] +"</td><td>" +e.features[0].properties['Rank3_name'] +"</td></tr><tr class = 'moves'><td class = 'title'>LA Moves</td><td>"+ e.features[0].properties['Rank1_move'] + "</td><td>" +e.features[0].properties['Rank2_move'] +"</td><td>" +e.features[0].properties['Rank3_move'] + "</td></tr></table>"
                                     ).addTo(inflowmap); // add table on popup box
         });
 
@@ -485,7 +485,7 @@
           var features = e.features
 
           if (features.length > 0) {
-            document.getElementById('pd').innerHTML = '<h3>' + features[0].properties.outflow_na + '</h3><h3>to</h3>' + '<h3>'+ features[0].properties.inflow_nam +'</h3><p><strong><em>' +features[0].properties.summed_mov +'</strong> moves </em></p>';
+            document.getElementById('pd').innerHTML = '<h2>' + features[0].properties.outflow_na + '</h2><h3>to</h3>' + '<h2>'+ features[0].properties.inflow_nam +'</h2><p><strong><em>' +features[0].properties.summed_mov +'</strong> moves </em></p>';
           } else {
             document.getElementById('pd').innerHTML = '<p>Hover over a line!</p>';
           }
@@ -501,7 +501,7 @@
         inflowmap.on('mousemove',"InflowMapLayer",function(e) {
           var infl = e.features
           if (infl.length > 0) {
-           document.getElementById('pd').innerHTML = '<h2><strong>' + infl[0].properties.la_name + '</strong></h2><p><strong><em>' + infl[0].properties.inflow_12 + '</strong> people come in 2012</br><strong>' + infl[0].properties.inflow_13 + '</strong> people come in 2013</br><strong>'+ infl[0].properties.inflow_14 +'</strong> people come in 2014</br><strong>'+ infl[0].properties.inflow_15 +'</strong> people come in 2015</br><strong>'+ infl[0].properties.inflow_16 +'</strong> people come in 2016</br><strong>'+ infl[0].properties.inflow_17 +'</strong> people come in 2017</br><strong></em></p>';
+           document.getElementById('pd').innerHTML = '<h2><strong>' + infl[0].properties.la_name + '</strong></h2><h3><strong><em>' + infl[0].properties.inflow_12 + '</strong> people come in 2012</br><strong>' + infl[0].properties.inflow_13 + '</strong> people come in 2013</br><strong>'+ infl[0].properties.inflow_14 +'</strong> people come in 2014</br><strong>'+ infl[0].properties.inflow_15 +'</strong> people come in 2015</br><strong>'+ infl[0].properties.inflow_16 +'</strong> people come in 2016</br><strong>'+ infl[0].properties.inflow_17 +'</strong> people come in 2017</br><strong></em></h3>';
          } else {
           document.getElementById('pd').innerHTML = '<p>Hover over a borough!</p>';
         }
@@ -558,7 +558,7 @@
 
         inflowmap.on('mousemove',"netflowLayer",function(e) {
           if (e.features.length > 0) {
-           document.getElementById('pz').innerHTML = '<h2><strong>' + e.features[0].properties.la_name + '</strong></h2><p><strong><em>' + e.features[0].properties.net_12 + '</strong> net flows in 2012</br><strong>' + e.features[0].properties.net_13 + '</strong> net flows in 2013</br><strong>'+ e.features[0].properties.net_14 +'</strong> net flows in 2014</br><strong>'+ e.features[0].properties.net_15 +'</strong> net flows in 2015</br><strong>'+ e.features[0].properties.net_16 +'</strong> net flows in 2016</br><strong>'+ e.features[0].properties.net_17 +'</strong> net flows in 2017</br><strong></em></p>';
+           document.getElementById('pz').innerHTML = '<h2><strong>' + e.features[0].properties.la_name + '</strong></h2><h3><strong><em>' + e.features[0].properties.net_12 + '</strong> net flows in 2012</br><strong>' + e.features[0].properties.net_13 + '</strong> net flows in 2013</br><strong>'+ e.features[0].properties.net_14 +'</strong> net flows in 2014</br><strong>'+ e.features[0].properties.net_15 +'</strong> net flows in 2015</br><strong>'+ e.features[0].properties.net_16 +'</strong> net flows in 2016</br><strong>'+ e.features[0].properties.net_17 +'</strong> net flows in 2017</br><strong></em></h3>';
          } else {
           document.getElementById('pz').innerHTML = '<p>Hover over a borough!</p>';
         }
@@ -635,24 +635,6 @@
 
 
       var years = ['12','13','14','15','16','17']
-
-        //var layers = ['0-1000', '1000-100000', '100000-20000', '20000-30000', '30000-40000', ];
-        //var colors = ['#ceb075', '#a3803a', '#715928', '#3f3116', '#0d0a05'];
-
-        //for (i = 0; i < layers.length; i++) {
-            //var layer = layers[i];
-            //var color = colors[i];
-            //var item = document.createElement('div');
-            //var key = document.createElement('span');
-            //key.className = 'legendoutflow-key';
-            //key.style.backgroundColor = color;
-
-            //var value = document.createElement('span');
-            //value.innerHTML = layer;
-            //item.appendChild(key);
-            //item.appendChild(value);
-            //legendoutflow.appendChild(item);
-       //}
 
        function setYear(year) {
                     // Set the label to the correct year
@@ -827,7 +809,7 @@
         outflowmap.on('mouseover', 'outflow_destination', function (e) {
           mypopup
           .setLngLat(e.features[0].geometry.coordinates)
-          .setHTML("<h3>" + e.features[0].properties.inflow_nam + "</h3>" 
+          .setHTML("<h2>" + e.features[0].properties.inflow_nam + "</h2>" 
            + '<p>' + 'Total Inflows: ' + e.features[0].properties.summed_mov +'</p>'
                                     ).addTo(outflowmap); // add table on popup box
         });
@@ -846,7 +828,7 @@
         outflowmap.on('mouseover', 'outflow_origination', function (e) {
           mypopup
           .setLngLat(e.features[0].geometry.coordinates)
-          .setHTML("<h3>" + e.features[0].properties.outflow_na + "</h3>" + "<table id = 'tablepop'><tr><th class = 'title'>Destination Rank</th><th>Rank1</th><th>Rank2</th><th>Rank3</th></tr><tr class = 'rate'><td class = 'title'>LA name</td><td>"+  e.features[0].properties['Rank1_name'] + "</td><td>" 
+          .setHTML("<h2>" + e.features[0].properties.outflow_na + "</h2>" + "<table id = 'tablepop'><tr><th class = 'title'>Destination Rank</th><th>Rank1</th><th>Rank2</th><th>Rank3</th></tr><tr class = 'rate'><td class = 'title'>LA name</td><td>"+  e.features[0].properties['Rank1_name'] + "</td><td>" 
             +e.features[0].properties['Rank2_name'] +"</td><td>" 
             +e.features[0].properties['Rank3_name'] + "</td></tr><tr class = 'moves'><td class = 'title'>LA Moves</td><td>"+ 
             e.features[0].properties['Rank1_move'] + "</td><td>" 
@@ -872,7 +854,7 @@
           var features = e.features
 
           if (features.length > 0) {
-            document.getElementById('ph').innerHTML = '<h3>' + features[0].properties.outflow_na + '</h3><h3>to</h3>' + '<h3>'+ features[0].properties.inflow_nam +'</h3><p><strong><em>' +features[0].properties.summed_mov +'</strong> moves </em></p>';
+            document.getElementById('ph').innerHTML = '<h2>' + features[0].properties.outflow_na + '</h2><h3>to</h3>' + '<h2>'+ features[0].properties.inflow_nam +'</h2><p><strong><em>' +features[0].properties.summed_mov +'</strong> moves </em></p>';
           } else {
             document.getElementById('ph').innerHTML = '<p>Hover over a line!</p>';
           }
@@ -895,7 +877,7 @@
          var outfl = e.features
 
          if (outfl.length > 0) {
-          document.getElementById('ph').innerHTML = '<h2><strong>' + outfl[0].properties.la_name + '</strong></h2><p><strong><em>' + outfl[0].properties.outflow_12 + '</strong> people out in 2012 </br><strong>' + outfl[0].properties.outflow_13 + '</strong> people out in 2013</br><strong>'+ outfl[0].properties.outflow_14 +'</strong> people out in 2014</br><strong>'+ outfl[0].properties.outflow_15 +'</strong> people out in 2015</br><strong>'+ outfl[0].properties.outflow_16 +'</strong> people out in 2016</br><strong>'+ outfl[0].properties.outflow_17 +'</strong> people out in 2017</br><strong></em></p>';
+          document.getElementById('ph').innerHTML = '<h2><strong>' + outfl[0].properties.la_name + '</strong></h2><h3><strong><em>' + outfl[0].properties.outflow_12 + '</strong> people out in 2012 </br><strong>' + outfl[0].properties.outflow_13 + '</strong> people out in 2013</br><strong>'+ outfl[0].properties.outflow_14 +'</strong> people out in 2014</br><strong>'+ outfl[0].properties.outflow_15 +'</strong> people out in 2015</br><strong>'+ outfl[0].properties.outflow_16 +'</strong> people out in 2016</br><strong>'+ outfl[0].properties.outflow_17 +'</strong> people out in 2017</br><strong></em></h3>';
         } else {
           document.getElementById('ph').innerHTML = '<p>Hover over a borough!</p>';
         }
