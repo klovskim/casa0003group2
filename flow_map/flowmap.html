@@ -56,7 +56,7 @@
     <div class="map-overlay-inner" id = 'inflowoverlay'>
      <h2>Year: <label id='year'>2012</label></h2>
      <table><tr><td>
-      <input id='slider' type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
+      <input id='slider' class="slider" type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
       <datalist id="tickmarks">
         <option value="0" label="2012">
           <option value="1">
@@ -73,7 +73,7 @@
 
 
         <button id = 'button'>NET FLOWS</button>
-        <button id = 'flybutton'>FLOW MAP</button>
+        <button id = 'flybutton'>Flow Map</button>
         
         <button id = 'chorobutton'>London Borough</button>
         
@@ -227,24 +227,6 @@
 
       var years = ['12','13','14','15','16','17']
 
-        //LEGEND 
-        //var layers = ['0-1000', '1000-100000', '100000-20000', '20000-30000', '30000-40000', ];
-        //var colors = ['#edf3f3', '#afc9ca', '#729fa2', '#456769', '#1d2b2c'];
-
-        //for (i = 0; i < layers.length; i++) {
-            //var layer = layers[i];
-            //var color = colors[i];
-            //var item = document.createElement('div');
-            //var key = document.createElement('span');
-            //key.className = 'legend-key';
-            //key.style.backgroundColor = color;
-
-            //var value = document.createElement('span');
-            //value.innerHTML = layer;
-            //item.appendChild(key);
-            //item.appendChild(value);
-            //legend.appendChild(item);
-        //}
 
       // function for inflow slider
         function setYear(year) {
