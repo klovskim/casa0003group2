@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <!--META-->
+  <!--TITLE-->
+  <meta charset='utf-8' />
+  <title>Combine Map</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+  <!--MAPBOX-->
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+
+  <!--STYLE SHEET-->
+  <style type="text/css">
+    /* STORY TEXT AND LEGEND CONTENT */
+    h9 {
+      font-family: 'Montserrat';
+      font-size: 13px;
+      color: white;
+      font-weight: normal;
+    }
+    
+    /* GENERAL */
+
+    body {
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    /*MAP SETTING*/
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* EXIT AND ENTRY BUTTON LAYOUT */
+
+    #menu {
+      background: black;
+      opacity: 0.6;
+      position: absolute;
+      top: 20px;
+      /* size depending on buttons website */
+      right: 50px;
+      width: 80px;
+      border-radius: 3px;
+    }
+    #menu a {
+      color: white;
+      display: block;
+      margin: 0;
+      padding: 0;
+      padding: 10px;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,0,0,0.25);
+      /*opacity: 0.6;*/
+    }
+
+    #menu a:last-child {
+      border: none;
+    }
+
+    /* CHANGE BORDER RADIUS OTHERWISE WILL SEE PART OF BLACK BACKGROUND */
+    #menu a[id = 'Social']:hover {
+      color: white;
+      background: grey;
+      opacity: 1;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+
+    #menu a[id = 'Private']:hover {
+      color: white;
+      background: grey;
+      opacity: 1;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+
+    #menu a[id = 'Social'].active {
+      color: white;
+      background: grey;
+      opacity: 1;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+
+    #menu a[id = 'Private'].active {
+      color: white;
+      background: grey;
+      opacity: 1;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+
+    #menu a[id = 'Social'].active:hover {
+      color: white;
+      background: grey;
+      opacity: 1;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+
+    #menu a[id = 'Private'].active:hover {
+      color: white;
+      background: grey;
+      opacity: 1;
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+
+
+    /* POSITION OF MENU OF EXIT ENTRY BUTTON*/
+
+    .map-overlay-menu top {
+      position: absolute;
+      width: 100%;
+      height: 20px;
+      top: 10px; 
+    }
+
+    .map-overlay-menu inner {
+      display: inline-block;
+      position: absolute;
+    }
+
+    /* PLAY STOP FORWARD BACK BUTTON */
+
+    .map-overlay2 {
+      background-color: transparent;
+      position: absolute;
+      /* setting as min so it will not cross the mapbox logo */
+      bottom: 48.5px;
+      /* change left value to make more in middle */
+      left: 320px;
+    }  
+
+    .map-overlay2-inner2 {
+      display: inline-block;
+      background-color: transparent;
+      /* change left value to make more in middle */
+      left: 7px;
+      position: absolute; 
+      width: 300px;
+      bottom: 0px;
+    }
+
+    .map-overlay {
+      background-color: transparent;
+      position: absolute;
+      /* change width value to make more in middle */
+      /* setting as min so it will not cross the mapbox logo */
+      bottom: 70px;
+      left: 10px;
+    } 
+
+    .map-overlay-inner2 {
+      display: inline-block;
+      background-color: transparent;
+      position: absolute; 
+      width: 300px;
+    }
+
+    /* DATE AND TIME LAYOUT */
+
+    .map-overlay3 {
+      background-color: transparent;
+      /*opacity: 0.6;*/
+      position: absolute;
+      bottom: 120px;
+      left: 10px;
+      border-radius: 5px;
+    }
+
+    #time {
+      display: inline-block;
+      padding: 10px;
+    }
+
+    .map-overlay4 {
+      background-color: transparent;
+      /*opacity: 0.6;*/
+      position: absolute;
+      bottom: 80px;
+      left: 10px;
+      border-radius: 5px;
+    }
+
+    #date {
+      display: inline-block;
+      padding: 10px;
+    }
+
+    /* SLIDER */
+
+    .map-overlay-inner {
+      display: inline-block;
+      background-color: transparent;
+      left: 30%;
+      position: absolute;
+      width: 20%;
+      bottom: 0;
+    }
+
+    map-overlay2 {
+      background-color: transparent;
+      position: absolute;
+      width: 50%;
+      height: 10%;
+      bottom: 58.5px;
+      left: 42%;
+    }
+
+    .range-slider {
+      color: black;
+      opacity: 0.6;
+      margin-bottom: 40px;
+    }
+
+    /* LEGEND */
+
+    .map-overlay5 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 10px;
+      border-radius: 5px;
+    }
+
+    #legend {
+      background: black;
+      opacity: 0.8;
+      padding: 10px;
+      /* line height divides space between options */
+      line-height: 15px;
+      height: 120px;
+      margin-bottom: 40px;
+      width: 100px;
+    }
+
+    #legend-title {
+      background: black;
+      opacity: 1;
+      padding: 10px;
+      /* line height divides space between options */
+      line-height: 15px;
+      margin-bottom: 170px;
+      width: 100px;
+    }
+
+    .legend-key {
+      display: inline-block;
+      border-radius: 20%;
+      width: 10px;
+      height: 10px;
+      margin-right: 5px;
+    }
+
+    /* BUTTON COLOURS */
+
+    .button {
+      cursor: hand;
+    }
+
+    .stop {
+     background-color: black;
+     opacity: 0.6;
+   }
+
+   .stop:hover {
+     background-color: darkblue;
+   }
+
+   .play {
+     background-color: black;
+     opacity: 0.6;
+   }
+
+   .play:hover {
+     background-color: darkblue;
+   }
+
+   .backward {
+     background-color: black;
+     opacity: 0.6;
+   }
+
+   .backward:hover {
+     background-color: darkblue;
+   }
+
+   .forward {
+     background-color: black;
+     opacity: 0.6;
+   }
+
+   .forward:hover {
+     background-color: darkblue;
+   }
+
+   /*TEXT STYLE*/
+
+   /* EXIT ENTRY BUTTON TEXT*/
+   h2 {
+    font-family: 'Montserrat';
+    font-size: 17px;
+    color: white;
+    font-weight: normal;
+  }
+
+  /* STORY TEXT AND LEGEND CONTENT */
+  h9 {
+    font-family: 'Montserrat';
+    font-size: 13px;
+    color: white;
+    font-weight: normal;
+  }
+
+  /* STORY TEXT AND LEGEND HEADER */
+  h10 {
+    font-family: 'Montserrat';
+    font-size: 14px;
+    color: white;
+    font-weight: normal;
+  }
+
+  h3 {
+    font-family: 'Montserrat';
+    font-size: 16px;
+    color: white;
+    font-weight: normal;
+    margin: 0;
+  }
+
+  /* TIME TEXT */
+
+  h6 {
+    font-family: 'Montserrat';
+    font-size: 30px;
+    color: white;
+    text-shadow: 5px 5px 10px #0e0c43;
+  }
+
+  /* POP UP TEXT */
+
+  .mapboxgl-map {
+    font-family: 'Montserrat';
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+  }
+
+  /* RANGE SLIER LAY OUT */
+
+  .range-slider {
+    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+    width: 100%; /* Specific width is required for Firefox. */
+    background: transparent; /* Otherwise white in Chrome */
+  }
+
+
+  .range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+
+  .range-slider :focus {
+    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+  }
+
+  .range-slider ::-ms-track {
+    width: 100%;
+    cursor: pointer;
+
+    /* Hides the slider so custom styles can be added */
+    background: transparent; 
+    border-color: transparent;
+    color: transparent;
+  }
+
+
+  /* Special styling for WebKit/Blink */
+  .range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 3px solid white;
+    height: 29px;
+    width: 15px;
+    border-radius: 2px;
+    background: black;
+    opacity: 1;
+    cursor: pointer;
+    margin-top: -5px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+  }
+
+  /* All the same stuff for Firefox */
+  /* check how to change slider value bit to the left!! */
+  .range-slider::-moz-range-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 3px solid white;
+    height: 29px;
+    width: 15px;
+    border-radius: 2px;
+    background: black;
+    opacity: 1; 
+    cursor: pointer;
+  }
+
+  /* All the same stuff for IE */
+  .range-slider::-ms-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 3px solid white;
+    height: 29px;
+    width: 32px;
+    border-radius: 2px;
+    background: black;
+    opacity: 1;
+    cursor: pointer;
+  }    
+
+  .range-slider::-webkit-slider-runnable-track {
+    opacity: 1;
+    width: 100%;
+    height: 21px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: black;
+    opacity: 0.9;
+    border-radius: 1.3px;
+    border: 0.2px solid white;
+  }
+
+/*
+.range-slider:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+  } */
+
+  /* change % of width so slider value is in de middle */
+  .range-slider::-moz-range-track {
+    opacity: 1;
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    /* check opacity of slider and thumb !! */
+    background: black;
+    border-radius: 1.3px;
+    border: 0.2px solid white;
+  }
+
+  .range-slider::-ms-track {
+    opacity: 1;
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+    background: black;
+    /*border-color: transparent;*/
+    border-width: 16px 0;
+    color: transparent;
+  }
+  .range-slider::-ms-fill-lower {
+    background: black;
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  }
+  .range-slider:focus::-ms-fill-lower {
+    background: black;
+  }
+  .range-slider::-ms-fill-upper {
+    background: black;
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  }
+  .range-slider:focus::-ms-fill-upper {
+    background: black;
+  }    
+
+  /* STORY */
+
+  #storymode {
+   position: absolute;
+   top: 500px;
+   left: 10px;
+   width: 290px;
+   height: 140px;
+   background: black;
+   opacity: 0.85;
+   color: white;
+   padding: 10px;
+   display: block;
+   border-radius: 5px;
+ }
+
+ #storymode-content {
+   font-family: 'Montserrat', sans-serif;
+   font-size: 12px;
+   line-height: 16px;
+ }
+
+ #storymode-header {
+   font-weight: 600;
+   /* distance from title */
+   margin-bottom: 10px;
+   text-align: left;
+   font-size: 14px;
+ }
+
+ #storymode-controls {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#storymode-controls-numbers {
+  display: inline-block;
+  text-align: center;
+  width: 60px;
+}
+
+#story-back {
+  visibility: hidden;
+}
+
+i {
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+/* POP UP STYLE */
+
+mapboxgl-popup-content {
+  position: relative;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+  padding: 10px 10px 15px;
+  pointer-events: auto;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  -webkit-align-self: center;
+  align-self: center;
+  border-bottom: none;
+}
+</style>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 16px;
+    line-height: 30px;
+    color: #c7c7c7;
+    font-family: Helvetica;
+  }
+
+  h2 {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px；
+    color: #c7c7c7;
+    font-family: Helvetica;
+  }
+
+  a {
+    text-decoration: none;
+    color: #2dc4b2;
+    font-family: Helvetica;
+  }
+
+  #console {
+    position: absolute;
+    top: 30px;
+    width: 240px;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: black;
+    opacity: 0.85;
+  }
+
+  .session {
+    margin-bottom: 20px;
+    color: #2dc4b2;
+  }
+
+  .slidecontainer {
+    width: 100%;
+  }
+  .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: dark;
+    outline: none;
+    opacity: 0.5;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+
+  .slider:hover {
+    opacity: 1;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #729fa2;
+    cursor: pointer;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #729fa2;
+    cursor: pointer;
+  }
+
+  .colors {
+    background: linear-gradient(to right, #2166ac, #67a9cf, #d1e5f0, #fddbc7, #ef8a62, #b2182b);
+    margin-bottom: 5px;
+  }
+
+  .label {
+    width: 15%;
+    display: inline-block;
+    text-align: center;
+    text-color: 'rgb(199,199,199,100)'
+  }
+
+  .mapboxgl-popup {
+    position: absolute;
+    max-width: 400px;
+    font: 12px/20px, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  p{
+    color: #c7c7c7
+  }
+</style>
+
+<!--FLY MAP BUTTONS--> 
+<style>
+  #flyin {
+    font: Helvetica;
+    font-size: 14px;
+    display: block;
+    position: relative;
+    margin: 0px auto;
+    width: 40%;
+    height: 40px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+    color: #c7c7c7;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  #flyout {
+    font: Helvetica;
+    font-size: 14px;
+    position: relative;
+    margin: 0px auto;
+    width: 40%;
+    height: 40px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+    color: #c7c7c7;
+    background: rgba(0, 0, 0, 0.7);
+    display: block;
+  }
+</style>
+
+<!--D3 STORY BUTTONS-->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<!--JQUERY EXIT ENTRY BUTTONS--> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>  
+
+</head>
+<body>
+
+  <!--MAPS-->
+  <div id='map'></div>
+
+  <!--EXIT ENTRY BUTTON-->
+  <div class='map-overlay-menu top'><div class='map-overlay-menu inner'><h2><nav id="menu"></nav></h2></div></div>
+
+  <!--FLY MAP BUTTONS--> 
+  <button id='flyin'>London Borough</button>
+  <button id='flyout'>England</button>
+
+  <!--CONSOLE-->
+  <div id='console'>
+    <h1>Social Own Social Housing Rent</h1>
+    <p>Data source: The average Social own social housing rent in UK from 2014 to 2016</p><a href=""></a>
+    <div class='session'>
+      <h2>Total rent</h2>
+      <div class='slider colors'>
+      </div>
+      <div class='slider labels'>
+        <div class='label'>0</div>
+        <div class='label'>0.2</div>
+        <div class='label'>0.4</div>
+        <div class='label'>0.6</div>
+        <div class='label'>0.8</div>
+        <div class='label'>1</div>
+      </div>
+    </div>
+
+    <!--SLIDER-->
+    <div class='session' id='sliderbar'>
+      <h2>Year: <label id='active-year'>2014</label></h2>
+      <input id='slider' class='slider' type='range' min='2014' max='2017' step='1' value='0' />
+    </div>
+
+    <!--RADIO BUTTON-->
+    <div class='session'>
+      <h2>Type of charge</h2>
+      <div class='row' id='filters'>
+        <input id='all' type='radio' name='toggle' value='all' checked='checked'>
+        <label for='all'>Weekly Rent</label>
+        <input id='Weekly' type='radio' name='toggle' value='Weekly' >
+        <label for='Weekly'>Service Charge</label>
+      </div>
+    </div>
+  </div>
+
+  <!--LEGEND-->
+  <h9><div class='map-overlay5' id='legend'></div></h9>
+  <h10><div class='map-overlay5' id ='legend-title'>Estimated Social/Private:</div></h10>
+
+  <!-- STORY MODE -->
+  <div id = 'storymode'>
+
+    <!-- STORY MODE/HEADER -->
+    <h10><div id = 'storymode-header'>London Night Tube Expansion</div></h10>
+
+    <!-- STORY MODE/CONTENT -->
+    <div id = 'storymode-content'>
+      <h9>
+        The London Night Tube was introduced in 2015 and runs on Friday and Saturday nights. Initially only the Central Line and Victoria Line were operating.
+      </h9>
+    </div>
+
+    <!-- STORY MODE/CONTROLS -->
+    <div class = 'noselect' id = 'storymode-controls'>
+
+      <!-- STORY MODE/CONTROLS/PAGE -->
+      <i class='arrow left' id = 'story-back'></i>
+      <span id = 'storymode-controls-numbers'>1 of 28</span>
+      <i class='arrow right' id = 'story-forward'></i>
+    </div>
+  </div> 
+
+
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbm5hemhvdSIsImEiOiJjanY1cjhwdTUxdDI4M3lvYjFnMTB6ejVyIn0.daDuLibhR42z9EbKYs7z7Q';
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/joannazhou/cjvdn1kww5b3d1fpnlgvlzs8p',
+      center: [-2.54, 53.03],
+      zoom: 5.3
+    });
+
+
+
+
+
+    var values = [2014, 2015, 2016, 2017]
+
+    values.sort();
+
+    var layers = ['<90', '90-100', '100-110', '110-120', '120-130', '140>'];
+
+// TEST with http://www.0to255.com/17146E
+var colors = ['#fff', '#e4d4b3', '#caaa68', '#977735', '#4b3b1b', '#0d0a04']; 
+
+for (i = 0; i < layers.length; i++) {
+  var layer = layers[i];
+  var color = colors[i];
+  var item = document.createElement('div');
+  var key = document.createElement('span');
+  key.className = 'legend-key';
+  key.style.backgroundColor = color;
+
+  var value = document.createElement('span');
+  value.innerHTML = layer;
+  item.appendChild(key);
+  item.appendChild(value);
+  legend.appendChild(item);
+}
+
+
+//add layers
+map.on('load', function() {
+
+  map.addLayer({
+    id: 'price-heatmap',
+    type: 'heatmap',
+    source: {
+      type: 'vector',
+  url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
+},
+  'source-layer': 'hebing-8twnae', // name of tilesets
+  'layout': {
+    'visibility': 'visible'
+  },
+  "maxzoom": 9.5,
+  "paint": {
+    // Increase the heatmap weight based on frequency and rent
+    "heatmap-weight": [
+    "interpolate",
+    ["linear"],
+    ["get", "value"],
+    71, 0,
+    169, 1
+    ],
+  // Increase the heatmap color weight weight by zoom level
+  // heatmap-intensity is a multiplier on top of heatmap-weight
+  "heatmap-intensity": [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0, 1,
+  9, 3
+  ],
+  // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+  // Begin color ramp at 0-stop with a 0-transparancy color
+  // to create a blur-like effect.
+  "heatmap-color": [
+  "interpolate",
+  ["linear"],
+  ["heatmap-density"],
+  0, "rgba(33,102,172,0)",
+  0.2, "rgb(103,169,207)",
+  0.4, "rgb(209,229,240)",
+  0.6, "rgb(253,219,199)",
+  0.8, "rgb(239,138,98)",
+  1, "rgb(178,24,43)"
+  ],
+  // Adjust the heatmap radius by zoom level
+  "heatmap-radius": [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0, 2,
+  9, 20
+  ],
+  // Transition from heatmap to circle layer by zoom level
+  "heatmap-opacity": [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  7, 1,
+  9, 0
+  ],
+}
+}, 'waterway-label');
+
+  map.addLayer({
+    id: 'price-circle',
+    type: 'circle',
+    source: {
+      type: 'vector',
+  url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
+},
+  'source-layer': 'hebing-8twnae', // name of tilesets
+  'layout': {
+    'visibility': 'visible'
+  },
+  minzoom: 7,
+  paint: {
+    'circle-radius': [
+    'interpolate',
+    ['linear'],
+    ['number', ['get', 'value']],
+    71, 4,
+    147, 24
+    ],
+    'circle-color': [
+    'interpolate',
+    ['linear'],
+    ['number', ['get', 'value']],
+    71, '#fff',
+    86, '#e4d4b3',
+    101, '#caaa68',
+    116, '#977735',
+    131, '#4b3b1b',
+    147, '#0d0a04'
+    ],
+    'circle-opacity': 0
+  }
+});
+
+  map.addLayer({
+    id: 'price-fill',
+    type: 'fill',
+    source: {
+      type: 'vector',
+  url: 'mapbox://joannazhou.9x7okull' // Your Mapbox tileset Map ID
+},
+  'source-layer': 'shapefiledata-91x1z8', // name of tilesets
+  'layout': {
+    'visibility': 'visible'
+  },
+  paint: {
+    'fill-color': 'rgba(254, 254, 254, 0)',
+  }
+});
+
+  map.addLayer({
+    id: "price-borders",
+    type: "line",
+    source: {
+      type: 'vector',
+    url: 'mapbox://joannazhou.7lk2zja2' // Your Mapbox tileset Map ID
+  },
+  'source-layer': 'london_borough_boundary-0ec2on', // name of tilesets
+  'layout': {},
+  'minzoom': 9.5,
+  'paint': {
+    'line-color': 'rgba(205, 205, 205, 0.7)',
+    'line-width': 1
+  }
+});
+
+
+
+
+
+
+
+
+
+
+  /*  SOCIAL: MAPBOX INTERVAL DATA: 0-1272 */
+  map.addLayer({
+    id: 'Social',
+        // for 3D effect 
+        type: 'circle',
+        source: {
+          type: 'vector',
+    url: 'mapbox://joannazhou.87farynh' // Your Mapbox tileset Map ID
+  },
+          //'source-layer': 'hebing-2yxh6o',
+    'source-layer': 'hebing-2yxh6o', // name of tilesets
+        // filter on first value unixtime 
+        'filter': ['==', ['number', ['get', 'year']], values[0]],
+        'layout': {
+          'visibility': 'none'
+        },
+        'minzoom': 9.5,
+        paint: {
+          'circle-radius': [
+          'interpolate',
+          ['linear'],
+          ['number', ['get', 'social']],
+          71, 4,
+          147, 24
+          ],
+          'circle-opacity': 0.75,
+          'circle-color': [
+          'interpolate',
+          ['linear'],
+          ['number', ['get', 'social']],
+          90, '#e0cda7',
+          100, '#ceb175',
+          110, '#c19b4f',
+          120, '#a3813a',
+          130, '#715928',
+          140, '#4b3b1b'
+          ],
+        }
+      });   
+
+  /* PRIVATE: MAPBOX INTERVAL DATA: 0-1272 */
+  map.addLayer({
+    id: 'Private',
+    type: 'circle',
+    source: {
+      type: 'vector',
+    url: 'mapbox://joannazhou.87farynh' // Your Mapbox tileset Map ID
+  },
+          //'source-layer': 'hebing-2yxh6o',
+    'source-layer': 'hebing-2yxh6o', // name of tilesets
+        // filter on first value unixtime
+        'filter': ['==', ['number', ['get', 'year']], values[0]],
+        'layout': {
+            // starting view
+            'visibility': 'visible'
+          },
+          'minzoom': 9,
+          paint: {
+            'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['number', ['get', 'private']],
+            61.8, 4,
+            146.1, 24
+            ],
+            'circle-opacity': 0.75,
+            'circle-color': [
+            'interpolate',
+            ['linear'],
+            ['number', ['get', 'private']],
+            90, '#e0cda7',
+            100, '#ceb175',
+            110, '#c19b4f',
+            120, '#a3813a',
+            130, '#715928',
+            140, '#4b3b1b'
+            ]
+          }
+        }); 
+
+  /*map.addLayer({
+    id: 'price-labels',
+    type: 'symbol',
+    source: {
+      type: 'vector',
+    url: 'mapbox://joannazhou.d0fywqtm' // Your Mapbox tileset Map ID
+  },
+    'source-layer': '7788-3jydaa', // name of tilesets
+    'layout': {
+      'text-field': 'value',
+      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+      'text-size': 12
+    },
+    'label-opacity':0,
+    'minzoom': 9.5,
+    'paint': {
+      'text-color': 'rgba(255, 255, 255, 0.8)'
+    }
+  });*/
+
+
+  map.addLayer({
+    id: 'price-labels-social',
+    type: 'symbol',
+    source: {
+      type: 'vector',
+    url: 'mapbox://joannazhou.87farynh' // Your Mapbox tileset Map ID
+  },
+    'source-layer': 'hebing-2yxh6o', // name of tilesets
+    'layout': {
+      'visibility': 'none',
+      'text-field': '£{social}',
+      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+      'text-size': 12
+    },
+    'minzoom': 9.5,
+    'paint': {
+      'text-color': 'rgba(255, 255, 255, 0.8)'
+    }
+  });
+
+
+  map.addLayer({
+    id: 'price-labels-private',
+    type: 'symbol',
+    source: {
+      type: 'vector',
+    url: 'mapbox://joannazhou.87farynh' // Your Mapbox tileset Map ID
+  },
+    'source-layer': 'hebing-2yxh6o', // name of tilesets
+    'layout': {
+      'visibility': 'visible',
+      'text-field': '£{private}',
+      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+      'text-size': 12
+    },
+    'minzoom': 9.5,
+    'paint': {
+      'text-color': 'rgba(255, 255, 255, 0.8)'
+    }
+  });
+});
+
+
+//create exit and entry button to show data
+var toggleableLayerIds = [ 'Private', 'Social'];
+
+
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+  var id = toggleableLayerIds[i];
+
+  var link = document.createElement('a');
+  link.id = id;
+  link.href = '#'+id;
+  link.className = '';
+  link.textContent = id;
+
+  /* STARTING LAYER BUTTON */ 
+
+  link.onclick = function (e) {
+
+    var clickedLayer = this.textContent;
+    e.preventDefault();
+    e.stopPropagation();         
+
+    if (this.className === '' && this.id === 'Social') {
+      map.setLayoutProperty('Social', 'visibility', 'visible');
+      map.setLayoutProperty('Private', 'visibility', 'none'); 
+      map.setLayoutProperty('price-labels-social', 'visibility', 'visible'); 
+      map.setLayoutProperty('price-labels-private', 'visibility', 'none');            
+      this.className = 'active';
+      var Private = document.getElementById('Private');
+      Private.className = '';              
+    } 
+    else if (this.className === 'active' && this.id === 'Social') {
+      map.setLayoutProperty('Social', 'visibility', 'none');
+      map.setLayoutProperty('price-labels-social', 'visibility', 'none');
+      this.className = '';
+
+    }
+    else if (this.className === '' && this.id === 'Private') {
+      map.setLayoutProperty('Private', 'visibility', 'visible');
+      map.setLayoutProperty('Social', 'visibility', 'none');
+      map.setLayoutProperty('price-labels-private', 'visibility', 'visible'); 
+      map.setLayoutProperty('price-labels-social', 'visibility', 'none');
+      this.className = 'active';
+      var Social = document.getElementById('Social');
+      Social.className = '';      
+    }
+    else if (this.className === 'active' && this.id === 'Private') {
+      map.setLayoutProperty('Private', 'visibility', 'none');
+      map.setLayoutProperty('price-labels-private', 'visibility', 'none');
+      this.className = '';     
+    }
+  }
+  var layers = document.getElementById('menu');
+  layers.appendChild(link);
+}
+
+
+document.getElementById('slider').addEventListener('input', function(e) {
+  var year = parseInt(e.target.value);
+  // update the map
+  map.setFilter('price-circle', ['==', ['number', ['get', 'year']], year]);
+  map.setFilter('price-heatmap', ['==', ['number', ['get', 'year']], year]);
+  map.setFilter('price-labels', ['==', ['number', ['get', 'year']], year]);
+  map.setFilter('Social', ['==', ['number', ['get', 'year']], year]);
+  map.setFilter('Private', ['==', ['number', ['get', 'year']], year]);
+  // update text in the UI
+  document.getElementById('active-year').innerText = year;
+});
+
+
+document.getElementById('filters').addEventListener('change', function(e) {
+  var type = e.target.value;
+  // update the map filter
+  if (type === 'all') {
+    filterType = ['!=', ['string', ['get', 'typr']], 'placeholder'];
+  } else if (type === 'Weekly') {
+    filterType = ['match', ['get', 'typr'], ['rent mean'], false, true];
+  } else {
+    console.log('error');
+  }
+  map.setFilter('price-heatmap', ['all', filterType]);
+  map.setFilter('price-circle', ['all', filterType]);
+  map.setFilter('price-labels', ['all', filterType]);
+  map.setFilter('Social', ['all', filterType]);
+  map.setFilter('Private', ['all', filterType]);
+});
+
+
+  // When a click event occurs on a feature in the states layer, open a popup at the
+// location of the click, with description HTML from its properties.
+map.on('click', 'price-fill', function (e) {
+  new mapboxgl.Popup()
+  .setLngLat(e.lngLat)
+  .setHTML(e.features[0].properties.lad18nm)
+  .addTo(map);
+});
+
+// Change the cursor to a pointer when the mouse is over the states layer.
+map.on('mouseenter', 'price-fill', function () {
+  map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'price-fill', function () {
+  map.getCanvas().style.cursor = '';
+});
+
+document.getElementById('flyin').addEventListener('click', function () {
+// Fly to a random location by offsetting the point -74.50, 40
+// by up to 5 degrees.
+map.flyTo({
+  center: [-0.14,51.51],
+  zoom: 9.5,
+  bearing: 0
+});
+});
+
+document.getElementById('flyout').addEventListener('click', function () {
+// Fly to a random location by offsetting the point -74.50, 40
+// by up to 5 degrees.
+map.flyTo({
+  center: [-2.54, 53.03],
+  zoom: 5.3,
+  bearing: 0
+});
+});
+
+var zoomThreshold = 5.3;
+
+var flowmapbuttonEl = document.getElementById('flyin');
+map.on('zoom', function() {
+  if (map.getZoom() > zoomThreshold) {
+    flowmapbuttonEl.style.display = 'none';
+  } else {
+    flowmapbuttonEl.style.display = 'block';
+  }
+});
+
+var flyoutbutton = document.getElementById('flyout');
+map.on('zoom', function() {
+  if (map.getZoom() > zoomThreshold) {
+    flowmapbuttonEl.style.display = 'none';
+  } else {
+    flowmapbuttonEl.style.display = 'block';
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Storyline buttons to make interaction easier, d3 used */
+
+var pageNum = 1;
+var backButton = d3.select("#story-back");
+var forwardButton = d3.select("#story-forward");
+var pageNumbers = d3.select("#storymode-controls-numbers");
+var storyHeader = d3.select("#storymode-header");
+var storyContent = d3.select("#storymode-content h9");
+
+/* STORY PAGES */
+var stories = [{ title: "London Rent Distribution",
+description: "The London social housing rent.",
+    // change starting position also on filter of map!!!!
+    index: 0,
+    Private: 'visible',
+    Social: 'none',
+    Private_status: "active",
+    Social_status: "",
+    flyTo1: {
+      zoom: 11.5,
+      center: [-0.2,51.4833],
+      bearing: -60,
+      pitch: 60.0,
+      speed: 0.3
+    },
+    flyTo2: {
+      zoom: 11.5,
+      center: [-0.2,51.4833],
+      pitch: 60.0,
+      speed: 0.3,
+    }
+  },
+
+  { title: "London Night Tube Expansion",
+  description: "In October 2016 the Jubilee Line service started to operate and in November 2016 the Northern Line.",
+  index: 156,
+  Private: 'visible',
+  Social: 'none',
+  Private_status: "active",
+  Social_status: "",
+  flyTo1: {
+    zoom: 11,
+    center: [-0.2,51.4833],
+    pitch: 60.0,
+    speed: 0.3
+  },
+  flyTo2: {
+    zoom: 11,
+    center: [-0.2,51.4833],
+    pitch: 60.0,
+    speed: 0.3
+  }
+},
+
+{ title: "London Night Tube Expansion",
+description: "In December 2016 the London Night Tube expanded once more by also operating the Piccadilly Line during the night.",
+index: 312,
+Private: 'visible',
+Social: 'none',
+Private_status: "active",
+Social_status: "",
+flyTo1: {
+  zoom: 11,
+  pitch: 60.0,
+  speed: 0.3
+},
+flyTo2: {
+  zoom: 11,
+  center: [-0.2,51.4833],
+  bearing: +20,
+  pitch: 60.0,
+  speed: 0.3
+},
+},
+
+{ title: "Number of Private during Friday Night",
+description: "02:00 - Passenger flow that enters the night tube on Friday is clustered around Soho and Liverpool Street. Number of Private is decreasing over night.",
+index: 312,
+Private: 'visible',
+Social: 'none',
+Private_status: "active",
+Social_status: "",
+flyTo1: {
+  zoom: 12,
+  center: [-0.13,51.498],
+  bearing: -20,
+  pitch: 60.0,
+  speed: 0.3
+},
+flyTo2: {
+  zoom: 12,
+  center: [-0.13,51.498],
+  pitch: 60.0,
+  speed: 0.3
+}
+},
+
+{ title: "Number of Private during Friday Night",
+description: "02:30",
+index: 313,
+Private: 'visible',
+Social: 'none',
+Private_status: "active",
+Social_status: "",
+flyTo1: {
+  zoom: 12,
+  pitch: 60.0,
+  speed: 0.3
+},
+flyTo2: {
+  zoom: 12,
+  pitch: 60.0,
+  speed: 0.3
+}
+},
+
+{ title: "Number of Private during Friday Night",
+description: "03:00",
+index: 314,
+Private: 'visible',
+Social: 'none',
+Private_status: "active",
+Social_status: "",
+flyTo1: {
+  zoom: 12,
+  pitch: 60.0,
+  speed: 0.3
+},
+flyTo2: {
+  zoom: 12,
+  pitch: 60.0,
+  speed: 0.3
+} 
+},
+
+{ title: "Number of Private during Friday Night",
+description: "03:30",
+index: 315,
+Private: 'visible',
+Social: 'none',
+Private_status: "active",
+Social_status: "",
+flyTo1: {
+  zoom: 12,
+  pitch: 60.0,
+  speed: 0.3
+},
+flyTo2: {
+  zoom: 12,
+  pitch: 60.0,
+  speed: 0.3
+}
+}
+];
+
+/* STORY FUNCTIONS */
+
+// Update Story.
+function updateStory1(storyObj) {
+
+  // story variables
+  var title = storyObj['title'];
+  var description = storyObj['description'];
+  var cameraSettings = storyObj['flyTo1'];
+  
+  // date variables
+  var index = storyObj['index'];
+  $('.range-slider').val(index);
+  var date_value = values[index];
+
+ // entry/exit variables
+ var Private_visibility = storyObj['Private'];
+ var Social_visibility = storyObj['Social'];
+ var Private_status = storyObj['Private_status'];
+ var Social_status = storyObj['Social_status'];
+
+   // set Private/Social layer
+  // set button colours
+
+  map.setLayoutProperty('Private', 'visibility', Private_visibility);
+  map.setLayoutProperty('Social', 'visibility', Social_visibility);
+  $("#Private").attr("class", Private_status);
+  $("#Social").attr("class", Social_status);
+
+  // Update the Storymode content.
+  storyHeader.text(title);
+  storyContent.text(description);
+
+  // Update Camera.
+  map.flyTo(cameraSettings);
+
+};
+</script>
+</body>
+<html>
