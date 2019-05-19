@@ -385,3 +385,49 @@
                 margin-right: 5px;
                 width: 10px;
               }
+
+              #info {
+                position: fixed;
+                display: none;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.8);
+                z-index: 75;
+              }
+              
+              #infobox {
+                position: absolute;
+                text-align: left;
+                top: 20%;
+                left: 20%;
+                right: 20%;
+                color: white;
+              }
+              
+              #infocircle {
+                right: 0;
+                position: fixed;
+                z-index: 70;
+                padding: 0;
+                margin: 0;
+              }
+              
+              #infotext {
+                display: block;
+                float: center;
+                text-align: center;
+                margin: 5px;
+                width: 1.5vw;
+                height: 1.5vw;
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 50%;
+              }
+              
+              #infotext:hover {
+                background: rgba(114, 159, 162, 0.8);
+                cursor: pointer;
+              }
