@@ -90,7 +90,6 @@
         </div>
     </div>
     <!-- dual legends and menus for each -->
-    <div class='map-overlay' id='sociallegend'></div>
     <div class='map-overlay' id='privatelegend'></div>
     <nav id="menu"></nav>
     <nav id="privatemenu"></nav>
@@ -547,24 +546,6 @@
         social.on('mouseleave', 'social_overcrowded', function () {
             social.getCanvas().style.cursor = '';
         });
-
-        // add a legend for the social map side of things
-        var sociallegendlabels = ['Very Low', 'Low', 'Middle', 'High', 'Very High'];
-        var socialcolors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
-        for (i = 0; i < sociallegendlabels.length; i++) {
-            var sociallayer = sociallegendlabels[i];
-            var socialcolor = socialcolors[i];
-            var socialitem = document.createElement('div');
-            var socialkey = document.createElement('span');
-            socialkey.className = 'sociallegend-key';
-            socialkey.style.backgroundColor = socialcolor;
-
-            var socialvalue = document.createElement('span');
-            socialvalue.innerHTML = sociallayer;
-            socialitem.appendChild(socialkey);
-            socialitem.appendChild(socialvalue);
-            sociallegend.appendChild(socialitem);
-        }
 
         // all of the above repeated again for the privately owned housing map!!!
 
