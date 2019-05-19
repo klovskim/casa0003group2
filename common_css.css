@@ -1,47 +1,45 @@
-body { 
-  overflow: hidden;
-  margin:0; 
-  padding:0; 
-}
+#info {
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 75;
+        }
 
-h1 {
-    font-size: 16px;
-    line-height: 20px;
-    margin-bottom: 10px;
-  }
+        #infobox {
+            position: absolute;
+            text-align: left;
+            top: 20%;
+            left: 20%;
+            right: 20%;
+            color: white;
+        }
 
-h2 {
-  font-size: 14px;
-  line-height: 20px;
-  margin-bottom: 10px;
-}
+        #infocircle {
+            right: 0;
+            position: fixed;
+            z-index: 70;
+            padding: 0;
+            margin: 0;
+        }
 
-p {
-    font-size: 12px;
-    margin: 10px;
-    text-align: left;
-    }
-    
-.map-overlay {
-position: absolute;
-bottom: 0;
-right: 0;
-background: rgba(255, 255, 255, 0.8);
-margin-right: 20px;
-padding: 10px 20px;
-font-family: Helvetica, sans-serif;
-overflow: auto;
-border-radius: 3px;
-}
+        #infotext {
+            display: block;
+            float: center;
+            text-align: center;
+            margin: 5px;
+            width: 1.5vw;
+            height: 1.5vw;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+        }
 
-.slider {
--webkit-appearance: none;
-width: 100%;
-height: 15px;
-border-radius: 5px;
-background: #d3d3d3;
-outline: none;
-opacity: 0.7;
--webkit-transition: .2s;
-transition: opacity .2s;
-}
+        #infotext:hover {
+            background: rgba(114, 159, 162, 0.8);
+            cursor: pointer;
+        }
