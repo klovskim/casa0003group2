@@ -296,7 +296,7 @@
             // create the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + year + ", roughly " + count + " per 28,000 people migrated from " + detailed_origin + " to " + name + "</p>")
+                .setHTML(name.bold().fontsize(4) + "<h3>" + "In " + year + ", roughly " + count + " per 28,000 people migrated from " + detailed_origin + " to " + name + "</h3>")
                 .addTo(map);
         });
 
@@ -323,7 +323,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from abroad to " + name + "</p>")
+                .setHTML(name.bold().fontsize(4) + "<h3>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from abroad to " + name + "</h3>")
                 .addTo(map);
         });
 
@@ -342,7 +342,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from " + people_source + " to London " + "</p>")
+                .setHTML(people_source.bold().fontsize(4) + "<h3>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from " + people_source + " to London " + "</h3>")
                 .addTo(map);
         });
 
