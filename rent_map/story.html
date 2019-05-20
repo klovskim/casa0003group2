@@ -13,33 +13,9 @@
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
 
   <!--STYLE SHEET-->
-  <style type="text/css">
-    /* STORY TEXT AND LEGEND CONTENT */
-    h9 {
-      font-family: 'Montserrat';
-      font-size: 13px;
-      color: white;
-      font-weight: normal;
-    }
-    
-    /* GENERAL */
+  <style>
 
-    body {
-      overflow: hidden;
-      margin: 0;
-      padding: 0;
-    }
-
-    /*MAP SETTING*/
-
-    #map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-    }
-
-    /* EXIT AND ENTRY BUTTON LAYOUT */
+    /* SOCIAL AND PRIVATE BUTTON LAYOUT */
 
     #menu {
       background: black;
@@ -52,14 +28,14 @@
       border-radius: 3px;
     }
     #menu a {
-      color: white;
+      color: #c7c7c7;
       display: block;
       margin: 0;
       padding: 0;
       padding: 10px;
       text-decoration: none;
-      border-bottom: 1px solid rgba(0,0,0,0.25);
-      /*opacity: 0.6;*/
+      border-bottom: 1px solid rgba(0, 0, 0, 1);
+      opacity: 0.85;
     }
 
     #menu a:last-child {
@@ -68,7 +44,7 @@
 
     /* CHANGE BORDER RADIUS OTHERWISE WILL SEE PART OF BLACK BACKGROUND */
     #menu a[id = 'Social']:hover {
-      color: white;
+      color: #c7c7c7;
       background: grey;
       opacity: 1;
       border-top-left-radius: 3px;
@@ -76,7 +52,7 @@
     }
 
     #menu a[id = 'Private']:hover {
-      color: white;
+      color: #c7c7c7;
       background: grey;
       opacity: 1;
       border-bottom-left-radius: 3px;
@@ -84,7 +60,7 @@
     }
 
     #menu a[id = 'Social'].active {
-      color: white;
+      color: #c7c7c7;
       background: grey;
       opacity: 1;
       border-top-left-radius: 3px;
@@ -92,7 +68,7 @@
     }
 
     #menu a[id = 'Private'].active {
-      color: white;
+      color: #c7c7c7;
       background: grey;
       opacity: 1;
       border-bottom-left-radius: 3px;
@@ -100,7 +76,7 @@
     }
 
     #menu a[id = 'Social'].active:hover {
-      color: white;
+      color: #c7c7c7;
       background: grey;
       opacity: 1;
       border-top-left-radius: 3px;
@@ -108,7 +84,7 @@
     }
 
     #menu a[id = 'Private'].active:hover {
-      color: white;
+      color: #c7c7c7;
       background: grey;
       opacity: 1;
       border-bottom-left-radius: 3px;
@@ -116,7 +92,7 @@
     }
 
 
-    /* POSITION OF MENU OF EXIT ENTRY BUTTON*/
+    /* POSITION OF MENU OF SOCIAL PRIVATE BUTTON*/
 
     .map-overlay-menu top {
       position: absolute;
@@ -130,99 +106,6 @@
       position: absolute;
     }
 
-    /* PLAY STOP FORWARD BACK BUTTON */
-
-    .map-overlay2 {
-      background-color: transparent;
-      position: absolute;
-      /* setting as min so it will not cross the mapbox logo */
-      bottom: 48.5px;
-      /* change left value to make more in middle */
-      left: 320px;
-    }  
-
-    .map-overlay2-inner2 {
-      display: inline-block;
-      background-color: transparent;
-      /* change left value to make more in middle */
-      left: 7px;
-      position: absolute; 
-      width: 300px;
-      bottom: 0px;
-    }
-
-    .map-overlay {
-      background-color: transparent;
-      position: absolute;
-      /* change width value to make more in middle */
-      /* setting as min so it will not cross the mapbox logo */
-      bottom: 70px;
-      left: 10px;
-    } 
-
-    .map-overlay-inner2 {
-      display: inline-block;
-      background-color: transparent;
-      position: absolute; 
-      width: 300px;
-    }
-
-    /* DATE AND TIME LAYOUT */
-
-    .map-overlay3 {
-      background-color: transparent;
-      /*opacity: 0.6;*/
-      position: absolute;
-      bottom: 120px;
-      left: 10px;
-      border-radius: 5px;
-    }
-
-    #time {
-      display: inline-block;
-      padding: 10px;
-    }
-
-    .map-overlay4 {
-      background-color: transparent;
-      /*opacity: 0.6;*/
-      position: absolute;
-      bottom: 80px;
-      left: 10px;
-      border-radius: 5px;
-    }
-
-    #date {
-      display: inline-block;
-      padding: 10px;
-    }
-
-    /* SLIDER */
-
-    .map-overlay-inner {
-      display: inline-block;
-      background-color: transparent;
-      left: 30%;
-      position: absolute;
-      width: 20%;
-      bottom: 0;
-    }
-
-    map-overlay2 {
-      background-color: transparent;
-      position: absolute;
-      width: 50%;
-      height: 10%;
-      bottom: 58.5px;
-      left: 42%;
-    }
-
-    .range-slider {
-      color: black;
-      opacity: 0.6;
-      margin-bottom: 40px;
-    }
-
     /* LEGEND */
 
     .map-overlay5 {
@@ -234,8 +117,8 @@
     }
 
     #legend {
-      background: black;
-      opacity: 0.8;
+      background: #282828;
+      opacity: 0.9;
       padding: 10px;
       /* line height divides space between options */
       line-height: 15px;
@@ -245,8 +128,8 @@
     }
 
     #legend-title {
-      background: black;
-      opacity: 1;
+      background: #282828;
+      opacity: 0.9;
       padding: 10px;
       /* line height divides space between options */
       line-height: 15px;
@@ -262,244 +145,24 @@
       margin-right: 5px;
     }
 
-    /* BUTTON COLOURS */
-
-    .button {
-      cursor: hand;
-    }
-
-    .stop {
-     background-color: black;
-     opacity: 0.6;
-   }
-
-   .stop:hover {
-     background-color: darkblue;
-   }
-
-   .play {
-     background-color: black;
-     opacity: 0.6;
-   }
-
-   .play:hover {
-     background-color: darkblue;
-   }
-
-   .backward {
-     background-color: black;
-     opacity: 0.6;
-   }
-
-   .backward:hover {
-     background-color: darkblue;
-   }
-
-   .forward {
-     background-color: black;
-     opacity: 0.6;
-   }
-
-   .forward:hover {
-     background-color: darkblue;
-   }
-
-   /*TEXT STYLE*/
-
-   /* EXIT ENTRY BUTTON TEXT*/
-   h2 {
-    font-family: 'Montserrat';
-    font-size: 17px;
-    color: white;
-    font-weight: normal;
-  }
-
-  /* STORY TEXT AND LEGEND CONTENT */
-  h9 {
-    font-family: 'Montserrat';
-    font-size: 13px;
-    color: white;
-    font-weight: normal;
-  }
-
-  /* STORY TEXT AND LEGEND HEADER */
-  h10 {
-    font-family: 'Montserrat';
-    font-size: 14px;
-    color: white;
-    font-weight: normal;
-  }
-
-  h3 {
-    font-family: 'Montserrat';
-    font-size: 16px;
-    color: white;
-    font-weight: normal;
-    margin: 0;
-  }
-
-  /* TIME TEXT */
-
-  h6 {
-    font-family: 'Montserrat';
-    font-size: 30px;
-    color: white;
-    text-shadow: 5px 5px 10px #0e0c43;
-  }
-
-  /* POP UP TEXT */
-
-  .mapboxgl-map {
-    font-family: 'Montserrat';
-    font-size: 13px;
-    color: black;
-    font-weight: bold;
-  }
-
-  /* RANGE SLIER LAY OUT */
-
-  .range-slider {
-    -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
-    width: 100%; /* Specific width is required for Firefox. */
-    background: transparent; /* Otherwise white in Chrome */
-  }
-
-
-  .range-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-  }
-
-  .range-slider :focus {
-    outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
-  }
-
-  .range-slider ::-ms-track {
-    width: 100%;
-    cursor: pointer;
-
-    /* Hides the slider so custom styles can be added */
-    background: transparent; 
-    border-color: transparent;
-    color: transparent;
-  }
-
-
-  /* Special styling for WebKit/Blink */
-  .range-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: 3px solid white;
-    height: 29px;
-    width: 15px;
-    border-radius: 2px;
-    background: black;
-    opacity: 1;
-    cursor: pointer;
-    margin-top: -5px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
-  }
-
-  /* All the same stuff for Firefox */
-  /* check how to change slider value bit to the left!! */
-  .range-slider::-moz-range-thumb {
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    border: 3px solid white;
-    height: 29px;
-    width: 15px;
-    border-radius: 2px;
-    background: black;
-    opacity: 1; 
-    cursor: pointer;
-  }
-
-  /* All the same stuff for IE */
-  .range-slider::-ms-thumb {
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    border: 3px solid white;
-    height: 29px;
-    width: 32px;
-    border-radius: 2px;
-    background: black;
-    opacity: 1;
-    cursor: pointer;
-  }    
-
-  .range-slider::-webkit-slider-runnable-track {
-    opacity: 1;
-    width: 100%;
-    height: 21px;
-    cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: black;
-    opacity: 0.9;
-    border-radius: 1.3px;
-    border: 0.2px solid white;
-  }
-
-/*
-.range-slider:focus::-webkit-slider-runnable-track {
-  background: #367ebd;
-  } */
-
-  /* change % of width so slider value is in de middle */
-  .range-slider::-moz-range-track {
-    opacity: 1;
-    width: 100%;
-    height: 20px;
-    cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    /* check opacity of slider and thumb !! */
-    background: black;
-    border-radius: 1.3px;
-    border: 0.2px solid white;
-  }
-
-  .range-slider::-ms-track {
-    opacity: 1;
-    width: 100%;
-    height: 20px;
-    cursor: pointer;
-    background: black;
-    /*border-color: transparent;*/
-    border-width: 16px 0;
-    color: transparent;
-  }
-  .range-slider::-ms-fill-lower {
-    background: black;
-    border: 0.2px solid #010101;
-    border-radius: 2.6px;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  }
-  .range-slider:focus::-ms-fill-lower {
-    background: black;
-  }
-  .range-slider::-ms-fill-upper {
-    background: black;
-    border: 0.2px solid #010101;
-    border-radius: 2.6px;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  }
-  .range-slider:focus::-ms-fill-upper {
-    background: black;
-  }    
-
   /* STORY */
 
   #storymode {
    position: absolute;
-   top: 500px;
+   top: 480px;
    left: 10px;
    width: 290px;
    height: 140px;
-   background: black;
-   opacity: 0.85;
-   color: white;
+   background: #282828;
+   opacity: 0.9;
+   color: #c7c7c7;
    padding: 10px;
    display: block;
    border-radius: 5px;
  }
 
  #storymode-content {
-   font-family: 'Montserrat', sans-serif;
+   font-family: 'Helvetica', sans-serif;
    font-size: 12px;
    line-height: 16px;
  }
@@ -529,8 +192,10 @@
   visibility: hidden;
 }
 
+/* STORY CONTROL BUTTONS */
+
 i {
-  border: solid white;
+  border: solid #c7c7c7;
   border-width: 0 3px 3px 0;
   display: inline-block;
   padding: 3px;
@@ -549,26 +214,41 @@ i {
 
 /* POP UP STYLE */
 
-.mapboxgl-popup-content {
+/*mapboxgl-popup-content {
   position: relative;
   border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.10);
+  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
   padding: 10px 10px 15px;
   pointer-events: auto;
+  background-color: rgb(0, 0, 0, 0.85);
 }
 
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
   -webkit-align-self: center;
   align-self: center;
   border-bottom: none;
+  background-color: rgb(0, 0, 0, 0.85);
 }
+
+/* POP UP TEXT */
+
+  /*.mapboxgl-map {
+    font-family: 'Helvetica';
+    font-size: 13px;
+    color: #c7c7c7;
+    font-weight: bold;
+    background-color: rgb(0, 0, 0, 0.85);
+  }
 </style>
 <style>
+
+  /* GENERAL */
   body {
     margin: 0;
     padding: 0;
   }
 
+  /*MAP SETTING*/
   #map {
     position: absolute;
     top: 0;
@@ -576,6 +256,36 @@ i {
     width: 100%;
   }
 
+  /*TEXT STYLE*/
+
+  /* SOCIAL PRIVATE TEXT*/
+
+  h2 {
+    font-family: 'Helvetica';
+    font-size: 17px;
+    color: #cfcfcf;
+    font-weight: normal;
+  }
+
+  /* STORY TEXT AND LEGEND CONTENT */
+
+  h9 {
+    font-family: 'Montserrat';
+    font-size: 13px;
+    color: #c7c7c7;
+    font-weight: normal;
+  }
+
+  /* STORY TEXT AND LEGEND HEADER */
+
+  h10 {
+    font-family: 'Helvetica';
+    font-size: 14px;
+    color: #c7c7c7;
+    font-weight: normal;
+  }
+
+  /* CONSOLE TITTLE */
   h1 {
     font-size: 16px;
     line-height: 30px;
@@ -583,6 +293,7 @@ i {
     font-family: Helvetica;
   }
 
+  /* TIME SLIDER TEXT */
   h2 {
     font-size: 14px;
     line-height: 20px;
@@ -591,11 +302,23 @@ i {
     font-family: Helvetica;
   }
 
+  /* DATA SOURCE WEBSITE*/
   a {
     text-decoration: none;
-    color: #2dc4b2;
-    font-family: Helvetica;
+    color: #c7c7c7;
+    font-family: Montserrat;
+    font-size: 16px;
   }
+
+  /* DATA SOURCE TEXT */
+  p{
+    font-family: 'Montserrat';
+    font-size: 16px;
+    color: #c7c7c7;
+    font-weight: normal;åω
+  }
+
+  /* CONSLOE */
 
   #console {
     position: absolute;
@@ -603,23 +326,34 @@ i {
     width: 240px;
     margin: 10px;
     padding: 10px 20px;
-    background-color: black;
-    opacity: 0.85;
+    background-color: #282828;
+    opacity: 0.9;
   }
+
+  /* SESSION */
 
   .session {
     margin-bottom: 20px;
     color: #2dc4b2;
   }
 
+  /* COLOUR BAR */
   .row {
     height: 12px;
     width: 100%;
   }
 
+  .colors {
+    background: linear-gradient(to right, #2166ac, #67a9cf, #d1e5f0, #fddbc7, #ef8a62, #b2182b);
+    margin-bottom: 5px;
+  }
+
+  /* SLIDER */
+
   .slidecontainer {
     width: 100%;
   }
+
   .slider {
     -webkit-appearance: none;
     width: 100%;
@@ -642,7 +376,7 @@ i {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #fddbc7;
+    background: #caaa68;
     cursor: pointer;
   }
 
@@ -650,29 +384,32 @@ i {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #fddbc7;
+    background: #729fa2;
     cursor: pointer;
-  }
-
-  .colors {
-    background: linear-gradient(to right, #2166ac, #67a9cf, #d1e5f0, #fddbc7, #ef8a62, #b2182b);
-    margin-bottom: 5px;
   }
 
   .label {
     width: 15%;
     display: inline-block;
     text-align: center;
-    text-color: 'rgb(199,199,199,100)'
+    text-color: 'rgb(199, 199, 199, 0.8)'
   }
 
-  p{
-    color: #c7c7c7
+  /* POPUP */
+
+  /*.mapboxgl-popup {
+    position: absolute;
+    max-width: 400px;
+    font: 12px/20px Helvetica, sans-serif;
+    background-color: rgba(255, 255, 255, 1);
   }
+
+  
 </style>
 
 <!--FLY MAP BUTTONS--> 
 <style>
+
   #flyin {
     font: Helvetica;
     font-size: 14px;
@@ -709,7 +446,7 @@ i {
 <!--D3 STORY BUTTONS-->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
-<!--JQUERY EXIT ENTRY BUTTONS--> 
+<!--JQUERY PRIVATE SOCIAL BUTTONS--> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>  
 
 </head>
@@ -718,7 +455,7 @@ i {
   <!--MAPS-->
   <div id='map'></div>
 
-  <!--EXIT ENTRY BUTTON-->
+  <!--PRIVATE SOCIAL BUTTON-->
   <div class='map-overlay-menu top'><div class='map-overlay-menu inner'><h2><nav id="menu"></nav></h2></div></div>
 
   <!--FLY MAP BUTTONS--> 
@@ -728,7 +465,7 @@ i {
   <!--CONSOLE-->
   <div id='console'>
     <h1>Social Own Social Housing Rent</h1>
-    <p>Data source: The average Social own social housing rent in UK from 2014 to 2016</p><a href=""></a>
+    <p>Data source: The average Social own social housing rent in UK from 2014 to 2016</p><a href="">sdfghjk</a>
     <div class='session'>
       <h2>Total rent</h2>
       <div class='row colors'>
@@ -769,12 +506,12 @@ i {
   <div id = 'storymode'>
 
     <!-- STORY MODE/HEADER -->
-    <h10><div id = 'storymode-header'>London Night Tube Expansion</div></h10>
+    <h10><div id = 'storymode-header'>Private and Social Rent in England</div></h10>
 
     <!-- STORY MODE/CONTENT -->
     <div id = 'storymode-content'>
       <h9>
-        The London Night Tube was introduced in 2015 and runs on Friday and Saturday nights. Initially only the Central Line and Victoria Line were operating.
+        The map shows the sum of the prices of private own social houses in each region of England for four years. The price of private own social house in London is significantly higher than that in other regions.
       </h9>
     </div>
 
@@ -783,7 +520,7 @@ i {
 
       <!-- STORY MODE/CONTROLS/PAGE -->
       <i class='arrow left' id = 'story-back'></i>
-      <span id = 'storymode-controls-numbers'>1 of 28</span>
+      <span id = 'storymode-controls-numbers'>1 of 5</span>
       <i class='arrow right' id = 'story-forward'></i>
     </div>
   </div> 
@@ -806,10 +543,10 @@ i {
 
     values.sort();
 
-    var layers = ['<87', '87-97', '97-110', '110-127', '127>'];
+    var layers = ['<90', '90-100', '100-110', '110-120', '120-130', '140>'];
 
 // TEST with http://www.0to255.com/17146E
-var colors = ['#e0cda7', '#ceb175', '#c19b4f', '#a3813a', '#715928']; 
+var colors = ['#fff', '#e4d4b3', '#caaa68', '#977735', '#4b3b1b', '#0d0a04']; 
 
 for (i = 0; i < layers.length; i++) {
   var layer = layers[i];
@@ -830,8 +567,10 @@ for (i = 0; i < layers.length; i++) {
 //add layers
 map.on('load', function() {
 
+
+//Private Rent Heat Map
   map.addLayer({
-    id: 'price-heatmap',
+    id: 'price-heatmap-private',
     type: 'heatmap',
     source: {
       type: 'vector',
@@ -850,6 +589,70 @@ map.on('load', function() {
     ["get", "value"],
     71, 0,
     169, 1
+    ],
+  // Increase the heatmap color weight weight by zoom level
+  // heatmap-intensity is a multiplier on top of heatmap-weight
+  "heatmap-intensity": [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0, 1,
+  9, 3
+  ],
+  // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+  // Begin color ramp at 0-stop with a 0-transparancy color
+  // to create a blur-like effect.
+  "heatmap-color": [
+  "interpolate",
+  ["linear"],
+  ["heatmap-density"],
+  0, "rgba(33,102,172,0)",
+  0.2, "rgb(103,169,207)",
+  0.4, "rgb(209,229,240)",
+  0.6, "rgb(253,219,199)",
+  0.8, "rgb(239,138,98)",
+  1, "rgb(178,24,43)"
+  ],
+  // Adjust the heatmap radius by zoom level
+  "heatmap-radius": [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  0, 2,
+  9, 20
+  ],
+  // Transition from heatmap to circle layer by zoom level
+  "heatmap-opacity": [
+  "interpolate",
+  ["linear"],
+  ["zoom"],
+  7, 1,
+  9, 0
+  ],
+}
+}, 'waterway-label');
+
+//Social Rent Heat Map
+  map.addLayer({
+        id: 'price-heatmap-social',
+        type: 'heatmap',
+        source: {
+          type: 'vector',
+  url: 'mapbox://joannazhou.7jozekyp' // Your Mapbox tileset Map ID
+},
+  'source-layer': 'final_socown_social_rent-98umef', // name of tilesets
+  'layout': {
+    'visibility': 'none'
+  },
+  "maxzoom": 7,
+  "paint": {
+    // Increase the heatmap weight based on frequency and rent
+    "heatmap-weight": [
+    "interpolate",
+    ["linear"],
+    ["get", "value"],
+    61.8, 0,
+    146.1, 1
     ],
   // Increase the heatmap color weight weight by zoom level
   // heatmap-intensity is a multiplier on top of heatmap-weight
@@ -953,7 +756,7 @@ map.on('load', function() {
   },
   'source-layer': 'london_borough_boundary-0ec2on', // name of tilesets
   'layout': {},
-  'minzoom': 9.5,
+  'minzoom': 8,
   'paint': {
     'line-color': 'rgba(205, 205, 205, 0.7)',
     'line-width': 1
@@ -985,7 +788,7 @@ map.on('load', function() {
         'layout': {
           'visibility': 'none'
         },
-        'minzoom': 9.5,
+        'minzoom': 8,
         paint: {
           'circle-radius': [
           'interpolate',
@@ -999,11 +802,12 @@ map.on('load', function() {
           'interpolate',
           ['linear'],
           ['number', ['get', 'social']],
-          71, '#e0cda7',
-          87, '#ceb175',
-          97, '#c19b4f',
-          110, '#a3813a',
-          127, '#715928'
+          90, '#e0cda7',
+          100, '#ceb175',
+          110, '#c19b4f',
+          120, '#a3813a',
+          130, '#715928',
+          140, '#4b3b1b'
           ],
         }
       });   
@@ -1038,11 +842,12 @@ map.on('load', function() {
             'interpolate',
             ['linear'],
             ['number', ['get', 'private']],
-            71, '#e0cda7',
-            87, '#ceb175',
-            97, '#c19b4f',
-            110, '#a3813a',
-            127, '#715928'
+            90, '#e0cda7',
+            100, '#ceb175',
+            110, '#c19b4f',
+            120, '#a3813a',
+            130, '#715928',
+            140, '#4b3b1b'
             ]
           }
         }); 
@@ -1082,7 +887,7 @@ map.on('load', function() {
       'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
       'text-size': 12
     },
-    'minzoom': 9.5,
+    'minzoom': 9,
     'paint': {
       'text-color': 'rgba(255, 255, 255, 0.8)'
     }
@@ -1103,7 +908,7 @@ map.on('load', function() {
       'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
       'text-size': 12
     },
-    'minzoom': 9.5,
+    'minzoom': 9,
     'paint': {
       'text-color': 'rgba(255, 255, 255, 0.8)'
     }
@@ -1111,7 +916,7 @@ map.on('load', function() {
 });
 
 
-//create exit and entry button to show data
+//create Social and SOCIAL button to show data
 var toggleableLayerIds = [ 'Private', 'Social'];
 
 
@@ -1136,7 +941,9 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
       map.setLayoutProperty('Social', 'visibility', 'visible');
       map.setLayoutProperty('Private', 'visibility', 'none'); 
       map.setLayoutProperty('price-labels-social', 'visibility', 'visible'); 
-      map.setLayoutProperty('price-labels-private', 'visibility', 'none');            
+      map.setLayoutProperty('price-labels-private', 'visibility', 'none');
+      map.setLayoutProperty('price-heatmap-social', 'visibility', 'visible'); 
+      map.setLayoutProperty('price-heatmap-private', 'visibility', 'none');            
       this.className = 'active';
       var Private = document.getElementById('Private');
       Private.className = '';              
@@ -1144,6 +951,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     else if (this.className === 'active' && this.id === 'Social') {
       map.setLayoutProperty('Social', 'visibility', 'none');
       map.setLayoutProperty('price-labels-social', 'visibility', 'none');
+      map.setLayoutProperty('price-heatmap-social', 'visibility', 'none');
       this.className = '';
 
     }
@@ -1152,6 +960,8 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
       map.setLayoutProperty('Social', 'visibility', 'none');
       map.setLayoutProperty('price-labels-private', 'visibility', 'visible'); 
       map.setLayoutProperty('price-labels-social', 'visibility', 'none');
+      map.setLayoutProperty('price-heatmap-private', 'visibility', 'visible'); 
+      map.setLayoutProperty('price-heatmap-social', 'visibility', 'none');
       this.className = 'active';
       var Social = document.getElementById('Social');
       Social.className = '';      
@@ -1159,6 +969,7 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
     else if (this.className === 'active' && this.id === 'Private') {
       map.setLayoutProperty('Private', 'visibility', 'none');
       map.setLayoutProperty('price-labels-private', 'visibility', 'none');
+      map.setLayoutProperty('price-heatmap-private', 'visibility', 'none');
       this.className = '';     
     }
   }
@@ -1171,8 +982,10 @@ document.getElementById('slider').addEventListener('input', function(e) {
   var year = parseInt(e.target.value);
   // update the map
   map.setFilter('price-circle', ['==', ['number', ['get', 'year']], year]);
-  map.setFilter('price-heatmap', ['==', ['number', ['get', 'year']], year]);
-  map.setFilter('price-labels', ['==', ['number', ['get', 'year']], year]);
+  map.setFilter('price-heatmap-private', ['==', ['number', ['get', 'year']], year]);
+  map.setFilter('price-heatmap-social', ['==', ['number', ['get', 'year']], year]);
+  map.setFilter('price-labels-private', ['==', ['number', ['get', 'year']], year]);
+  map.setFilter('price-labels-social', ['==', ['number', ['get', 'year']], year]);
   map.setFilter('Social', ['==', ['number', ['get', 'year']], year]);
   map.setFilter('Private', ['==', ['number', ['get', 'year']], year]);
   // update text in the UI
@@ -1190,9 +1003,11 @@ document.getElementById('filters').addEventListener('change', function(e) {
   } else {
     console.log('error');
   }
-  map.setFilter('price-heatmap', ['all', filterType]);
+  map.setFilter('price-heatmap-private', ['all', filterType]);
+  map.setFilter('price-heatmap-social', ['all', filterType]);
   map.setFilter('price-circle', ['all', filterType]);
-  map.setFilter('price-labels', ['all', filterType]);
+  map.setFilter('price-labels-private', ['all', filterType]);
+  map.setFilter('price-labels-social', ['all', filterType]);
   map.setFilter('Social', ['all', filterType]);
   map.setFilter('Private', ['all', filterType]);
 });
@@ -1218,11 +1033,11 @@ map.on('mouseleave', 'price-fill', function () {
 });
 
 document.getElementById('flyin').addEventListener('click', function () {
-// Fly to a random location by offsetting the point -74.50, 40
+// Fly to a random location by offsetting the point -0.14, 51.51
 // by up to 5 degrees.
 map.flyTo({
-  center: [-0.14,51.51],
-  zoom: 9.5,
+  center: [-0.14, 51.51],
+  zoom: 9,
   bearing: 0
 });
 });
@@ -1236,7 +1051,6 @@ map.flyTo({
   bearing: 0
 });
 });
-
 
 var zoomThreshold = 5.3;
 
@@ -1287,8 +1101,8 @@ var storyHeader = d3.select("#storymode-header");
 var storyContent = d3.select("#storymode-content h9");
 
 /* STORY PAGES */
-var stories = [{ title: "London Rent Distribution",
-description: "The London social housing rent.",
+var stories = [{ title: "Private Own and Social Own Social House Rent in England",
+description: "The map shows the sum of the prices of private own and social own social houses in each region of England for four years.",
     // change starting position also on filter of map!!!!
     index: 0,
     Private: 'visible',
@@ -1296,137 +1110,145 @@ description: "The London social housing rent.",
     Private_status: "active",
     Social_status: "",
     flyTo1: {
-      zoom: 11.5,
-      center: [-0.2,51.4833],
-      bearing: -60,
-      pitch: 60.0,
+      center: [-2.54, 53.03],
+  zoom: 5.3,
+  bearing: 0,
+      pitch: 0,
       speed: 0.3
     },
     flyTo2: {
-      zoom: 11.5,
-      center: [-0.2,51.4833],
-      pitch: 60.0,
-      speed: 0.3,
-    }
+      center: [-2.54, 53.03],
+  zoom: 5.3,
+  bearing: 0,
+      speed: 0.3    }
   },
 
-  { title: "London Night Tube Expansion",
-  description: "In October 2016 the Jubilee Line service started to operate and in November 2016 the Northern Line.",
-  index: 156,
+  { title: "Private Own Social House Rent in England",
+description: "From 2014 to 2017, the weekly rent of private own social house in the south of England, especially in London, prices are significantly higher than in other parts of the country.",
+    // change starting position also on filter of map!!!!
+    index: 0,
+    Private: 'visible',
+    Social: 'none',
+    Private_status: "active",
+    Social_status: "",
+    flyTo1: {
+      center: [-2.54, 53.03],
+  zoom: 5.3,
+  bearing: 0,
+      pitch: 0,
+      speed: 0.3
+    },
+    flyTo2: {
+      center: [-2.54, 53.03],
+  zoom: 5.3,
+  bearing: 0,
+      speed: 0.3    }
+  },
+
+  { title: "Social Own Social House Rent in England",
+  description: "Social own social house weekly rent shows a similar price distribution.",
+  index: 0,
   Private: 'visible',
   Social: 'none',
   Private_status: "active",
   Social_status: "",
   flyTo1: {
-    zoom: 11,
-    center: [-0.2,51.4833],
-    pitch: 60.0,
+    center: [-2.54, 53.03],
+  zoom: 5.3,
+  bearing: 0,
     speed: 0.3
   },
   flyTo2: {
-    zoom: 11,
-    center: [-0.2,51.4833],
-    pitch: 60.0,
+    center: [-2.54, 53.03],
+  zoom: 5.3,
+  bearing: 0,
     speed: 0.3
   }
 },
 
-{ title: "London Night Tube Expansion",
-description: "In December 2016 the London Night Tube expanded once more by also operating the Piccadilly Line during the night.",
+{ title: "Private Own Social House Rent in London",
+description: "The closer you get to the City of London, the higher the weekly rent becomes. Borough weekly rent in the north is higher than borough weekly rent in the south.",
 index: 312,
 Private: 'visible',
 Social: 'none',
 Private_status: "active",
 Social_status: "",
 flyTo1: {
-  zoom: 11,
-  pitch: 60.0,
+  zoom: 9,
+  center: [-0.14, 51.51],
+  pitch: 0,
   speed: 0.3
 },
 flyTo2: {
-  zoom: 11,
-  center: [-0.2,51.4833],
-  bearing: +20,
-  pitch: 60.0,
-  speed: 0.3
+  center: [-2.54, 53.03],
+  zoom: 5.3,
+  bearing: 0,
+    speed: 0.3
 },
 },
 
-{ title: "Number of Private",
-description: "02:00 - Passenger flow that enters the night tube on Friday is clustered around Soho and Liverpool Street. Number of Private is decreasing over night.",
+{ title: "Private Own Social House Rent in London",
+description: "In the four years from 2014 to 2017, weekly rent in most borough showed an upward trend. Only borough Enfield's rent has a drop of about 10 pounds",
 index: 312,
 Private: 'visible',
 Social: 'none',
 Private_status: "active",
 Social_status: "",
 flyTo1: {
-  zoom: 12,
-  center: [-0.13,51.498],
-  bearing: -20,
-  pitch: 60.0,
+  zoom: 9,
+  center: [-0.14, 51.51],
+  bearing: 0,
+  pitch: 0,
   speed: 0.3
 },
 flyTo2: {
-  zoom: 12,
-  center: [-0.13,51.498],
-  pitch: 60.0,
+  zoom: 9,
+  center: [-0.14, 51.51],
+  pitch: 0,
   speed: 0.3
 }
 },
 
-{ title: "Number of Private",
-description: "02:30",
-index: 313,
+{ title: "Social Own Social House Rent in London",
+description: "The weekly rent of social own social house in Most of borough is 10 to 20 pounds lower than those of private own rent. But weekly rent for the affluent borough is pretty much the same.",
+index: 312,
 Private: 'visible',
 Social: 'none',
 Private_status: "active",
 Social_status: "",
 flyTo1: {
-  zoom: 12,
-  pitch: 60.0,
+  zoom: 9,
+  center: [-0.14, 51.51],
+  pitch: 0,
   speed: 0.3
 },
 flyTo2: {
-  zoom: 12,
-  pitch: 60.0,
+  zoom: 9,
+  center: [-0.14, 51.51],
+  bearing: 0,
+  pitch: 0,
   speed: 0.3
-}
+},
 },
 
-{ title: "Number of Private",
-description: "03:00",
-index: 314,
+{ title: "Social Own Social House Rent in London",
+description: "From 2014 to 2016, the weekly rent of social own social house rose slowly, and even a lot of borough showed a downward trend.",
+index: 312,
 Private: 'visible',
 Social: 'none',
 Private_status: "active",
 Social_status: "",
 flyTo1: {
-  zoom: 12,
-  pitch: 60.0,
+  zoom: 9,
+  center: [-0.14, 51.51],
+  bearing: 0,
+  pitch: 0,
   speed: 0.3
 },
 flyTo2: {
-  zoom: 12,
-  pitch: 60.0,
-  speed: 0.3
-} 
-},
-
-{ title: "Number of Private",
-description: "03:30",
-index: 315,
-Private: 'visible',
-Social: 'none',
-Private_status: "active",
-Social_status: "",
-flyTo1: {
-  zoom: 12,
-  pitch: 60.0,
-  speed: 0.3
-},
-flyTo2: {
-  zoom: 12,
-  pitch: 60.0,
+  zoom: 9,
+  center: [-0.14, 51.51],
+  pitch: 0,
   speed: 0.3
 }
 }
@@ -1443,21 +1265,33 @@ function updateStory1(storyObj) {
   var cameraSettings = storyObj['flyTo1'];
   
   // date variables
-  var index = storyObj['index'];
+  /*var index = storyObj['index'];
   $('.range-slider').val(index);
-  var date_value = values[index];
+  var date_value = values[index];*/
 
- // entry/exit variables
+ // Private/Social variables
  var Private_visibility = storyObj['Private'];
  var Social_visibility = storyObj['Social'];
  var Private_status = storyObj['Private_status'];
  var Social_status = storyObj['Social_status'];
+
+
+
+
+
+
+
+
+
+   
+
 
    // set Private/Social layer
   // set button colours
 
   map.setLayoutProperty('Private', 'visibility', Private_visibility);
   map.setLayoutProperty('Social', 'visibility', Social_visibility);
+
   $("#Private").attr("class", Private_status);
   $("#Social").attr("class", Social_status);
 
@@ -1469,6 +1303,97 @@ function updateStory1(storyObj) {
   map.flyTo(cameraSettings);
 
 };
+
+
+
+/* CHECK */
+
+function updateStory2(storyObj) {
+  
+  // story variables
+  var title = storyObj['title'];
+  var description = storyObj['description'];
+  // control for back
+  var cameraSettings = storyObj['flyTo2'];
+  
+  // date variables
+  /*var index = storyObj['index'];
+  $('.range-slider').val(index);
+  var date_value = values[index];*/
+    
+ // social/exit variables
+ var social_visibility = storyObj['social'];
+ var private_visibility = storyObj['private'];
+ var social_status = storyObj['social_status'];
+ var private_status = storyObj['private_status'];
+
+
+  // set social/private layer
+  // set button colours
+    
+  map.setLayoutProperty('Social', 'visibility', social_visibility);
+  map.setLayoutProperty('Private', 'visibility', private_visibility);
+  $("#Social").attr("class", social_status);
+  $("#Private").attr("class", private_status);
+
+  // Update the Storymode content.
+  storyHeader.text(title);
+  storyContent.text(description);
+
+  // Update Camera.
+  map.flyTo(cameraSettings);
+    
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CALL TO STORY */
+
+// Story mode click through FORWARD.
+backButton.on("click", function () {
+
+  // Update the Navigation bottom panel.
+  pageNum = pageNum - 1;
+  pageNumbers.text(pageNum + " of " + stories.length);
+  backButton.style( "visibility", (pageNum == 1) ? "hidden" : "visible" );
+  forwardButton.style( "visibility", (pageNum == stories.length) ? "hidden" : "visible" );
+
+  // Update the story.
+  updateStory2(stories[pageNum-1]);
+});
+
+// Story mode click through BACKWARD.
+forwardButton.on("click", function () {
+
+  // Update the Navigation bottom panel.
+  pageNum = pageNum + 1;
+  pageNumbers.text(pageNum + " of " + stories.length);
+  backButton.style( "visibility", (pageNum == 1) ? "hidden" : "visible" );
+  forwardButton.style( "visibility", (pageNum == stories.length) ? "hidden" : "visible" );
+
+  // Update the story.
+  updateStory1(stories[pageNum-1]);
+});
+
+
+
+
+
+
+
+
 </script>
 </body>
 <html>
