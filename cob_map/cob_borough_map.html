@@ -11,6 +11,57 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
     <!-- call the stylesheet -->
     <link href='cob_borough_map_styles.css' rel='stylesheet' />
+
+    
+    <script>
+            function on() {
+                document.getElementById("info").style.display = "block";
+            }
+            function off() {
+                document.getElementById("info").style.display = "none";
+            }
+    </script>
+
+    <div id="infocircle">
+        <div id="infotext" onclick="on()">
+            i
+        </div>
+    </div>
+
+    <div id="info" onclick="off()">
+
+        <div id="infobox">
+            <h1>Reasons for Lettings Map 2014-2017</h1>
+            <br />
+            <h3>
+                <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non nulla eget nibh
+                commodo molestie eget vel magna. Duis odio lacus, vulputate eget tincidunt a, placerat sit amet
+                felis. Nulla facilisi. Maecenas consectetur, mauris eu porttitor malesuada, nunc dolor auctor
+                tellus, sed mattis massa magna eget odio. Maecenas vitae nibh eleifend nisl rhoncus dignissim ac
+                sed eros. Aliquam mauris nisi, eleifend quis mattis ac, porttitor ac sem. Proin posuere ex non
+                pharetra rhoncus. Mauris vel mi dignissim, condimentum dolor blandit, pharetra ipsum.
+                Suspendisse mattis mattis faucibus. Phasellus tincidunt justo ultricies, feugiat mauris vitae,
+                tincidunt odio. Nullam ultrices euismod justo non varius. Morbi et nisi eu risus pellentesque
+                varius porta vel ligula.
+                <br />
+
+                <h3>
+                    Donec venenatis luctus nulla, non hendrerit justo porta sed. Integer bibendum ipsum non
+                    eleifend
+                    posuere. Aliquam ultrices quam lectus, vel tempus augue sollicitudin ut. Morbi ornare
+                    ultrices
+                    faucibus. Duis blandit tellus iaculis sapien facilisis rutrum. Fusce feugiat quam porttitor
+                    imperdiet efficitur. Ut hendrerit mattis nisi vitae lacinia. Duis consectetur mauris et diam
+                    auctor, sit amet finibus neque dapibus. Duis condimentum egestas nisi, eget vulputate nulla
+                    accumsan non. Praesent faucibus dolor diam, eget suscipit ante pulvinar ut. Ut nibh quam,
+                    posuere feugiat tellus sed, tempus congue dolor. Nullam condimentum finibus felis, in
+                    fringilla
+                    felis mollis id. Phasellus laoreet dictum nulla, non porttitor nisl blandit sed. Mauris ac
+                    libero eget sem lobortis auctor et convallis arcu.
+                    <br />
+                </h3>
+        </div>
+    </div>
 </head>
 
 <body>
@@ -21,13 +72,11 @@
     <div class='map-overlay top'>
         <div class='map-overlay-inner'>
             <!-- all the credits and data sources -->
-            <h2>Areas of Origin by London Borough 2004-2017</h2>
-            <p>Select a Borough area to see the inflows from abroad.<br> Select a dot to see total flows to a
-                borough.<br> Select a region dot to see total flows from that area to London in a year.</p>
-            <p class="credit">Country of Origin Data: <a
-                    href="https://data.london.gov.uk/dataset/country-of-birth">London Datastore</a></p>
+            <h1>Areas of Origin by London Borough 2004-2017</h1>
+            <h3>Select a Borough area to see the inflows from abroad.<br> Select a dot to see total flows to a
+                borough.<br> Select a region dot to see total flows from that area to London in a year.</h3>
             <!-- slider below -->
-            <h3>Year: <label id='active-year'>2004</label></h3>
+            <h2>Year: <label id='active-year'>2004</label></h2>
             <input id='slider' class='slider' type='range' min='2004' max='2017' step='1' value='2004' />
         </div>
     </div>
@@ -60,8 +109,6 @@
                 bearing: 0
             });
         });
-        // add the toggle in the corner
-        map.addControl(new mapboxgl.NavigationControl());
 
         map.on('load', function () {
             // adding the borough polygons
@@ -249,7 +296,7 @@
             // create the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + year + ", roughly " + count + " per 28,000 people migrated from " + detailed_origin + " to " + name + "</p>")
+                .setHTML(name.bold().fontsize(4) + "<h3>" + "In " + year + ", roughly " + count + " per 28,000 people migrated from " + detailed_origin + " to " + name + "</h3>")
                 .addTo(map);
         });
 
@@ -276,7 +323,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from abroad to " + name + "</p>")
+                .setHTML(name.bold().fontsize(4) + "<h3>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from abroad to " + name + "</h3>")
                 .addTo(map);
         });
 
@@ -295,7 +342,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from " + people_source + " to London " + "</p>")
+                .setHTML(people_source.bold().fontsize(4) + "<h3>" + "In " + year + ", roughly " + count + " per 28,000 people in total moved from " + people_source + " to London " + "</h3>")
                 .addTo(map);
         });
 

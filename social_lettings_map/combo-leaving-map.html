@@ -17,8 +17,60 @@
     <div id='private' class='map'></div>
     <div id='divider'></div>
 
+    <script>
+            function on() {
+                document.getElementById("info").style.display = "block";
+            }
+            function off() {
+                document.getElementById("info").style.display = "none";
+            }
+    </script>
+
+    <div id="infocircle">
+        <div id="infotext" onclick="on()">
+            i
+        </div>
+    </div>
+
+    <div id="info" onclick="off()">
+
+        <div id="infobox">
+            <h1>Reasons for Lettings Map 2014-2017</h1>
+            <br />
+            <h3>
+                <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non nulla eget nibh
+                commodo molestie eget vel magna. Duis odio lacus, vulputate eget tincidunt a, placerat sit amet
+                felis. Nulla facilisi. Maecenas consectetur, mauris eu porttitor malesuada, nunc dolor auctor
+                tellus, sed mattis massa magna eget odio. Maecenas vitae nibh eleifend nisl rhoncus dignissim ac
+                sed eros. Aliquam mauris nisi, eleifend quis mattis ac, porttitor ac sem. Proin posuere ex non
+                pharetra rhoncus. Mauris vel mi dignissim, condimentum dolor blandit, pharetra ipsum.
+                Suspendisse mattis mattis faucibus. Phasellus tincidunt justo ultricies, feugiat mauris vitae,
+                tincidunt odio. Nullam ultrices euismod justo non varius. Morbi et nisi eu risus pellentesque
+                varius porta vel ligula.
+                <br />
+
+                <h3>
+                    Donec venenatis luctus nulla, non hendrerit justo porta sed. Integer bibendum ipsum non
+                    eleifend
+                    posuere. Aliquam ultrices quam lectus, vel tempus augue sollicitudin ut. Morbi ornare
+                    ultrices
+                    faucibus. Duis blandit tellus iaculis sapien facilisis rutrum. Fusce feugiat quam porttitor
+                    imperdiet efficitur. Ut hendrerit mattis nisi vitae lacinia. Duis consectetur mauris et diam
+                    auctor, sit amet finibus neque dapibus. Duis condimentum egestas nisi, eget vulputate nulla
+                    accumsan non. Praesent faucibus dolor diam, eget suscipit ante pulvinar ut. Ut nibh quam,
+                    posuere feugiat tellus sed, tempus congue dolor. Nullam condimentum finibus felis, in
+                    fringilla
+                    felis mollis id. Phasellus laoreet dictum nulla, non porttitor nisl blandit sed. Mauris ac
+                    libero eget sem lobortis auctor et convallis arcu.
+                    <br />
+                </h3>
+        </div>
+    </div>
+
     <div class='map-overlay' id='features'>
-        <h3>Reasons for Leaving Prior Accomodation, Socially-Owned Social Housing Residents</h3>
+        <h1>Reasons for Leaving Prior Accomodation, Socially-Owned Social Housing Residents</h1>
+        <h3>Select a layer from the menu to see it visualized.
+            <br> Click a borough to see the total counts and relative rate of that layer.</h3>
         <div id='pd'></div>
         <div class="map-overlay-inner">
             <h2>Year: <label id='active-year1'>2014</label></h2>
@@ -28,7 +80,9 @@
 
 
     <div class='map-overlay' id='features1'>
-        <h3>Reasons for Leaving Prior Accomodation, Privately-Owned Social Housing Residents</h3>
+        <h1>Reasons for Leaving Prior Accomodation, Privately-Owned Social Housing Residents</h1>
+        <h3>Select a layer from the menu to see it visualized.
+                <br> Click a borough to see the total counts and relative rate of that layer.</h3>
         <div id='pd'></div>
         <div class="map-overlay-inner">
             <h2>Year: <label id='active-year2'>2014</label></h2>
@@ -36,7 +90,6 @@
         </div>
     </div>
     <!-- dual legends and menus for each -->
-    <div class='map-overlay' id='sociallegend'></div>
     <div class='map-overlay' id='privatelegend'></div>
     <nav id="menu"></nav>
     <nav id="privatemenu"></nav>
@@ -155,7 +208,7 @@
                 },
                 'source-layer': 'social_leaving-2scgtp',
                 'layout': {
-                    'visibility': 'visible'
+                    'visibility': 'none'
                 },
                 // style the colors
                 paint: {
@@ -377,7 +430,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_leaving + " person(s) left " + socialname + " in total" + "<br>" + socialtotalper100k.toFixed(2) + " total leavings per 100,000" + "</p>")
+                .setHTML(socialname.bold().fontsize(4) + "<h3>" + "In " + socialyear + ", " + socialtotal_leaving + " person(s) left " + socialname + " in total" + "<br>" + socialtotalper100k.toFixed(2) + " total leavings per 100,000" + "</h3>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -398,7 +451,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_evict + " person(s) were evicted from " + socialname + "<br>" + socialevictper100k.toFixed(2) + " evictions per 100,000" + "</p>")
+                .setHTML(socialname.bold().fontsize(4) + "<h3>" + "In " + socialyear + ", " + socialtotal_evict + " person(s) were evicted from " + socialname + "<br>" + socialevictper100k.toFixed(2) + " evictions per 100,000" + "</h3>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -418,7 +471,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_decant + " person(s) permanently decanted from " + socialname + "<br>" + socialdecantper100k.toFixed(2) + " decantings per 100,000" + "</p>")
+                .setHTML(socialname.bold().fontsize(4) + "<h3>" + "In " + socialyear + ", " + socialtotal_decant + " person(s) permanently decanted from " + socialname + "<br>" + socialdecantper100k.toFixed(2) + " decantings per 100,000" + "</h3>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -439,7 +492,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_unafford + " person(s) left " + socialname + " because of unaffordable housing " + "<br>" + socialunaffordper100k.toFixed(2) + " people per 100,000" + "</p>")
+                .setHTML(socialname.bold().fontsize(4) + "<h3>" + "In " + socialyear + ", " + socialtotal_unafford + " person(s) left " + socialname + " because of unaffordable housing " + "<br>" + socialunaffordper100k.toFixed(2) + " people per 100,000" + "</h3>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -460,7 +513,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_condition + " person(s) left " + socialname + " because of poor home condition " + "<br>" + socialconditionper100k.toFixed(2) + " people per 100,000" + "</p>")
+                .setHTML(socialname.bold().fontsize(4) + "<h3>" + "In " + socialyear + ", " + socialtotal_condition + " person(s) left " + socialname + " because of poor home condition " + "<br>" + socialconditionper100k.toFixed(2) + " people per 100,000" + "</h3>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -482,7 +535,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + socialyear + ", " + socialtotal_over + " person(s) left " + socialname + " because of overcrowding " + "<br>" + socialovercrow100k.toFixed(2) + " people per 100,000" + "</p>")
+                .setHTML(socialname.bold().fontsize(4) + "<h3>" + "In " + socialyear + ", " + socialtotal_over + " person(s) left " + socialname + " because of overcrowding " + "<br>" + socialovercrow100k.toFixed(2) + " people per 100,000" + "</h3>")
                 .addTo(social);
         });
         // change the icon when you hover it
@@ -493,24 +546,6 @@
         social.on('mouseleave', 'social_overcrowded', function () {
             social.getCanvas().style.cursor = '';
         });
-
-        // add a legend for the social map side of things
-        var sociallegendlabels = ['Very Low', 'Low', 'Middle', 'High', 'Very High'];
-        var socialcolors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
-        for (i = 0; i < sociallegendlabels.length; i++) {
-            var sociallayer = sociallegendlabels[i];
-            var socialcolor = socialcolors[i];
-            var socialitem = document.createElement('div');
-            var socialkey = document.createElement('span');
-            socialkey.className = 'sociallegend-key';
-            socialkey.style.backgroundColor = socialcolor;
-
-            var socialvalue = document.createElement('span');
-            socialvalue.innerHTML = sociallayer;
-            socialitem.appendChild(socialkey);
-            socialitem.appendChild(socialvalue);
-            sociallegend.appendChild(socialitem);
-        }
 
         // all of the above repeated again for the privately owned housing map!!!
 
@@ -544,7 +579,7 @@
                 },
                 'source-layer': 'private_leaving-0mzusp',
                 'layout': {
-                    'visibility': 'visible'
+                    'visibility': 'none'
                 },
                 // style the colors
                 paint: {
@@ -754,7 +789,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_leaving + " person(s) left " + privatename + " in total " + "<br>" + privatetotalper100k.toFixed(2) + " people per 100,000" + "</p>")
+                .setHTML(privatename.bold().fontsize(4) + "<h3>" + "In " + privateyear + ", " + privatetotal_leaving + " person(s) left " + privatename + " in total " + "<br>" + privatetotalper100k.toFixed(2) + " people per 100,000" + "</h3>")
                 .addTo(private);
         });
         // change the icon when you hover it
@@ -775,7 +810,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_evict + " person(s) were evicted from " + privatename + "<br>" + privateevictper100k.toFixed(2) + " people per 100,000" + "</p>")
+                .setHTML(privatename.bold().fontsize(4) + "<h3>" + "In " + privateyear + ", " + privatetotal_evict + " person(s) were evicted from " + privatename + "<br>" + privateevictper100k.toFixed(2) + " people per 100,000" + "</h3>")
                 .addTo(private);
         });
         // change the icon when you hover it
@@ -795,7 +830,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_decant + " person(s) permanently decanted from " + privatename + "<br>" + privatedecantper100k.toFixed(2) + " people per 100,000" + "</p>")
+                .setHTML(privatename.bold().fontsize(4) + "<h3>" + "In " + privateyear + ", " + privatetotal_decant + " person(s) permanently decanted from " + privatename + "<br>" + privatedecantper100k.toFixed(2) + " people per 100,000" + "</h3>")
                 .addTo(private);
         });
         // change the icon when you hover it
@@ -816,7 +851,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_unafford + " person(s) left " + privatename + " because of unaffordable housing " + "<br>" + privateunaffordper100k.toFixed(2) + " people per 100,000" + "</p>")
+                .setHTML(privatename.bold().fontsize(4) + "<h3>" + "In " + privateyear + ", " + privatetotal_unafford + " person(s) left " + privatename + " because of unaffordable housing " + "<br>" + privateunaffordper100k.toFixed(2) + " people per 100,000" + "</h3>")
                 .addTo(private);
         });
         // change the icon when you hover it
@@ -836,7 +871,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_cond + " person(s) left " + privatename + " because of poor housing conditions " + "<br>" + privatepoor_condper100k.toFixed(2) + " people per 100,000" + "</p>")
+                .setHTML(privatename.bold().fontsize(4) + "<h3>" + "In " + privateyear + ", " + privatetotal_cond + " person(s) left " + privatename + " because of poor housing conditions " + "<br>" + privatepoor_condper100k.toFixed(2) + " people per 100,000" + "</h3>")
                 .addTo(private);
         });
         // change the icon when you hover it
@@ -856,7 +891,7 @@
             // format the popup
             new mapboxgl.Popup()
                 .setLngLat(e.lngLat)
-                .setHTML("<p>" + "In " + privateyear + ", " + privatetotal_over + " person(s) left " + privatename + " because of overcrowding " + "<br>" + privateovercrow100k.toFixed(2) + " people per 100,000" + "</p>")
+                .setHTML(privatename.bold().fontsize(4) + "<h3>" + "In " + privateyear + ", " + privatetotal_over + " person(s) left " + privatename + " because of overcrowding " + "<br>" + privateovercrow100k.toFixed(2) + " people per 100,000" + "</h3>")
                 .addTo(private);
         });
         // change the icon when you hover it
