@@ -102,7 +102,7 @@
 
             #features {
               top: 0;
-              height: 220px;
+              height: 280px;
               margin-top: 20px;
               width: 210px;
               left: 15px;
@@ -182,7 +182,7 @@
             }
             #button {
                 background: #202020;
-                border-radius: 10px;
+                border-radius: 15px;
                 border: 2px solid #606060;
                 color: white;
                 font-family: "Helvetica";
@@ -203,14 +203,14 @@
 
             #flybutton{
                 background: #202020;
-                border-radius:  18px;
+                border-radius:  15px;
                 border: 2px solid #606060;
                 color: white;
                 font-family: "Helvetica";
                 font-size: 14px;
                 position: absolute;
-                left: 10px;
-                top: 250px;
+                left: 600px;
+                top: 80px;
                 padding: 10px;
                 height: 40px;
                 display: none;
@@ -230,9 +230,9 @@
                 font-family: "Helvetica";
                 font-size: 14px;
                 position: absolute;
-                left: 10px;
-                top: 250px;
-                padding: 10px;
+                left: 595px;
+                top: 80px;
+                padding: 5px;
                 height: 40px;
         }
              #chorobutton:hover {
@@ -241,7 +241,12 @@
                 cursor: pointer;
             }
 
-
+            #inflowoverlay{
+                display: none;
+            }
+#flowmapyear{
+    display: block;
+}
 
               .mapboxgl-popup{
                 font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
