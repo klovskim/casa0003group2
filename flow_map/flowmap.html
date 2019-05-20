@@ -104,6 +104,8 @@
     </div>
     <div id='divider'></div>
     <div class='map-overlay' id='features'><h1>London Inflow</h1><div id='pd'><h2>Hover over a line or point!</h2></div>
+        
+    
     <div class="map-overlay-inner" id = 'inflowoverlay'>
      <h2>Year: <label id='year'>2012</label></h2>
      <table><tr><td>
@@ -118,15 +120,15 @@
                   </datalist>
                 </td>
               </tr></table> 
+        
             </div>
-    <div id = 'flowmapyear'><h2>Year: 2017</h2></div>
-        <div id = "credit"> <p>Data source: <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/migrationwithintheuk/datasets/internalmigrationbyoriginanddestinationlocalauthoritiessexandsingleyearofagedetailedestimatesdataset" target="_blank">Office for National Statistics</a>
-            <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/migrationwithintheuk/datasets/internalmigrationlaandregionmovesandbysexandsingleyearofagetotals" target="_blank">Office for National Statistics</a>
-            </p></div>
+          
+        <div id = 'flowmapyear'><h2>Year: 2017</h2></div>
+        <div id = "credit"> <br><p>&copy;Dan Zhang 2019&nbsp;<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/migrationwithintheuk/datasets/internalmigrationbyoriginanddestinationlocalauthoritiessexandsingleyearofagedetailedestimatesdataset" target="_blank">Office for National Statistics</a></p></div>
           </div>
 
 
-        <button id = 'button'>NET FLOWS</button>
+        <button id = 'button'>Net Flows</button>
         <button id = 'flybutton'>Flow Map</button>
         
         <button id = 'chorobutton'>London Borough</button>
@@ -555,7 +557,7 @@
         inflowmap.on('mousemove',"InflowMapLayer",function(e) {
           var infl = e.features
           if (infl.length > 0) {
-           document.getElementById('pd').innerHTML = '<h2><strong>' + infl[0].properties.la_name + '</strong></h2><h3><strong><em>' + infl[0].properties.inflow_12 + '</strong> people come in 2012</br><strong>' + infl[0].properties.inflow_13 + '</strong> people come in 2013</br><strong>'+ infl[0].properties.inflow_14 +'</strong> people come in 2014</br><strong>'+ infl[0].properties.inflow_15 +'</strong> people come in 2015</br><strong>'+ infl[0].properties.inflow_16 +'</strong> people come in 2016</br><strong>'+ infl[0].properties.inflow_17 +'</strong> people come in 2017</br><strong></em></h3>';
+           document.getElementById('pd').innerHTML = '<h2><strong>' + infl[0].properties.la_name + '</strong></h2><h3><strong><em>' + infl[0].properties.inflow_12 + '</strong> people came in 2012</br><strong>' + infl[0].properties.inflow_13 + '</strong> people came in 2013</br><strong>'+ infl[0].properties.inflow_14 +'</strong> people came in 2014</br><strong>'+ infl[0].properties.inflow_15 +'</strong> people came in 2015</br><strong>'+ infl[0].properties.inflow_16 +'</strong> people came in 2016</br><strong>'+ infl[0].properties.inflow_17 +'</strong> people came in 2017</br><strong></em></h3>';
          } else {
           document.getElementById('pd').innerHTML = '<p>Hover over a borough!</p>';
         }
