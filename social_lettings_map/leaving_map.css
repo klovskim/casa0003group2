@@ -209,7 +209,7 @@ color: #ffff;
 }
 
 #menu {
-  background: #fff;
+  background: #282828;
   position: absolute;
   z-index: 1;
   top: 10px;
@@ -221,7 +221,7 @@ color: #ffff;
   }
 
 #privatemenu {
-  background: #fff;
+  background: #282828;
   position: absolute;
   z-index: 1;
   top: 10px;
@@ -234,7 +234,7 @@ color: #ffff;
 
 #menu a {
   font-size: 13px;
-  color: #404040;
+  color: #ffff;
   display: block;
   margin: 0;
   padding: 0;
@@ -249,22 +249,22 @@ border: none;
 }
  
 #menu a:hover {
-background-color: #f8f8f8;
-color: #404040;
+background-color: #fc8d59;
+color: #ffffff;
 }
  
 #menu a.active {
-background-color: #fc8d59;
+background-color: #b30000;
 color: #ffffff;
 }
   
 #menu a.active:hover {
-background: #b30000;
+background: #fc8d59;
 }  
 
 #privatemenu a {
   font-size: 13px;
-  color: #404040;
+  color: #ffff;
   display: block;
   margin: 0;
   padding: 0;
@@ -279,17 +279,17 @@ background: #b30000;
   }
    
   #privatemenu a:hover {
-  background-color: #f8f8f8;
+  background-color: #fc8d59;
   color: #404040;
   }
    
   #privatemenu a.active {
-  background-color: #fc8d59;
+  background-color: #b30000;
   color: #ffffff;
   }
     
   #privatemenu a.active:hover {
-  background: #b30000;
+  background: #fc8d59;
   }  
 
   #info {
