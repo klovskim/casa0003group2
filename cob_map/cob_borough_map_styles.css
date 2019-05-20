@@ -128,36 +128,36 @@ opacity: 0.95;
 }   
 
 #flyin {
-    display: block;
-    position: relative;
-    margin: 0px auto;
-    width: 10%;
-    height: 40px;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    font-size: 12px;
-    text-align: center;
-    color: black;
-    background: white;
-    opacity: .7;
-  }
+  font: Helvetica;
+  font-size: 14px;
+  display: block;
+  position: relative;
+  margin: 0px auto;
+  width: 40%;
+  height: 40px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  text-align: center;
+  color: #c7c7c7;
+  background: rgba(40, 40, 40, 0.8);
+}
 
-  #flyout {
-    display: block;
-    position: relative;
-    margin: 0px auto;
-    width: 10%;
-    height: 40px;
-    padding: 10px;
-    border: none;
-    border-radius: 3px;
-    font-size: 12px;
-    text-align: center;
-    color: black;
-    background: white;
-    opacity: .7;
-  }
+#flyout {
+  font: Helvetica;
+  font-size: 14px;
+  position: relative;
+  margin: 0px auto;
+  width: 40%;
+  height: 40px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  text-align: center;
+  color: #c7c7c7;
+  background: rgba(40, 40, 40, 0.8);
+  display: block;
+}
   .slidecontainer {
     width: 100%;
 }
