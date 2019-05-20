@@ -145,99 +145,71 @@
       margin-right: 5px;
     }
 
-  /* STORY */
+    /* STORY */
 
-  #storymode {
-   position: absolute;
-   top: 480px;
-   left: 10px;
-   width: 290px;
-   height: 140px;
-   background: #282828;
-   opacity: 0.9;
-   color: #c7c7c7;
-   padding: 10px;
-   display: block;
-   border-radius: 5px;
- }
+    #storymode {
+     position: absolute;
+     top: 490px;
+     left: 10px;
+     width: 290px;
+     height: 140px;
+     background: #282828;
+     opacity: 0.9;
+     color: #c7c7c7;
+     padding: 10px;
+     display: block;
+     border-radius: 5px;
+   }
 
- #storymode-content {
-   font-family: 'Helvetica', sans-serif;
-   font-size: 12px;
-   line-height: 16px;
- }
+   #storymode-content {
+     font-family: 'Helvetica', sans-serif;
+     font-size: 12px;
+     line-height: 16px;
+   }
 
- #storymode-header {
-   font-weight: 600;
-   /* distance from title */
-   margin-bottom: 10px;
-   text-align: left;
-   font-size: 14px;
- }
+   #storymode-header {
+     font-weight: 600;
+     /* distance from title */
+     margin-bottom: 10px;
+     text-align: left;
+     font-size: 14px;
+   }
 
- #storymode-controls {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
+   #storymode-controls {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-#storymode-controls-numbers {
-  display: inline-block;
-  text-align: center;
-  width: 60px;
-}
+  #storymode-controls-numbers {
+    display: inline-block;
+    text-align: center;
+    width: 60px;
+  }
 
-#story-back {
-  visibility: hidden;
-}
+  #story-back {
+    visibility: hidden;
+  }
 
-/* STORY CONTROL BUTTONS */
+  /* STORY CONTROL BUTTONS */
 
-i {
-  border: solid #c7c7c7;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-  cursor: pointer;
-}
+  i {
+    border: solid #c7c7c7;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    cursor: pointer;
+  }
 
-.right {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-}
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
 
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
-}
-
-/* POP UP STYLE */
-
-/*mapboxgl-popup-content {
-  position: relative;
-  border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
-  padding: 10px 10px 15px;
-  pointer-events: auto;
-  background-color: rgb(0, 0, 0, 0.85);
-}
-
-.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-  -webkit-align-self: center;
-  align-self: center;
-  border-bottom: none;
-  background-color: rgb(0, 0, 0, 0.85);
-}
-
-/* POP UP TEXT */
-
-  /*.mapboxgl-map {
-    font-family: 'Helvetica';
-    font-size: 13px;
-    color: #c7c7c7;
-    font-weight: bold;
-    background-color: rgb(0, 0, 0, 0.85);
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
   }
 </style>
 <style>
@@ -302,27 +274,27 @@ i {
     font-family: Helvetica;
   }
 
-  /* DATA SOURCE WEBSITE*/
-  a {
-    text-decoration: none;
+  h3 {
+    margin: 10px;
+    font-size: 13px;
     color: #c7c7c7;
-    font-family: Montserrat;
-    font-size: 16px;
+    font-family: Helvetica, sans-serif;
   }
 
   /* DATA SOURCE TEXT */
   p{
-    font-family: 'Montserrat';
-    font-size: 16px;
-    color: #c7c7c7;
-    font-weight: normal;åω
+    font-size: 12px;
+  margin: 10px;
+  text-align: left;
+  color: #c7c7c7;
+  font-family: Helvetica, sans-serif;
   }
 
   /* CONSLOE */
 
   #console {
     position: absolute;
-    top: 30px;
+    top: 10px;
     width: 240px;
     margin: 10px;
     padding: 10px 20px;
@@ -394,17 +366,6 @@ i {
     text-align: center;
     text-color: 'rgb(199, 199, 199, 0.8)'
   }
-
-  /* POPUP */
-
-  /*.mapboxgl-popup {
-    position: absolute;
-    max-width: 400px;
-    font: 12px/20px Helvetica, sans-serif;
-    background-color: rgba(255, 255, 255, 1);
-  }
-
-  
 </style>
 
 <!--FLY MAP BUTTONS--> 
@@ -441,52 +402,6 @@ i {
     background: rgba(0, 0, 0, 0.7);
     display: block;
   }
-
-  #info {
-    position: fixed;
-    display: none;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 75;
-  }
-  
-  #infobox {
-    position: absolute;
-    text-align: left;
-    top: 20%;
-    left: 20%;
-    right: 20%;
-    color: white;
-  }
-  
-  #infocircle {
-    right: 0;
-    position: fixed;
-    z-index: 70;
-    padding: 0;
-    margin: 0;
-  }
-  
-  #infotext {
-    display: block;
-    float: center;
-    text-align: center;
-    margin: 5px;
-    width: 1.5vw;
-    height: 1.5vw;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-  }
-  
-  #infotext:hover {
-    background: rgba(114, 159, 162, 0.8);
-    cursor: pointer;
-  }
 </style>
 
 <!--D3 STORY BUTTONS-->
@@ -494,57 +409,6 @@ i {
 
 <!--JQUERY PRIVATE SOCIAL BUTTONS--> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>  
-
-
-<script>
-    function on() {
-        document.getElementById("info").style.display = "block";
-    }
-    function off() {
-        document.getElementById("info").style.display = "none";
-    }
-</script>
-
-<div id="infocircle">
-<div id="infotext" onclick="on()">
-    i
-</div>
-</div>
-
-<div id="info" onclick="off()">
-
-<div id="infobox">
-    <h1>Rent Map</h1>
-    <br />
-    <h3>
-        <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non nulla eget nibh
-        commodo molestie eget vel magna. Duis odio lacus, vulputate eget tincidunt a, placerat sit amet
-        felis. Nulla facilisi. Maecenas consectetur, mauris eu porttitor malesuada, nunc dolor auctor
-        tellus, sed mattis massa magna eget odio. Maecenas vitae nibh eleifend nisl rhoncus dignissim ac
-        sed eros. Aliquam mauris nisi, eleifend quis mattis ac, porttitor ac sem. Proin posuere ex non
-        pharetra rhoncus. Mauris vel mi dignissim, condimentum dolor blandit, pharetra ipsum.
-        Suspendisse mattis mattis faucibus. Phasellus tincidunt justo ultricies, feugiat mauris vitae,
-        tincidunt odio. Nullam ultrices euismod justo non varius. Morbi et nisi eu risus pellentesque
-        varius porta vel ligula.
-        <br />
-
-        <h3>
-            Donec venenatis luctus nulla, non hendrerit justo porta sed. Integer bibendum ipsum non
-            eleifend
-            posuere. Aliquam ultrices quam lectus, vel tempus augue sollicitudin ut. Morbi ornare
-            ultrices
-            faucibus. Duis blandit tellus iaculis sapien facilisis rutrum. Fusce feugiat quam porttitor
-            imperdiet efficitur. Ut hendrerit mattis nisi vitae lacinia. Duis consectetur mauris et diam
-            auctor, sit amet finibus neque dapibus. Duis condimentum egestas nisi, eget vulputate nulla
-            accumsan non. Praesent faucibus dolor diam, eget suscipit ante pulvinar ut. Ut nibh quam,
-            posuere feugiat tellus sed, tempus congue dolor. Nullam condimentum finibus felis, in
-            fringilla
-            felis mollis id. Phasellus laoreet dictum nulla, non porttitor nisl blandit sed. Mauris ac
-            libero eget sem lobortis auctor et convallis arcu.
-            <br />
-        </h3>
-</div>
-</div>
 
 </head>
 <body>
@@ -561,8 +425,8 @@ i {
 
   <!--CONSOLE-->
   <div id='console'>
-    <h1>Social Own Social Housing Rent</h1>
-    <p>Data source: The average Social own social housing rent in UK from 2014 to 2016</p><a href="">sdfghjk</a>
+    <h1>Social Own and Private Own Social Housing Rent</h1>
+    <p>The Social Own and Private Own social housing rent in UK from 2014 to 2017</p>
     <div class='session'>
       <h2>Total rent</h2>
       <div class='row colors'>
@@ -593,6 +457,8 @@ i {
         <label for='Weekly'>Service Charge</label>
       </div>
     </div>
+    <p>Data source:</p><a href="https://data.gov.uk/dataset/412bc7fb-2347-4427-8f2a-1e0f55872914/core-social-housing-lettings-la-owned-rent-and-charges">Social Own Dataset</a><p><a href="https://data.gov.uk/dataset/c2c6c92c-a7c5-4eac-8784-cb9a76079694/core-social-housing-lettings-prp-owned-rent-and-charges">Private Own Dataset</a>
+    <p class="credit">&copy; Zhijia Zhou 2019&nbsp;</p>
   </div>
 
   <!--LEGEND-->
@@ -617,7 +483,7 @@ i {
 
       <!-- STORY MODE/CONTROLS/PAGE -->
       <i class='arrow left' id = 'story-back'></i>
-      <span id = 'storymode-controls-numbers'>1 of 5</span>
+      <span id = 'storymode-controls-numbers'>1 of 7</span>
       <i class='arrow right' id = 'story-forward'></i>
     </div>
   </div> 
@@ -631,11 +497,7 @@ i {
       center: [-2.54, 53.03],
       zoom: 5.3
     });
-
-
-
-
-
+    
     var values = [2014, 2015, 2016, 2017]
 
     values.sort();
@@ -666,11 +528,11 @@ map.on('load', function() {
 
 
 //Private Rent Heat Map
-  map.addLayer({
-    id: 'price-heatmap-private',
-    type: 'heatmap',
-    source: {
-      type: 'vector',
+map.addLayer({
+  id: 'price-heatmap-private',
+  type: 'heatmap',
+  source: {
+    type: 'vector',
   url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
 },
   'source-layer': 'hebing-8twnae', // name of tilesets
@@ -730,11 +592,11 @@ map.on('load', function() {
 }, 'waterway-label');
 
 //Social Rent Heat Map
-  map.addLayer({
-        id: 'price-heatmap-social',
-        type: 'heatmap',
-        source: {
-          type: 'vector',
+map.addLayer({
+  id: 'price-heatmap-social',
+  type: 'heatmap',
+  source: {
+    type: 'vector',
   url: 'mapbox://joannazhou.7jozekyp' // Your Mapbox tileset Map ID
 },
   'source-layer': 'final_socown_social_rent-98umef', // name of tilesets
@@ -793,46 +655,11 @@ map.on('load', function() {
 }
 }, 'waterway-label');
 
-  map.addLayer({
-    id: 'price-circle',
-    type: 'circle',
-    source: {
-      type: 'vector',
-  url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
-},
-  'source-layer': 'hebing-8twnae', // name of tilesets
-  'layout': {
-    'visibility': 'visible'
-  },
-  minzoom: 7,
-  paint: {
-    'circle-radius': [
-    'interpolate',
-    ['linear'],
-    ['number', ['get', 'value']],
-    71, 4,
-    147, 24
-    ],
-    'circle-color': [
-    'interpolate',
-    ['linear'],
-    ['number', ['get', 'value']],
-    71, '#fff',
-    86, '#e4d4b3',
-    101, '#caaa68',
-    116, '#977735',
-    131, '#4b3b1b',
-    147, '#0d0a04'
-    ],
-    'circle-opacity': 0
-  }
-});
-
-  map.addLayer({
-    id: 'price-fill',
-    type: 'fill',
-    source: {
-      type: 'vector',
+map.addLayer({
+  id: 'price-fill',
+  type: 'fill',
+  source: {
+    type: 'vector',
   url: 'mapbox://joannazhou.9x7okull' // Your Mapbox tileset Map ID
 },
   'source-layer': 'shapefiledata-91x1z8', // name of tilesets
@@ -844,11 +671,11 @@ map.on('load', function() {
   }
 });
 
-  map.addLayer({
-    id: "price-borders",
-    type: "line",
-    source: {
-      type: 'vector',
+map.addLayer({
+  id: "price-borders",
+  type: "line",
+  source: {
+    type: 'vector',
     url: 'mapbox://joannazhou.7lk2zja2' // Your Mapbox tileset Map ID
   },
   'source-layer': 'london_borough_boundary-0ec2on', // name of tilesets
@@ -860,18 +687,9 @@ map.on('load', function() {
   }
 });
 
-
-
-
-
-
-
-
-
-
-  /*  SOCIAL: MAPBOX INTERVAL DATA: 0-1272 */
-  map.addLayer({
-    id: 'Social',
+/*  SOCIAL  */
+map.addLayer({
+  id: 'Social',
         // for 3D effect 
         type: 'circle',
         source: {
@@ -909,12 +727,12 @@ map.on('load', function() {
         }
       });   
 
-  /* PRIVATE: MAPBOX INTERVAL DATA: 0-1272 */
-  map.addLayer({
-    id: 'Private',
-    type: 'circle',
-    source: {
-      type: 'vector',
+/* PRIVATE */
+map.addLayer({
+  id: 'Private',
+  type: 'circle',
+  source: {
+    type: 'vector',
     url: 'mapbox://joannazhou.87farynh' // Your Mapbox tileset Map ID
   },
           //'source-layer': 'hebing-2yxh6o',
@@ -949,32 +767,11 @@ map.on('load', function() {
           }
         }); 
 
-  /*map.addLayer({
-    id: 'price-labels',
-    type: 'symbol',
-    source: {
-      type: 'vector',
-    url: 'mapbox://joannazhou.d0fywqtm' // Your Mapbox tileset Map ID
-  },
-    'source-layer': '7788-3jydaa', // name of tilesets
-    'layout': {
-      'text-field': 'value',
-      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-      'text-size': 12
-    },
-    'label-opacity':0,
-    'minzoom': 9.5,
-    'paint': {
-      'text-color': 'rgba(255, 255, 255, 0.8)'
-    }
-  });*/
-
-
-  map.addLayer({
-    id: 'price-labels-social',
-    type: 'symbol',
-    source: {
-      type: 'vector',
+map.addLayer({
+  id: 'price-labels-social',
+  type: 'symbol',
+  source: {
+    type: 'vector',
     url: 'mapbox://joannazhou.87farynh' // Your Mapbox tileset Map ID
   },
     'source-layer': 'hebing-2yxh6o', // name of tilesets
@@ -991,11 +788,11 @@ map.on('load', function() {
   });
 
 
-  map.addLayer({
-    id: 'price-labels-private',
-    type: 'symbol',
-    source: {
-      type: 'vector',
+map.addLayer({
+  id: 'price-labels-private',
+  type: 'symbol',
+  source: {
+    type: 'vector',
     url: 'mapbox://joannazhou.87farynh' // Your Mapbox tileset Map ID
   },
     'source-layer': 'hebing-2yxh6o', // name of tilesets
@@ -1140,7 +937,7 @@ map.flyTo({
 });
 
 document.getElementById('flyout').addEventListener('click', function () {
-// Fly to a random location by offsetting the point -74.50, 40
+// Fly to a random location by offsetting the point -2.54, 53.03
 // by up to 5 degrees.
 map.flyTo({
   center: [-2.54, 53.03],
@@ -1169,25 +966,6 @@ map.on('zoom', function() {
   }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Storyline buttons to make interaction easier, d3 used */
 
 var pageNum = 1;
@@ -1208,20 +986,20 @@ description: "The map shows the sum of the prices of private own and social own 
     Social_status: "",
     flyTo1: {
       center: [-2.54, 53.03],
-  zoom: 5.3,
-  bearing: 0,
+      zoom: 5.3,
+      bearing: 0,
       pitch: 0,
       speed: 0.3
     },
     flyTo2: {
       center: [-2.54, 53.03],
-  zoom: 5.3,
-  bearing: 0,
+      zoom: 5.3,
+      bearing: 0,
       speed: 0.3    }
-  },
+    },
 
-  { title: "Private Own Social House Rent in England",
-description: "From 2014 to 2017, the weekly rent of private own social house in the south of England, especially in London, prices are significantly higher than in other parts of the country.",
+    { title: "Private Own Social House Rent in England",
+    description: "From 2014 to 2017, the weekly rent of private own social house in the south of England, especially in London, prices are significantly higher than in other parts of the country.",
     // change starting position also on filter of map!!!!
     index: 0,
     Private: 'visible',
@@ -1230,58 +1008,58 @@ description: "From 2014 to 2017, the weekly rent of private own social house in 
     Social_status: "",
     flyTo1: {
       center: [-2.54, 53.03],
-  zoom: 5.3,
-  bearing: 0,
+      zoom: 5.3,
+      bearing: 0,
       pitch: 0,
       speed: 0.3
     },
     flyTo2: {
       center: [-2.54, 53.03],
-  zoom: 5.3,
-  bearing: 0,
+      zoom: 5.3,
+      bearing: 0,
       speed: 0.3    }
+    },
+
+    { title: "Social Own Social House Rent in England",
+    description: "Social own social house weekly rent shows a similar price distribution.",
+    index: 0,
+    Private: 'visible',
+    Social: 'none',
+    Private_status: "active",
+    Social_status: "",
+    flyTo1: {
+      center: [-2.54, 53.03],
+      zoom: 5.3,
+      bearing: 0,
+      speed: 0.3
+    },
+    flyTo2: {
+      center: [-2.54, 53.03],
+      zoom: 5.3,
+      bearing: 0,
+      speed: 0.3
+    }
   },
 
-  { title: "Social Own Social House Rent in England",
-  description: "Social own social house weekly rent shows a similar price distribution.",
-  index: 0,
+  { title: "Private Own Social House Rent in London",
+  description: "The closer you get to the City of London, the higher the weekly rent becomes. Borough weekly rent in the north is higher than borough weekly rent in the south.",
+  index: 312,
   Private: 'visible',
   Social: 'none',
   Private_status: "active",
   Social_status: "",
   flyTo1: {
-    center: [-2.54, 53.03],
-  zoom: 5.3,
-  bearing: 0,
+    zoom: 9,
+    center: [-0.14, 51.51],
+    pitch: 0,
     speed: 0.3
   },
   flyTo2: {
     center: [-2.54, 53.03],
-  zoom: 5.3,
-  bearing: 0,
+    zoom: 5.3,
+    bearing: 0,
     speed: 0.3
-  }
-},
-
-{ title: "Private Own Social House Rent in London",
-description: "The closer you get to the City of London, the higher the weekly rent becomes. Borough weekly rent in the north is higher than borough weekly rent in the south.",
-index: 312,
-Private: 'visible',
-Social: 'none',
-Private_status: "active",
-Social_status: "",
-flyTo1: {
-  zoom: 9,
-  center: [-0.14, 51.51],
-  pitch: 0,
-  speed: 0.3
-},
-flyTo2: {
-  center: [-2.54, 53.03],
-  zoom: 5.3,
-  bearing: 0,
-    speed: 0.3
-},
+  },
 },
 
 { title: "Private Own Social House Rent in London",
@@ -1372,17 +1150,6 @@ function updateStory1(storyObj) {
  var Private_status = storyObj['Private_status'];
  var Social_status = storyObj['Social_status'];
 
-
-
-
-
-
-
-
-
-   
-
-
    // set Private/Social layer
   // set button colours
 
@@ -1401,12 +1168,10 @@ function updateStory1(storyObj) {
 
 };
 
-
-
 /* CHECK */
 
 function updateStory2(storyObj) {
-  
+
   // story variables
   var title = storyObj['title'];
   var description = storyObj['description'];
@@ -1417,7 +1182,7 @@ function updateStory2(storyObj) {
   /*var index = storyObj['index'];
   $('.range-slider').val(index);
   var date_value = values[index];*/
-    
+
  // social/exit variables
  var social_visibility = storyObj['social'];
  var private_visibility = storyObj['private'];
@@ -1427,7 +1192,7 @@ function updateStory2(storyObj) {
 
   // set social/private layer
   // set button colours
-    
+
   map.setLayoutProperty('Social', 'visibility', social_visibility);
   map.setLayoutProperty('Private', 'visibility', private_visibility);
   $("#Social").attr("class", social_status);
@@ -1439,22 +1204,8 @@ function updateStory2(storyObj) {
 
   // Update Camera.
   map.flyTo(cameraSettings);
-    
+
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* CALL TO STORY */
 
