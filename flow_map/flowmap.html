@@ -103,11 +103,11 @@
     <div id='outflow' class='map'>
     </div>
     <div id='divider'></div>
-    <div class='map-overlay' id='features'><h1>London Inflow</h1><div id='pd'><h2>Hover over a borough or zoom!</h2></div>
+    <div class='map-overlay' id='features'><h1>London Inflow</h1><div id='pd'><h2>Hover over a line or point!</h2></div>
     <div class="map-overlay-inner" id = 'inflowoverlay'>
      <h2>Year: <label id='year'>2012</label></h2>
      <table><tr><td>
-      <input id='slider' class="slider" type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
+      <input id='slider1' class="slider" type='range' min='0' max='5' step='1' value='0' list='tickmarks' />
       <datalist id="tickmarks">
         <option value="0" label="2012">
           <option value="1">
@@ -120,6 +120,9 @@
               </tr></table> 
             </div>
     <div id = 'flowmapyear'><h2>Year: 2017</h2></div>
+        <div id = "credit"> <p>Data source: <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/migrationwithintheuk/datasets/internalmigrationbyoriginanddestinationlocalauthoritiessexandsingleyearofagedetailedestimatesdataset" target="_blank">Office for National Statistics</a>
+            <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/migrationwithintheuk/datasets/internalmigrationlaandregionmovesandbysexandsingleyearofagetotals" target="_blank">Office for National Statistics</a>
+            </p></div>
           </div>
 
 
@@ -128,13 +131,13 @@
         
         <button id = 'chorobutton'>London Borough</button>
         
-          <div class='map-overlay' id='features1'><h1>London Outflow</h1><div id='ph'><h2>Hover over a borough or zoom!</h2></div>
+          <div class='map-overlay' id='features1'><h1>London Outflow</h1><div id='ph'><h2>Hover over a line or point!</h2></div>
           <div id = 'flowmapyear2'><h2>Year: 2017</h2></div>
                 </div>
 
         
         
-        <div class='map-overlay-net' id='features2'><h1>London Netflow</h1><div id='pz'><p>Hover over a borough!</p></div>
+        <div class='map-overlay-net' id='features2'><h1>London Netflow</h1><div id='pz'><p>Hover over a line or point!</p></div>
         <div class="map-overlay-inner">
            <h2> Year: <label id='year3'>2012</label></h2>
            <table><tr><td>
@@ -231,8 +234,8 @@
     var inflowmap = new mapboxgl.Map({
       container: 'inflow',
       style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
-      center: [-0.131404, 51.570888],
-      zoom: 8.5
+      center: [-0.904133,54.060395],
+      zoom: 5.28
     });
     //mapbox://styles/danzhang6028/cjv3vh8a00wd01foijlgt2myv
     //mapbox://styles/danzhang6028/cjv3y5p9e0fkj1frme5lbjfed
@@ -240,8 +243,8 @@
     var outflowmap = new mapboxgl.Map({
       container: 'outflow',
       style: 'mapbox://styles/danzhang6028/cjvcojym61a1p1fp0aqsr5pk8',
-      center: [-0.131404, 51.570888],
-      zoom: 8.5
+      center: [-0.904133,54.060395],
+      zoom: 5.28
     });
                     
     // sync maps
@@ -561,7 +564,7 @@
 
 
           });
-        document.getElementById('slider').addEventListener('input', function(e) {
+        document.getElementById('slider1').addEventListener('input', function(e) {
           var year = parseInt(e.target.value);
           setYear(year);
         });
@@ -634,7 +637,7 @@
           }
         });
 
-        // show slider based on zoom level
+        // show year window based on zoom level
         var sliderEl = document.getElementById('inflowoverlay');
         inflowmap.on('zoom', function() {
           if (inflowmap.getZoom() > zoomThreshold) {
@@ -643,8 +646,27 @@
             sliderEl.style.display = 'none';
           }
         });
-
-
+        
+        // show inflow and outflow slider based on zoom level
+        var slider1El = document.getElementById('slider1');
+        inflowmap.on('zoom', function() {
+          if (inflowmap.getZoom() > zoomThreshold) {
+            slider1El.style.display = 'block';
+          } else {
+            slider1El.style.display = 'none';
+          }
+        });
+        
+        // show netflow slider based on zoom level
+        var slider3El = document.getElementById('slider3');
+        inflowmap.on('zoom', function() {
+          if (inflowmap.getZoom() > zoomThreshold) {
+            slider3El.style.display = 'block';
+          } else {
+            slider3El.style.display = 'none';
+          }
+        });
+        
         // show flowmap year based on zoom level
         var flowmapyearEl = document.getElementById('flowmapyear');
         inflowmap.on('zoom', function() {
@@ -914,15 +936,11 @@
         //outflowmap end
 
 
-        document.getElementById('slider').addEventListener('input', function(e) {
+        document.getElementById('slider1').addEventListener('input', function(e) {
           var year = parseInt(e.target.value);
           setYear(year);
         });
         
-        //document.getElementById('slider2').addEventListener('input', function(e) {
-          //var year = parseInt(e.target.value);
-          //setYear(year);
-        //});
 
         outflowmap.on('mousemove','outflowMapLayer', function(e) {
          var outfl = e.features
@@ -946,15 +964,6 @@
           outflowmap.setFilter("outflow-border", ["==", "la_name", ""]);
         });
 
-        // show slider based on zoom level
-        //var outflowsliderEl = document.getElementById('outflowoverlay');
-       // outflowmap.on('zoom', function() {
-          //if (outflowmap.getZoom() > zoomThreshold) {
-            //outflowsliderEl.style.display = 'block';
-          //} else {
-           // outflowsliderEl.style.display = 'none';
-         // }
-        //});
 
         // show outflow map year based on zoom level
         var flowmapyearEl = document.getElementById('flowmapyear2');
