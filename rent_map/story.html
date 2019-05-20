@@ -11,6 +11,7 @@
   <!--MAPBOX-->
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+  
 
   <!--STYLE SHEET-->
   <style>
@@ -428,6 +429,7 @@
   
   #infocircle {
     right: 0;
+    top: 0;
     position: fixed;
     z-index: 70;
     padding: 0;
@@ -449,7 +451,7 @@
     background: rgba(114, 159, 162, 0.8);
     cursor: pointer;
   }
-  }
+
 </style>
 
 <!--D3 STORY BUTTONS-->
@@ -458,61 +460,12 @@
 <!--JQUERY PRIVATE SOCIAL BUTTONS--> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>  
 
-
 </head>
 <body>
 
   <!--MAPS-->
   <div id='map'></div>
 
-  <script>
-    function on() {
-        document.getElementById("info").style.display = "block";
-    }
-    function off() {
-        document.getElementById("info").style.display = "none";
-    }
-</script>
-
-<div id="infocircle">
-<div id="infotext" onclick="on()">
-    i
-</div>
-</div>
-
-<div id="info" onclick="off()">
-
-<div id="infobox">
-    <h1>Rent Map 2014-2017</h1>
-    <br />
-    <h3>
-        <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non nulla eget nibh
-        commodo molestie eget vel magna. Duis odio lacus, vulputate eget tincidunt a, placerat sit amet
-        felis. Nulla facilisi. Maecenas consectetur, mauris eu porttitor malesuada, nunc dolor auctor
-        tellus, sed mattis massa magna eget odio. Maecenas vitae nibh eleifend nisl rhoncus dignissim ac
-        sed eros. Aliquam mauris nisi, eleifend quis mattis ac, porttitor ac sem. Proin posuere ex non
-        pharetra rhoncus. Mauris vel mi dignissim, condimentum dolor blandit, pharetra ipsum.
-        Suspendisse mattis mattis faucibus. Phasellus tincidunt justo ultricies, feugiat mauris vitae,
-        tincidunt odio. Nullam ultrices euismod justo non varius. Morbi et nisi eu risus pellentesque
-        varius porta vel ligula.
-        <br />
-
-        <h3>
-            Donec venenatis luctus nulla, non hendrerit justo porta sed. Integer bibendum ipsum non
-            eleifend
-            posuere. Aliquam ultrices quam lectus, vel tempus augue sollicitudin ut. Morbi ornare
-            ultrices
-            faucibus. Duis blandit tellus iaculis sapien facilisis rutrum. Fusce feugiat quam porttitor
-            imperdiet efficitur. Ut hendrerit mattis nisi vitae lacinia. Duis consectetur mauris et diam
-            auctor, sit amet finibus neque dapibus. Duis condimentum egestas nisi, eget vulputate nulla
-            accumsan non. Praesent faucibus dolor diam, eget suscipit ante pulvinar ut. Ut nibh quam,
-            posuere feugiat tellus sed, tempus congue dolor. Nullam condimentum finibus felis, in
-            fringilla
-            felis mollis id. Phasellus laoreet dictum nulla, non porttitor nisl blandit sed. Mauris ac
-            libero eget sem lobortis auctor et convallis arcu.
-            <br />
-        </h3>
-</div>
 
   <!--PRIVATE SOCIAL BUTTON-->
   <div class='map-overlay-menu top'><div class='map-overlay-menu inner'><h2><nav id="menu"></nav></h2></div></div>
@@ -586,6 +539,54 @@
     </div>
   </div> 
 
+  <script>
+    function on() {
+        document.getElementById("info").style.display = "block";
+    }
+    function off() {
+        document.getElementById("info").style.display = "none";
+    }
+</script>
+
+<div id="infocircle">
+<div id="infotext" onclick="on()">
+    i
+</div>
+</div>
+
+<div id="info" onclick="off()">
+
+<div id="infobox">
+    <h1>Rent Map 2014-2017</h1>
+    <br />
+    <h3>
+        <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non nulla eget nibh
+        commodo molestie eget vel magna. Duis odio lacus, vulputate eget tincidunt a, placerat sit amet
+        felis. Nulla facilisi. Maecenas consectetur, mauris eu porttitor malesuada, nunc dolor auctor
+        tellus, sed mattis massa magna eget odio. Maecenas vitae nibh eleifend nisl rhoncus dignissim ac
+        sed eros. Aliquam mauris nisi, eleifend quis mattis ac, porttitor ac sem. Proin posuere ex non
+        pharetra rhoncus. Mauris vel mi dignissim, condimentum dolor blandit, pharetra ipsum.
+        Suspendisse mattis mattis faucibus. Phasellus tincidunt justo ultricies, feugiat mauris vitae,
+        tincidunt odio. Nullam ultrices euismod justo non varius. Morbi et nisi eu risus pellentesque
+        varius porta vel ligula.
+        <br />
+
+        <h3>
+            Donec venenatis luctus nulla, non hendrerit justo porta sed. Integer bibendum ipsum non
+            eleifend
+            posuere. Aliquam ultrices quam lectus, vel tempus augue sollicitudin ut. Morbi ornare
+            ultrices
+            faucibus. Duis blandit tellus iaculis sapien facilisis rutrum. Fusce feugiat quam porttitor
+            imperdiet efficitur. Ut hendrerit mattis nisi vitae lacinia. Duis consectetur mauris et diam
+            auctor, sit amet finibus neque dapibus. Duis condimentum egestas nisi, eget vulputate nulla
+            accumsan non. Praesent faucibus dolor diam, eget suscipit ante pulvinar ut. Ut nibh quam,
+            posuere feugiat tellus sed, tempus congue dolor. Nullam condimentum finibus felis, in
+            fringilla
+            felis mollis id. Phasellus laoreet dictum nulla, non porttitor nisl blandit sed. Mauris ac
+            libero eget sem lobortis auctor et convallis arcu.
+            <br />
+        </h3>
+</div>
 
   <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbm5hemhvdSIsImEiOiJjanY1cjhwdTUxdDI4M3lvYjFnMTB6ejVyIn0.daDuLibhR42z9EbKYs7z7Q';
