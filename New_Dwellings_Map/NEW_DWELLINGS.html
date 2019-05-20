@@ -70,7 +70,7 @@
 
 .legend label,
 .legend span {
-  color: #c7c7c7
+  color: #c7c7c7;
   display:block;
   float:left;
   height:15px;
@@ -148,7 +148,52 @@
 .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
     border-left-color: #282828;
     opacity: 0.95;
-    }         
+    }      
+    #info {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 75;
+  }
+  
+  #infobox {
+    position: absolute;
+    text-align: left;
+    top: 20%;
+    left: 20%;
+    right: 20%;
+    color: white;
+  }
+  
+  #infocircle {
+    right: 0;
+    position: fixed;
+    z-index: 70;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #infotext {
+    display: block;
+    float: center;
+    text-align: center;
+    margin: 5px;
+    width: 1.5vw;
+    height: 1.5vw;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+  }
+  
+  #infotext:hover {
+    background: rgba(114, 159, 162, 0.8);
+    cursor: pointer;
+  }   
   </style>
 </head>
 <body>
@@ -179,6 +224,55 @@
     
 <div id='map'></div>
 
+<script>
+  function on() {
+      document.getElementById("info").style.display = "block";
+  }
+  function off() {
+      document.getElementById("info").style.display = "none";
+  }
+</script>
+
+<div id="infocircle">
+<div id="infotext" onclick="on()">
+  i
+</div>
+</div>
+
+<div id="info" onclick="off()">
+
+<div id="infobox">
+  <h1>Reasons for Lettings Map 2014-2017</h1>
+  <br />
+  <h3>
+      <br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent non nulla eget nibh
+      commodo molestie eget vel magna. Duis odio lacus, vulputate eget tincidunt a, placerat sit amet
+      felis. Nulla facilisi. Maecenas consectetur, mauris eu porttitor malesuada, nunc dolor auctor
+      tellus, sed mattis massa magna eget odio. Maecenas vitae nibh eleifend nisl rhoncus dignissim ac
+      sed eros. Aliquam mauris nisi, eleifend quis mattis ac, porttitor ac sem. Proin posuere ex non
+      pharetra rhoncus. Mauris vel mi dignissim, condimentum dolor blandit, pharetra ipsum.
+      Suspendisse mattis mattis faucibus. Phasellus tincidunt justo ultricies, feugiat mauris vitae,
+      tincidunt odio. Nullam ultrices euismod justo non varius. Morbi et nisi eu risus pellentesque
+      varius porta vel ligula.
+      <br />
+
+      <h3>
+          Donec venenatis luctus nulla, non hendrerit justo porta sed. Integer bibendum ipsum non
+          eleifend
+          posuere. Aliquam ultrices quam lectus, vel tempus augue sollicitudin ut. Morbi ornare
+          ultrices
+          faucibus. Duis blandit tellus iaculis sapien facilisis rutrum. Fusce feugiat quam porttitor
+          imperdiet efficitur. Ut hendrerit mattis nisi vitae lacinia. Duis consectetur mauris et diam
+          auctor, sit amet finibus neque dapibus. Duis condimentum egestas nisi, eget vulputate nulla
+          accumsan non. Praesent faucibus dolor diam, eget suscipit ante pulvinar ut. Ut nibh quam,
+          posuere feugiat tellus sed, tempus congue dolor. Nullam condimentum finibus felis, in
+          fringilla
+          felis mollis id. Phasellus laoreet dictum nulla, non porttitor nisl blandit sed. Mauris ac
+          libero eget sem lobortis auctor et convallis arcu.
+          <br />
+      </h3>
+</div>
+</div>
     
 <div class='map-overlay'>
     <div class='map-overlay-inner-right'>
@@ -917,7 +1011,7 @@ if (la.length==1) {
 
 map.setFilter('highlights', ['==','borough_na',la[0].properties.borough_na]);
 console.log(la[0].properties.borough_na);
-document.getElementById('countryname').innerHTML = document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_6 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_6 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_6 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_6;
+document.getElementById('countryname').innerHTML = document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_6 + '<br>Affordable housing additions: ' + la[0].properties.affordab_6 + '<br>Average persons per dwelling: ' + la[0].properties.person_p_6 + '<br>Total dwellings in Borough: ' + la[0].properties.all_dwel_6 + '<br><br>2011 London average net additional dwellings: 663.15<br>2011 London average affordable housing: 443.06<br>2011 London average persons per dwelling: 2.41<br>2011 London percentage of net as afforable: 66.81%';
 console.log(la[0].id);
 console.log(la);
 
@@ -942,7 +1036,7 @@ var persons = e.features[0].properties.person_per;
 var dwellings = e.features[0].properties.all_dwelli;
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable housing additions: ' + afford + '<br>Average persons per dwelling: ' + persons + '<br>Total dwellings in Borough: ' + dwellings)
 .addTo(map);
 }
 else if (document.getElementById('slider-value').textContent == "2012") {
@@ -953,7 +1047,7 @@ var persons = e.features[0].properties.person_p_1;
 var dwellings = e.features[0].properties.all_dwel_1;
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable housing additions: ' + afford + '<br>Average persons per dwelling: ' + persons + '<br>Total dwellings in Borough: ' + dwellings)
 .addTo(map);}
 else if (document.getElementById('slider-value').textContent == "2013") {
 var borough = e.features[0].properties.borough_na;
@@ -963,7 +1057,7 @@ var persons = e.features[0].properties.person_p_2;
 var dwellings = e.features[0].properties.all_dwel_2;
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable housing additions: ' + afford + '<br>Average persons per dwelling: ' + persons + '<br>Total dwellings in Borough: ' + dwellings)
 .addTo(map);}
 else if (document.getElementById('slider-value').textContent == "2014") {
 var borough = e.features[0].properties.borough_na;
@@ -973,7 +1067,7 @@ var persons = e.features[0].properties.person_p_3;
 var dwellings = e.features[0].properties.all_dwel_3;
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable housing additions: ' + afford + '<br>Average persons per dwelling: ' + persons + '<br>Total dwellings in Borough: ' + dwellings)
 .addTo(map);}
 else if (document.getElementById('slider-value').textContent == "2015") {
 var borough = e.features[0].properties.borough_na;
@@ -983,7 +1077,7 @@ var persons = e.features[0].properties.person_p_4;
 var dwellings = e.features[0].properties.all_dwel_4;
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable housing additions: ' + afford + '<br>Average persons per dwelling: ' + persons + '<br>Total dwellings in Borough: ' + dwellings)
 .addTo(map);}
 else if (document.getElementById('slider-value').textContent == "2016") {
 var borough = e.features[0].properties.borough_na;
@@ -993,7 +1087,7 @@ var persons = e.features[0].properties.person_p_5;
 var dwellings = e.features[0].properties.all_dwel_5;
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable housing additions: ' + afford + '<br>Average persons per dwelling: ' + persons + '<br>Total dwellings in Borough: ' + dwellings)
 .addTo(map);}
 else if (document.getElementById('slider-value').textContent == "2017") {
 var borough = e.features[0].properties.borough_na;
@@ -1003,7 +1097,7 @@ var persons = e.features[0].properties.person_p_6;
 var dwellings = e.features[0].properties.all_dwel_6;
 new mapboxgl.Popup()
 .setLngLat(e.lngLat)
-.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable Housing additions: ' + afford + '<br>Average Persons per Dwelling: ' + persons + '<br>Total Dwellings in Borough: ' + dwellings)
+.setHTML(borough.bold().fontsize(4) + '<br>Net additional dwellings: ' + additions + '<br>Affordable housing additions: ' + afford + '<br>Average persons per dwelling: ' + persons + '<br>Total dwellings in Borough: ' + dwellings)
 .addTo(map);}
 });
 
@@ -1056,11 +1150,11 @@ map.on('mousemove', function(e) {
   });
 
 if (la.length==1) {
-document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_additi + '<br>Affordable Housing additions: ' + la[0].properties.affordable + '<br>Average Persons per Dwelling: ' + la[0].properties.person_per + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwelli;
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_additi + '<br>Affordable housing additions: ' + la[0].properties.affordable + '<br>Average persons per dwelling: ' + la[0].properties.person_per + '<br>Total dwellings in Borough: ' + la[0].properties.all_dwelli + '<br><br>2011 London average net additional dwellings: 663.15<br>2011 London average affordable housing: 443.06<br>2011 London average persons per dwelling: 2.41<br>2011 London percentage of net as afforable: 66.81%';
 }
     
     else {
-document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accomodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
+document.getElementById('countryname').innerHTML = "The underlying London map visualises how crowded accommodation is in each London borough for the years 2011 to 2017. The blue bar graphs in each borough represent the net dwelling additions for that year. The darker blue section represents the proportion of affordable housing for each total. Affordable housing, according to the Mayor's office, is: 'social rented, affordable rented and intermediate housing, provided to eligible households whose needs are not met by the market.'<br><br>Hover over each borough for a detailed look at the data and click to get some quick stats.";
 }
 });
 }
@@ -1100,7 +1194,7 @@ map.on('mousemove', function(e) {
   });
 
 if (la.length==1) {
-document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_1 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_1 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_1 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_1;
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_1 + '<br>Affordable housing additions: ' + la[0].properties.affordab_1 + '<br>Average persons per dwelling: ' + la[0].properties.person_p_1 + '<br>Total dwellings in Borough: ' + la[0].properties.all_dwel_1 + '<br><br>2012 London average net additional dwellings: 753.55<br>2012 London average affordable housing: 528.24<br>2012 London average persons per dwelling: 2.43<br>2012 London percentage of net as afforable: 70.10%';
 }
     
     else {
@@ -1111,7 +1205,7 @@ document.getElementById('countryname').innerHTML = "The underlying London map vi
 else{}
 });
 
-//Event listener for layer switch 3 - Country of Birth
+//Event listener for layer switch 3 - 2013
 document.getElementById('slider').addEventListener('input', function(e) {
 var inputyear = e.target.value;
 if (inputyear == 2) {
@@ -1143,7 +1237,7 @@ map.on('mousemove', function(e) {
   });
 
 if (la.length==1) {
-document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_2 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_2 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_2 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_2;
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_2 + '<br>Affordable housing additions: ' + la[0].properties.affordab_2 + '<br>Average persons per dwelling: ' + la[0].properties.person_p_2 + '<br>Total dwellings in Borough: ' + la[0].properties.all_dwel_2 + '<br><br>2013 London average net additional dwellings: 637.55<br>2013 London average affordable housing: 270.03<br>2013 London average persons per dwelling: 2.44<br>2013 London percentage of net as afforable: 42.35%';
 }
     
     else {
@@ -1154,7 +1248,7 @@ document.getElementById('countryname').innerHTML = "The underlying London map vi
 else{}
 });
     
-//Event listener for layer switch 4 - Without English
+//Event listener for layer switch 4 - 2014
 document.getElementById('slider').addEventListener('input', function(e) {
 var inputyear = e.target.value;
 if (inputyear == 3) {
@@ -1186,7 +1280,7 @@ map.on('mousemove', function(e) {
   });
 
 if (la.length==1) {
-document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_3 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_3 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_3 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_3;
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_3 + '<br>Affordable housing additions: ' + la[0].properties.affordab_3 + '<br>Average persons per dwelling: ' + la[0].properties.person_p_3 + '<br>Total dwellings in Borough: ' + la[0].properties.all_dwel_3 + '<br><br>2014 London average net additional dwellings: 714.45<br>2014 London average affordable housing: 284.21<br>2014 London average persons per dwelling: 2.46<br>2014 London percentage of net as afforable: 39.78%';
 }
     
     else {
@@ -1197,7 +1291,7 @@ document.getElementById('countryname').innerHTML = "The underlying London map vi
 else{}
 });
     
-//Event listener for layer switch 5 - Car availability
+//Event listener for layer switch 5 - 2015
 document.getElementById('slider').addEventListener('input', function(e) {
 var inputyear = e.target.value;
 if (inputyear == 4) {
@@ -1229,7 +1323,7 @@ map.on('mousemove', function(e) {
   });
 
 if (la.length==1) {
-document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_4 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_4 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_4 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_4;
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_4 + '<br>Affordable housing additions: ' + la[0].properties.affordab_4 + '<br>Average persons per dwelling: ' + la[0].properties.person_p_4 + '<br>Total dwellings in Borough: ' + la[0].properties.all_dwel_4 + '<br><br>2015 London average net additional dwellings: 813.42<br>2015 London average affordable housing: 551.39<br>2015 London average persons per dwelling: 2.48<br>2015 London percentage of net as afforable: 67.79%';
 }
     
     else {
@@ -1240,7 +1334,7 @@ document.getElementById('countryname').innerHTML = "The underlying London map vi
 else{}
 });
     
-//Event listener for layer switch 6 - House ownership
+//Event listener for layer switch 6 - 2016
 document.getElementById('slider').addEventListener('input', function(e) {
 var inputyear = e.target.value;
 if (inputyear == 5) {
@@ -1272,7 +1366,7 @@ map.on('mousemove', function(e) {
   });
 
 if (la.length==1) {
-document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_5 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_5 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_5 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_5;
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_5 + '<br>Affordable housing additions: ' + la[0].properties.affordab_5 + '<br>Average persons per dwelling: ' + la[0].properties.person_p_5 + '<br>Total dwellings in Borough: ' + la[0].properties.all_dwel_5 + '<br><br>2016 London average net additional dwellings: 925.12<br>2016 London average affordable housing: 175.39<br>2016 London average persons per dwelling: 2.49<br>2016 London percentage of net as afforable: 18.96%';
 }
     
     else {
@@ -1283,7 +1377,7 @@ document.getElementById('countryname').innerHTML = "The underlying London map vi
 else{}
 });
     
-//Event listener for layer switch 7 - Daily activity limited
+//Event listener for layer switch 7 - 2017
 document.getElementById('slider').addEventListener('input', function(e) {
 var inputyear = e.target.value;
 if (inputyear == 6) {
@@ -1315,7 +1409,7 @@ map.on('mousemove', function(e) {
   });
 
 if (la.length==1) {
-document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_6 + '<br>Affordable Housing additions: ' + la[0].properties.affordab_6 + '<br>Average Persons per Dwelling: ' + la[0].properties.person_p_6 + '<br>Total Dwellings in Borough: ' + la[0].properties.all_dwel_6;
+document.getElementById('countryname').innerHTML = la[0].properties.borough_na.fontsize(4) + '<br><br>Net additional dwellings: ' + la[0].properties.net_addi_6 + '<br>Affordable housing additions: ' + la[0].properties.affordab_6 + '<br>Average persons per dwelling: ' + la[0].properties.person_p_6 + '<br>Total dwellings in Borough: ' + la[0].properties.all_dwel_6 + '<br><br>2017 London average net additional dwellings: 1198.79<br>2017 London average affordable housing: 204.91<br>2017 London average persons per dwelling: 2.47<br>2017 London percentage of net as afforable: 17.09%';
 }
     
     else {
