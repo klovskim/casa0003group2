@@ -973,7 +973,6 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 document.getElementById('slider').addEventListener('input', function(e) {
   var year = parseInt(e.target.value);
   // update the map
-  map.setFilter('price-circle', ['==', ['number', ['get', 'year']], year]);
   map.setFilter('price-heatmap-private', ['==', ['number', ['get', 'year']], year]);
   map.setFilter('price-heatmap-social', ['==', ['number', ['get', 'year']], year]);
   map.setFilter('price-labels-private', ['==', ['number', ['get', 'year']], year]);
@@ -997,7 +996,6 @@ document.getElementById('filters').addEventListener('change', function(e) {
   }
   map.setFilter('price-heatmap-private', ['all', filterType]);
   map.setFilter('price-heatmap-social', ['all', filterType]);
-  map.setFilter('price-circle', ['all', filterType]);
   map.setFilter('price-labels-private', ['all', filterType]);
   map.setFilter('price-labels-social', ['all', filterType]);
   map.setFilter('Social', ['all', filterType]);
@@ -1236,11 +1234,6 @@ function updateStory1(storyObj) {
   var title = storyObj['title'];
   var description = storyObj['description'];
   var cameraSettings = storyObj['flyTo1'];
-  
-  // date variables
-  /*var index = storyObj['index'];
-  $('.range-slider').val(index);
-  var date_value = values[index];*/
 
  // Private/Social variables
  var Private_visibility = storyObj['Private'];
@@ -1275,11 +1268,6 @@ function updateStory2(storyObj) {
   var description = storyObj['description'];
   // control for back
   var cameraSettings = storyObj['flyTo2'];
-  
-  // date variables
-  /*var index = storyObj['index'];
-  $('.range-slider').val(index);
-  var date_value = values[index];*/
 
  // social/exit variables
  var social_visibility = storyObj['social'];
@@ -1332,13 +1320,6 @@ forwardButton.on("click", function () {
   // Update the story.
   updateStory1(stories[pageNum-1]);
 });
-
-
-
-
-
-
-
 
 </script>
 </body>
