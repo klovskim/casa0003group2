@@ -19,7 +19,7 @@
     /* SOCIAL AND PRIVATE BUTTON LAYOUT */
 
     #menu {
-      background: black;
+      background: #282828;
       opacity: 0.6;
       position: absolute;
       top: 20px;
@@ -109,48 +109,39 @@
 
     /* LEGEND */
 
-    .map-overlay5 {
+    .legend {
+      background-color: #282828;
+      border-radius: 8px;
+      bottom: 30px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+      font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+      color: white;
+      padding: 10px;
       position: absolute;
-      bottom: 0;
-      right: 0;
-      margin-right: 10px;
-      border-radius: 5px;
+      right: 10px;
+      z-index: 1;
+      opacity: 0.8;
+      display: none;
     }
 
-    #legend {
-      background: #282828;
-      opacity: 0.9;
-      padding: 10px;
-      /* line height divides space between options */
-      line-height: 15px;
-      height: 120px;
-      margin-bottom: 40px;
-      width: 100px;
+    .legend h4 {
+      margin: 0 0 10px;
     }
 
-    #legend-title {
-      background: #282828;
-      opacity: 0.9;
-      padding: 10px;
-      /* line height divides space between options */
-      line-height: 15px;
-      margin-bottom: 170px;
-      width: 100px;
-    }
-
-    .legend-key {
+    .legend div span {
+      border-radius: 50%;
       display: inline-block;
-      border-radius: 20%;
-      width: 10px;
       height: 10px;
-      margin-right: 5px;
+      margin-right: 10px;
+      width: 10px;
     }
 
+    
     /* STORY */
 
     #storymode {
      position: absolute;
-     top: 490px;
+     top: 500px;
      left: 10px;
      width: 290px;
      height: 140px;
@@ -285,10 +276,10 @@
   /* DATA SOURCE TEXT */
   p{
     font-size: 12px;
-  margin: 10px;
-  text-align: left;
-  color: #c7c7c7;
-  font-family: Helvetica, sans-serif;
+    margin: 10px;
+    text-align: left;
+    color: #c7c7c7;
+    font-family: Helvetica, sans-serif;
   }
 
   /* CONSLOE */
@@ -365,8 +356,8 @@
     width: 15%;
     display: inline-block;
     text-align: center;
-    text-color: 'rgb(199, 199, 199, 0.8)'
   }
+
 </style>
 
 <!--FLY MAP BUTTONS--> 
@@ -385,7 +376,7 @@
     border-radius: 3px;
     text-align: center;
     color: #c7c7c7;
-    background: rgba(0, 0, 0, 0.7);
+    background: #282828;
   }
 
   #flyout {
@@ -400,8 +391,8 @@
     border-radius: 3px;
     text-align: center;
     color: #c7c7c7;
-    background: rgba(0, 0, 0, 0.7);
-    display: block;
+    background: #282828;
+    display: none;
   }
 
 
@@ -502,105 +493,96 @@
     <div class='session'>
       <h2>Type of charge</h2>
       <div class='row' id='filters'>
-        <input id='all' type='radio' name='toggle' value='all' checked='checked'>
-        <label for='all'>Weekly Rent</label>
-        <input id='Weekly' type='radio' name='toggle' value='Weekly' >
-        <label for='Weekly'>Service Charge</label>
+        <p><input id='all' type='radio' name='toggle' value='all' checked='checked'>
+          <label for='all'>Weekly Rent + Total Rent</label>
+          <input id='Weekly' type='radio' name='toggle' value='Weekly' >
+          <label for='Weekly'>Weekly rent</label>
+          <input id='Service' type='radio' name='toggle' value='Service'>
+          <label for='Service'>Total Rent</label></p>
+        </div>
+      </div>
+
+      <br><h2>Data source: <a href="https://data.gov.uk/dataset/412bc7fb-2347-4427-8f2a-1e0f55872914/core-social-housing-lettings-la-owned-rent-and-charges">Social Own Dataset</a><a href="https://data.gov.uk/dataset/c2c6c92c-a7c5-4eac-8784-cb9a76079694/core-social-housing-lettings-prp-owned-rent-and-charges">Private Own Dataset</a></h2><p class="credit">&copy; Zhijia Zhou 2019&nbsp;</p>
+    </div>
+
+    <!--LEGEND-->
+    <div id='map-overlay5' class='legend'>
+      <h4>Estimated Social/Private</h4>
+      <div><span style='background-color: #fff'></span><90</div>
+      <div><span style='background-color: #e4d4b3'></span>90-100</div>
+      <div><span style='background-color: #caaa68'></span>100-110</div>
+      <div><span style='background-color: #977735'></span>110-120</div>
+      <div><span style='background-color: #4b3b1b'></span>120-130</div>
+      <div><span style='background-color: #0d0a04'></span>140></div>
+    </div>
+
+    <!-- STORY MODE -->
+    <div id = 'storymode'>
+
+      <!-- STORY MODE/HEADER -->
+      <h10><div id = 'storymode-header'>Private and Social Rent in England</div></h10>
+
+      <!-- STORY MODE/CONTENT -->
+      <div id = 'storymode-content'>
+        <h9>
+          The map shows the sum of the prices of private own social houses in each region of England for four years. The price of private own social house in London is significantly higher than that in other regions.
+        </h9>
+      </div>
+
+      <!-- STORY MODE/CONTROLS -->
+      <div class = 'noselect' id = 'storymode-controls'>
+
+        <!-- STORY MODE/CONTROLS/PAGE -->
+        <i class='arrow left' id = 'story-back'></i>
+        <span id = 'storymode-controls-numbers'>1 of 7</span>
+        <i class='arrow right' id = 'story-forward'></i>
+      </div>
+    </div> 
+
+    <script>
+      function on() {
+        document.getElementById("info").style.display = "block";
+      }
+      function off() {
+        document.getElementById("info").style.display = "none";
+      }
+    </script>
+
+    <div id="infocircle">
+      <div id="infotext" onclick="on()">
+        i
       </div>
     </div>
-    <p>Data source:</p><a href="https://data.gov.uk/dataset/412bc7fb-2347-4427-8f2a-1e0f55872914/core-social-housing-lettings-la-owned-rent-and-charges">Social Own Dataset</a><p><a href="https://data.gov.uk/dataset/c2c6c92c-a7c5-4eac-8784-cb9a76079694/core-social-housing-lettings-prp-owned-rent-and-charges">Private Own Dataset</a>
-    <p class="credit">&copy; Zhijia Zhou 2019&nbsp;</p>
-  </div>
 
-  <!--LEGEND-->
-  <h9><div class='map-overlay5' id='legend'></div></h9>
-  <h10><div class='map-overlay5' id ='legend-title'>Estimated Social/Private:</div></h10>
+    <div id="info" onclick="off()">
 
-  <!-- STORY MODE -->
-  <div id = 'storymode'>
-
-    <!-- STORY MODE/HEADER -->
-    <h10><div id = 'storymode-header'>Private and Social Rent in England</div></h10>
-
-    <!-- STORY MODE/CONTENT -->
-    <div id = 'storymode-content'>
-      <h9>
-        The map shows the sum of the prices of private own social houses in each region of England for four years. The price of private own social house in London is significantly higher than that in other regions.
-      </h9>
-    </div>
-
-    <!-- STORY MODE/CONTROLS -->
-    <div class = 'noselect' id = 'storymode-controls'>
-
-      <!-- STORY MODE/CONTROLS/PAGE -->
-      <i class='arrow left' id = 'story-back'></i>
-      <span id = 'storymode-controls-numbers'>1 of 7</span>
-      <i class='arrow right' id = 'story-forward'></i>
-    </div>
-  </div> 
-
-  <script>
-    function on() {
-        document.getElementById("info").style.display = "block";
-    }
-    function off() {
-        document.getElementById("info").style.display = "none";
-    }
-</script>
-
-<div id="infocircle">
-<div id="infotext" onclick="on()">
-    i
-</div>
-</div>
-
-<div id="info" onclick="off()">
-
-<div id="infobox">
-    <h1>2. Is the average rent for social and private housing across the London boroughs on the rise?</h1>
-    <br />
-    <h3>
-        <br />This map explores in detail the trend of rising rental prices in London and compares this to the wider situation in the UK. This interactive map shows the changes in the rent of privately owned and socially owned social housing from 2014 to 2017 in England. The map layers change based on the zoom level. The zoom can also be quickly toggled with a button to show either London in detail or the heat map of rental prices for the whole of the UK.
-        <br /><br />
-
+      <div id="infobox">
+        <h1>2. Is the average rent for social and private housing across the London boroughs on the rise?</h1>
+        <br />
         <h3>
+          <br />This map explores in detail the trend of rising rental prices in London and compares this to the wider situation in the UK. This interactive map shows the changes in the rent of privately owned and socially owned social housing from 2014 to 2017 in England. The map layers change based on the zoom level. The zoom can also be quickly toggled with a button to show either London in detail or the heat map of rental prices for the whole of the UK.
+          <br /><br />
+
+          <h3>
             The circle map explores the value of the specific rent for London boroughs. It can be found that the closer to the city of London, the higher the rent. From 2014 to 2017, private ownership rents are generally on the rise. A small portion of the borough’s rent value is down. Among the changes in rent of privately-owned social housing, the borough of Enfield is the only one whose price has decreased significantly. However, the rise of socially owned rent prices is not obvious, and many boroughs even show a downward trend. This is dependant however on the part of London in question. In ‘Kensington and Chelsea’, whether for private housing or social housing, the price has never dropped.
             <br />
-        </h3>
-</div>
+          </h3>
+        </div>
 
-  <script>
-    mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbm5hemhvdSIsImEiOiJjanY1cjhwdTUxdDI4M3lvYjFnMTB6ejVyIn0.daDuLibhR42z9EbKYs7z7Q';
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/joannazhou/cjvdn1kww5b3d1fpnlgvlzs8p',
-      center: [-2.54, 53.03],
-      zoom: 5.3
-    });
-    
-    var values = [2014, 2015, 2016, 2017]
+        <script>
+          mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbm5hemhvdSIsImEiOiJjanY1cjhwdTUxdDI4M3lvYjFnMTB6ejVyIn0.daDuLibhR42z9EbKYs7z7Q';
+          const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/joannazhou/cjvdn1kww5b3d1fpnlgvlzs8p',
+            center: [-2.54, 53.03],
+            zoom: 5.3
+          });
 
-    values.sort();
+          var values = [2014, 2015, 2016, 2017]
 
-    var layers = ['<90', '90-100', '100-110', '110-120', '120-130', '140>'];
+          values.sort();
 
-// TEST with http://www.0to255.com/17146E
-var colors = ['#fff', '#e4d4b3', '#caaa68', '#977735', '#4b3b1b', '#0d0a04']; 
-
-for (i = 0; i < layers.length; i++) {
-  var layer = layers[i];
-  var color = colors[i];
-  var item = document.createElement('div');
-  var key = document.createElement('span');
-  key.className = 'legend-key';
-  key.style.backgroundColor = color;
-
-  var value = document.createElement('span');
-  value.innerHTML = layer;
-  item.appendChild(key);
-  item.appendChild(value);
-  legend.appendChild(item);
-}
+          var layers = ['<90', '90-100', '100-110', '110-120', '120-130', '140>'];
 
 
 //add layers
@@ -677,9 +659,9 @@ map.addLayer({
   type: 'heatmap',
   source: {
     type: 'vector',
-  url: 'mapbox://joannazhou.7jozekyp' // Your Mapbox tileset Map ID
+  url: 'mapbox://joannazhou.535wpaov' // Your Mapbox tileset Map ID
 },
-  'source-layer': 'final_socown_social_rent-98umef', // name of tilesets
+  'source-layer': 'final_socown_social_rent-2kx9o5', // name of tilesets
   'layout': {
     'visibility': 'none'
   },
@@ -1026,6 +1008,7 @@ map.flyTo({
 
 var zoomThreshold = 5.3;
 
+// show London Borough and England fly button based on zoom level
 var flowmapbuttonEl = document.getElementById('flyin');
 map.on('zoom', function() {
   if (map.getZoom() > zoomThreshold) {
@@ -1038,11 +1021,24 @@ map.on('zoom', function() {
 var flyoutbutton = document.getElementById('flyout');
 map.on('zoom', function() {
   if (map.getZoom() > zoomThreshold) {
-    flowmapbuttonEl.style.display = 'none';
+    flyoutbutton.style.display = 'block';
   } else {
-    flowmapbuttonEl.style.display = 'block';
+    flyoutbutton.style.display = 'none';
   }
 });
+
+var zoomThreshold1 = 8.9;
+
+// show legend based on zoom level
+var lengendel = document.getElementById('map-overlay5');
+map.on('zoom', function() {
+  if (map.getZoom() > zoomThreshold1) {
+    lengendel.style.display = 'block';
+  } else {
+    lengendel.style.display = 'none';
+  }
+});
+
 
 /* Storyline buttons to make interaction easier, d3 used */
 
