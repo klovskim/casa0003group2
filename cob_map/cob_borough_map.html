@@ -64,6 +64,7 @@
     </div>
     <!-- legend -->
     <div class='box-legend' id='legend'></div>
+    <div class='dotbox-legend' id='dotlegend'></div>
 
 
     <script>
@@ -168,11 +169,17 @@
                 },
                 // set the size based on that total count(source layer only includes totals here)
                 paint: {
-                    'circle-radius': [
-                        '/',
-                        ['number', ['get', 'count']],
-                        20],
-                    'circle-color': '#535353',
+                    'circle-radius': 10,
+                    'circle-color': {
+                        property: 'count',
+                        stops: [
+                            [199, '#f7fafa'],
+                            [244, '#edf3f3'],
+                            [285, '#afc9ca'],
+                            [327, '#729fa2'],
+                            [391, '#456769'],
+                        ]
+                    },
                     'circle-opacity': 1
                 },
 
@@ -353,6 +360,24 @@
             item.appendChild(key);
             item.appendChild(value);
             legend.appendChild(item);
+        }
+
+        // add the dot legend
+        // variable is the dot color
+        var legendlabels = ['0-199', '200-244', '245-285', '286-327', '327-391'];
+        var colors = ['#f7fafa', '#edf3f3', '#afc9ca', '#729fa2', '#456769'];
+        for (i = 0; i < legendlabels.length; i++) {
+            var layer = legendlabels[i];
+            var color = colors[i];
+            var item = document.createElement('div');
+            var key = document.createElement('span');
+            key.className = 'dotlegend-key';
+            key.style.backgroundColor = color;
+            var value = document.createElement('span');
+            value.innerHTML = layer;
+            item.appendChild(key);
+            item.appendChild(value);
+            dotlegend.appendChild(item);
         }
     </script>
 </body>
