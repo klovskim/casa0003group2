@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-	<!--META-->
-	<!--TITLE-->
 	<meta charset='utf-8' />
-	<title>Combine Map</title>
+	<title>Display a map</title>
 	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-
-	<!--MAPBOX-->
 	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
 	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
-
 
 	<!--STYLE SHEET-->
 	<style>
@@ -203,8 +197,6 @@
 			transform: rotate(135deg);
 			-webkit-transform: rotate(135deg);
 		}
-	</style>
-	<style>
 
 		/* GENERAL */
 		body {
@@ -274,7 +266,7 @@
 		}
 
 		/* DATA SOURCE TEXT */
-		p{
+		p {
 			font-size: 12px;
 			margin: 10px;
 			text-align: left;
@@ -358,10 +350,7 @@
 			text-align: center;
 		}
 
-	</style>
-
-	<!--FLY MAP BUTTONS--> 
-	<style>
+		/* FLY MAP BUTTONS */
 
 		#flyin {
 			font: Helvetica;
@@ -457,7 +446,6 @@
 	<!--MAPS-->
 	<div id='map'></div>
 
-
 	<!--PRIVATE SOCIAL BUTTON-->
 	<div class='map-overlay-menu top'><div class='map-overlay-menu inner'><h2><nav id="menu"></nav></h2></div></div>
 
@@ -483,173 +471,177 @@
 			</div>
 		</div>
 
+		<!--RADIO BUTTON-->
+		<div class='session'>
+			<h2>Type of charge</h2>
+			<div class='row' id='filters'>
+				<input id="weekly" type="radio" name="toggle" value="weekly">
+				<label for="weekly">weekly</label>
+				<input id="total" type="radio" name="toggle" value="total">
+				<label for="total">total</label>
+			</div>
+		</div>
+
 		<!--SLIDER-->
 		<div class='session' id='sliderbar'>
 			<h2>Year: <label id='active-year'>2014</label></h2>
 			<input id='slider' class='slider' type='range' min='2014' max='2017' step='1' value='0' />
 		</div>
 
-		<!--RADIO BUTTON-->
-		<div class='session'>
-			<h2>Type of charge</h2>
-			<div class='row' id='filters'>
-				<p><input id='all' type='radio' name='toggle' value='all' checked='checked'>
-					<label for='all'>Weekly rent</label>
-					<input id='Weekly' type='radio' name='toggle' value='Weekly'>
-					<label for='Weekly'>Total Rent</label></p>
-				</div>
-			</div>
+		<h2>Data source: <a href="https://data.gov.uk/dataset/412bc7fb-2347-4427-8f2a-1e0f55872914/core-social-housing-lettings-la-owned-rent-and-charges">Social Own Dataset</a><a href="https://data.gov.uk/dataset/c2c6c92c-a7c5-4eac-8784-cb9a76079694/core-social-housing-lettings-prp-owned-rent-and-charges">Private Own Dataset</a></h2><p class="credit">&copy; Zhijia Zhou 2019&nbsp;</p>
+	</div>
 
-			<br><h2>Data source: <a href="https://data.gov.uk/dataset/412bc7fb-2347-4427-8f2a-1e0f55872914/core-social-housing-lettings-la-owned-rent-and-charges">Social Own Dataset</a><a href="https://data.gov.uk/dataset/c2c6c92c-a7c5-4eac-8784-cb9a76079694/core-social-housing-lettings-prp-owned-rent-and-charges">Private Own Dataset</a></h2><p class="credit">&copy; Zhijia Zhou 2019&nbsp;</p>
+	<!--LEGEND-->
+	<div id='map-overlay5' class='legend'>
+		<h4>Rent</h4>
+		<div><span style='background-color: #fff'></span><90</div>
+		<div><span style='background-color: #e4d4b3'></span>90-100</div>
+		<div><span style='background-color: #caaa68'></span>100-110</div>
+		<div><span style='background-color: #977735'></span>110-120</div>
+		<div><span style='background-color: #4b3b1b'></span>120-130</div>
+		<div><span style='background-color: #0d0a04'></span>140></div>
+	</div>
+
+	<!-- STORY MODE -->
+	<div id = 'storymode'>
+
+		<!-- STORY MODE/HEADER -->
+		<h10><div id = 'storymode-header'>Privately Owned and Social Owned Social Houses Rent in England</div></h10>
+
+		<!-- STORY MODE/CONTENT -->
+		<div id = 'storymode-content'>
+			<h9>
+				The map shows the rent of privately owned and social owned social houses in each region of England for four years. The rent of privately owned social house in London is significantly higher than that in other regions.
+			</h9>
 		</div>
 
-		<!--LEGEND-->
-		<div id='map-overlay5' class='legend'>
-			<h4>Rent</h4>
-			<div><span style='background-color: #fff'></span><90</div>
-			<div><span style='background-color: #e4d4b3'></span>90-100</div>
-			<div><span style='background-color: #caaa68'></span>100-110</div>
-			<div><span style='background-color: #977735'></span>110-120</div>
-			<div><span style='background-color: #4b3b1b'></span>120-130</div>
-			<div><span style='background-color: #0d0a04'></span>140></div>
+		<!-- STORY MODE/CONTROLS -->
+		<div class = 'noselect' id = 'storymode-controls'>
+
+			<!-- STORY MODE/CONTROLS/PAGE -->
+			<i class='arrow left' id = 'story-back'></i>
+			<span id = 'storymode-controls-numbers'>1 of 6</span>
+			<i class='arrow right' id = 'story-forward'></i>
 		</div>
+	</div> 
 
-		<!-- STORY MODE -->
-		<div id = 'storymode'>
+	<script>
+		function on() {
+			document.getElementById("info").style.display = "block";
+		}
+		function off() {
+			document.getElementById("info").style.display = "none";
+		}
+	</script>
 
-			<!-- STORY MODE/HEADER -->
-			<h10><div id = 'storymode-header'>Privately Owned and Social Owned Social Houses Rent in England</div></h10>
-
-			<!-- STORY MODE/CONTENT -->
-			<div id = 'storymode-content'>
-				<h9>
-					The map shows the rent of privately owned and social owned social houses in each region of England for four years. The rent of privately owned social house in London is significantly higher than that in other regions.
-				</h9>
-			</div>
-
-			<!-- STORY MODE/CONTROLS -->
-			<div class = 'noselect' id = 'storymode-controls'>
-
-				<!-- STORY MODE/CONTROLS/PAGE -->
-				<i class='arrow left' id = 'story-back'></i>
-				<span id = 'storymode-controls-numbers'>1 of 6</span>
-				<i class='arrow right' id = 'story-forward'></i>
-			</div>
-		</div> 
-
-		<script>
-			function on() {
-				document.getElementById("info").style.display = "block";
-			}
-			function off() {
-				document.getElementById("info").style.display = "none";
-			}
-		</script>
-
-		<div id="infocircle">
-			<div id="infotext" onclick="on()">
-				i
-			</div>
+	<div id="infocircle">
+		<div id="infotext" onclick="on()">
+			i
 		</div>
+	</div>
 
-		<div id="info" onclick="off()">
+	<div id="info" onclick="off()">
 
-			<div id="infobox">
-				<h1>2. Is the average rent for social and private housing across the London boroughs on the rise?</h1>
-				<br />
+		<div id="infobox">
+			<h1>2. Is the average rent for social and private housing across the London boroughs on the rise?</h1>
+			<br />
+			<h3>
+				<br />This map explores in detail the trend of rising rental prices in London and compares this to the wider situation in the UK. This interactive map shows the changes in the rent of privately owned and socially owned social housing from 2014 to 2017 in England. The map layers change based on the zoom level. The zoom can also be quickly toggled with a button to show either London in detail or the heat map of rental prices for the whole of the UK.
+				<br /><br />
+
 				<h3>
-					<br />This map explores in detail the trend of rising rental prices in London and compares this to the wider situation in the UK. This interactive map shows the changes in the rent of privately owned and socially owned social housing from 2014 to 2017 in England. The map layers change based on the zoom level. The zoom can also be quickly toggled with a button to show either London in detail or the heat map of rental prices for the whole of the UK.
-					<br /><br />
+					The circle map explores the value of the specific rent for London boroughs. It can be found that the closer to the city of London, the higher the rent. From 2014 to 2017, private ownership rents are generally on the rise. A small portion of the borough’s rent value is down. Among the changes in rent of privately-owned social housing, the borough of Enfield is the only one whose price has decreased significantly. However, the rise of socially owned rent prices is not obvious, and many boroughs even show a downward trend. This is dependant however on the part of London in question. In ‘Kensington and Chelsea’, whether for private housing or social housing, the price has never dropped.
+					<br />
+				</h3>
+			</div>
 
-					<h3>
-						The circle map explores the value of the specific rent for London boroughs. It can be found that the closer to the city of London, the higher the rent. From 2014 to 2017, private ownership rents are generally on the rise. A small portion of the borough’s rent value is down. Among the changes in rent of privately-owned social housing, the borough of Enfield is the only one whose price has decreased significantly. However, the rise of socially owned rent prices is not obvious, and many boroughs even show a downward trend. This is dependant however on the part of London in question. In ‘Kensington and Chelsea’, whether for private housing or social housing, the price has never dropped.
-						<br />
-					</h3>
-				</div>
+			<script>
+				mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbm5hemhvdSIsImEiOiJjanY1cjhwdTUxdDI4M3lvYjFnMTB6ejVyIn0.daDuLibhR42z9EbKYs7z7Q';
+				const map = new mapboxgl.Map({
+					container: 'map',
+					style: 'mapbox://styles/joannazhou/cjvdn1kww5b3d1fpnlgvlzs8p',
+					center: [-2.54, 53.03],
+					zoom: 5.3
+				});
 
-				<script>
-					mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbm5hemhvdSIsImEiOiJjanY1cjhwdTUxdDI4M3lvYjFnMTB6ejVyIn0.daDuLibhR42z9EbKYs7z7Q';
-					const map = new mapboxgl.Map({
-						container: 'map',
-						style: 'mapbox://styles/joannazhou/cjvdn1kww5b3d1fpnlgvlzs8p',
-						center: [-2.54, 53.03],
-						zoom: 5.3
-					});
+				var values = [2014, 2015, 2016, 2017]
 
-					var values = [2014, 2015, 2016, 2017]
+				values.sort();
 
-					values.sort();
-
-					var layers = ['<90', '90-100', '100-110', '110-120', '120-130', '140>'];
+				var layers = ['<90', '90-100', '100-110', '110-120', '120-130', '140>'];
 
 
 //add layers
 map.on('load', function() {
 
-//Private Rent Heat Map
-map.addLayer({
-	id: 'price-heatmap-private',
-	type: 'heatmap',
-	source: {
-		type: 'vector',
-  url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
-},
-'filter': ['==', ['number', ['get', 'year']], values[0]],
-  'source-layer': 'hebing-8twnae', // name of tilesets
-  'layout': {
-  	'visibility': 'visible'
-  },
-  "maxzoom": 9.5,
-  "paint": {
-    // Increase the heatmap weight based on frequency and rent
-    "heatmap-weight": [
-    "interpolate",
-    ["linear"],
-    ["get", "value"],
-    71, 0,
-    169, 1
-    ],
-  // Increase the heatmap color weight weight by zoom level
-  // heatmap-intensity is a multiplier on top of heatmap-weight
-  "heatmap-intensity": [
-  "interpolate",
-  ["linear"],
-  ["zoom"],
-  0, 1,
-  9, 3
-  ],
-  // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-  // Begin color ramp at 0-stop with a 0-transparancy color
-  // to create a blur-like effect.
-  "heatmap-color": [
-  "interpolate",
-  ["linear"],
-  ["heatmap-density"],
-  0, "rgba(33,102,172,0)",
-  0.2, "rgb(103,169,207)",
-  0.4, "rgb(209,229,240)",
-  0.6, "rgb(253,219,199)",
-  0.8, "rgb(239,138,98)",
-  1, "rgb(178,24,43)"
-  ],
-  // Adjust the heatmap radius by zoom level
-  "heatmap-radius": [
-  "interpolate",
-  ["linear"],
-  ["zoom"],
-  0, 2,
-  9, 20
-  ],
-  // Transition from heatmap to circle layer by zoom level
-  "heatmap-opacity": [
-  "interpolate",
-  ["linear"],
-  ["zoom"],
-  7, 1,
-  9, 0
-  ],
-}
-}, 'waterway-label');
+	var filterYear = ['==', ['number',['get', 'year']], 2014];
+	var filterType = ['!=', ['string',['get', 'typr']], 'placeholder'];
+
+	//Private Rent Heat Map
+	map.addLayer({
+		id: 'price-heatmap-private',
+		type: 'heatmap',
+		source: {
+			type: 'vector',
+			url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
+		},
+		'source-layer': 'hebing-8twnae', // name of tilesets
+		'layout': {
+			'visibility': 'visible'
+		},
+		"maxzoom": 9.5,
+		"paint": {
+    	// Increase the heatmap weight based on frequency and rent
+    	"heatmap-weight": [
+    	"interpolate",
+    	["linear"],
+    	["get", "value"],
+    	71, 0,
+    	169, 1
+    	],
+  		// Increase the heatmap color weight weight by zoom level
+  		// heatmap-intensity is a multiplier on top of heatmap-weight
+  		"heatmap-intensity": [
+  		"interpolate",
+  		["linear"],
+  		["zoom"],
+  		0, 1,
+  		9, 3
+  		],
+  		// Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+  		// Begin color ramp at 0-stop with a 0-transparancy color
+  		// to create a blur-like effect.
+  		"heatmap-color": [
+  		"interpolate",
+  		["linear"],
+  		["heatmap-density"],
+  		0, "rgba(33,102,172,0)",
+  		0.2, "rgb(103,169,207)",
+  		0.4, "rgb(209,229,240)",
+  		0.6, "rgb(253,219,199)",
+  		0.8, "rgb(239,138,98)",
+  		1, "rgb(178,24,43)"
+  		],
+  		// Adjust the heatmap radius by zoom level
+  		"heatmap-radius": [
+  		"interpolate",
+  		["linear"],
+  		["zoom"],
+  		0, 2,
+  		9, 20
+  		],
+  		// Transition from heatmap to circle layer by zoom level
+  		"heatmap-opacity": [
+  		"interpolate",
+  		["linear"],
+  		["zoom"],
+  		7, 1,
+  		9, 0
+  		],
+  	},
+  	'filter': ['all', filterYear, filterType]
+  }, 
+  'waterway-label');
 
 //Social Rent Heat Map
 map.addLayer({
@@ -657,64 +649,65 @@ map.addLayer({
 	type: 'heatmap',
 	source: {
 		type: 'vector',
-  url: 'mapbox://joannazhou.535wpaov' // Your Mapbox tileset Map ID
+  url: 'mapbox://joannazhou.37ok0oqu' // Your Mapbox tileset Map ID
 },
-'filter': ['==', ['number', ['get', 'year']], values[0]],
-  'source-layer': 'final_socown_social_rent-2kx9o5', // name of tilesets
-  'layout': {
-  	'visibility': 'none'
+	'source-layer': 'final_socown_social_rent-7mc6wd', // name of tilesets
+	'layout': {
+		'visibility': 'none'
+	},
+	"maxzoom": 7,
+	"paint": {
+    	// Increase the heatmap weight based on frequency and rent
+    	"heatmap-weight": [
+    	"interpolate",
+    	["linear"],
+    	["get", "value"],
+    	61.8, 0,
+    	146.1, 1
+    	],
+  	// Increase the heatmap color weight weight by zoom level
+  	// heatmap-intensity is a multiplier on top of heatmap-weight
+  	"heatmap-intensity": [
+  	"interpolate",
+  	["linear"],
+  	["zoom"],
+  	0, 1,
+  	9, 3
+  	],
+  	// Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+  	// Begin color ramp at 0-stop with a 0-transparancy color
+  	// to create a blur-like effect.
+  	"heatmap-color": [
+  	"interpolate",
+  	["linear"],
+  	["heatmap-density"],
+  	0, "rgba(33,102,172,0)",
+  	0.2, "rgb(103,169,207)",
+  	0.4, "rgb(209,229,240)",
+  	0.6, "rgb(253,219,199)",
+  	0.8, "rgb(239,138,98)",
+  	1, "rgb(178,24,43)"
+  	],
+  	// Adjust the heatmap radius by zoom level
+  	"heatmap-radius": [
+  	"interpolate",
+  	["linear"],
+  	["zoom"],
+  	0, 2,
+  	9, 20
+  	],
+  	// Transition from heatmap to circle layer by zoom level
+  	"heatmap-opacity": [
+  	"interpolate",
+  	["linear"],
+  	["zoom"],
+  	7, 1,
+  	9, 0
+  	],
   },
-  "maxzoom": 7,
-  "paint": {
-    // Increase the heatmap weight based on frequency and rent
-    "heatmap-weight": [
-    "interpolate",
-    ["linear"],
-    ["get", "value"],
-    61.8, 0,
-    146.1, 1
-    ],
-  // Increase the heatmap color weight weight by zoom level
-  // heatmap-intensity is a multiplier on top of heatmap-weight
-  "heatmap-intensity": [
-  "interpolate",
-  ["linear"],
-  ["zoom"],
-  0, 1,
-  9, 3
-  ],
-  // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-  // Begin color ramp at 0-stop with a 0-transparancy color
-  // to create a blur-like effect.
-  "heatmap-color": [
-  "interpolate",
-  ["linear"],
-  ["heatmap-density"],
-  0, "rgba(33,102,172,0)",
-  0.2, "rgb(103,169,207)",
-  0.4, "rgb(209,229,240)",
-  0.6, "rgb(253,219,199)",
-  0.8, "rgb(239,138,98)",
-  1, "rgb(178,24,43)"
-  ],
-  // Adjust the heatmap radius by zoom level
-  "heatmap-radius": [
-  "interpolate",
-  ["linear"],
-  ["zoom"],
-  0, 2,
-  9, 20
-  ],
-  // Transition from heatmap to circle layer by zoom level
-  "heatmap-opacity": [
-  "interpolate",
-  ["linear"],
-  ["zoom"],
-  7, 1,
-  9, 0
-  ],
-}
-}, 'waterway-label');
+  'filter': ['all', filterYear, filterType]
+}, 
+'waterway-label');
 
 map.addLayer({
 	id: 'price-fill',
@@ -723,14 +716,15 @@ map.addLayer({
 		type: 'vector',
   url: 'mapbox://joannazhou.9x7okull' // Your Mapbox tileset Map ID
 },
-  'source-layer': 'shapefiledata-91x1z8', // name of tilesets
-  'layout': {
-  	'visibility': 'visible'
-  },
-  paint: {
-  	'fill-color': 'rgba(254, 254, 254, 0)',
-  }
-});
+  	'source-layer': 'shapefiledata-91x1z8', // name of tilesets
+  	'layout': {
+  		'visibility': 'visible'
+  	},
+  	paint: {
+  		'fill-color': 'rgba(254, 254, 254, 0)',
+  	},
+  	'filter': ['all', filterYear, filterType]
+  });
 
 map.addLayer({
 	id: "price-borders",
@@ -745,7 +739,8 @@ map.addLayer({
   'paint': {
   	'line-color': 'rgba(205, 205, 205, 0.7)',
   	'line-width': 1
-  }
+  },
+  'filter': ['all', filterYear, filterType]
 });
 
 /*  SOCIAL  */
@@ -784,7 +779,8 @@ map.addLayer({
         	130, '#715928',
         	140, '#4b3b1b'
         	],
-        }
+        },
+        'filter': ['all', filterYear, filterType]
     });   
 
 /* PRIVATE */
@@ -823,7 +819,8 @@ map.addLayer({
         	130, '#715928',
         	140, '#4b3b1b'
         	]
-        }
+        },
+        'filter': ['all', filterYear, filterType]
     }); 
 
 map.addLayer({
@@ -831,19 +828,20 @@ map.addLayer({
 	type: 'symbol',
 	source: {
 		type: 'vector',
-    url: 'mapbox://joannazhou.87farynh' // Your Mapbox tileset Map ID
+    url: 'mapbox://joannazhou.37ok0oqu' // Your Mapbox tileset Map ID
 },
-    'source-layer': 'hebing-2yxh6o', // name of tilesets
-    'layout': {
-    	'visibility': 'none',
-    	'text-field': '£{social}',
-    	'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-    	'text-size': 12
-    },
-    'minzoom': 9,
-    'paint': {
-    	'text-color': 'rgba(255, 255, 255, 0.8)'
-    }
+  'source-layer': 'final_socown_social_rent-7mc6wd', // name of tilesets
+  'layout': {
+  	'visibility': 'none',
+  	'text-field': '£{value}',
+  	'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+  	'text-size': 12
+  },
+  'minzoom': 9,
+  'paint': {
+  	'text-color': 'rgba(255, 255, 255, 0.8)'
+  },
+  'filter': ['all', filterYear, filterType]
 });
 
 
@@ -852,19 +850,20 @@ map.addLayer({
 	type: 'symbol',
 	source: {
 		type: 'vector',
-    url: 'mapbox://joannazhou.87farynh' // Your Mapbox tileset Map ID
+    url: 'mapbox://joannazhou.c697k0fx' // Your Mapbox tileset Map ID
 },
-    'source-layer': 'hebing-2yxh6o', // name of tilesets
-    'layout': {
-    	'visibility': 'visible',
-    	'text-field': '£{private}',
-    	'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-    	'text-size': 12
-    },
-    'minzoom': 9,
-    'paint': {
-    	'text-color': 'rgba(255, 255, 255, 0.8)'
-    }
+  'source-layer': 'hebing-8twnae', // name of tilesets
+  'layout': {
+  	'visibility': 'visible',
+  	'text-field': '£{value}',
+  	'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+  	'text-size': 12
+  },
+  'minzoom': 9,
+  'paint': {
+  	'text-color': 'rgba(255, 255, 255, 0.8)'
+  },
+  'filter': ['all', filterYear, filterType]
 });
 });
 
@@ -882,7 +881,10 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 	link.className = '';
 	link.textContent = id;
 
-	/* STARTING LAYER BUTTON */ 
+	/* STARTING LAYER BUTTON
+	FOR SOME REASON CAN ONLY ACCESS ELEMENT ID OF THE FIRT SPECIFIED LAYER*/ 
+	$("#Private").attr("class", "active");
+	console.log(document.getElementById("Private")); 
 
 	link.onclick = function (e) {
 
@@ -930,40 +932,43 @@ for (var i = 0; i < toggleableLayerIds.length; i++) {
 	layers.appendChild(link);
 }
 
+    // update hour filter when the slider is dragged
+    document.getElementById('slider').addEventListener('input', function(e) {
+    	var year = parseInt(e.target.value);
 
-document.getElementById('slider').addEventListener('input', function(e) {
-	var year = parseInt(e.target.value);
-  // update the map
-  map.setFilter('price-heatmap-private', ['==', ['number', ['get', 'year']], year]);
-  map.setFilter('price-heatmap-social', ['==', ['number', ['get', 'year']], year]);
-  map.setFilter('price-labels-private', ['==', ['number', ['get', 'year']], year]);
-  map.setFilter('price-labels-social', ['==', ['number', ['get', 'year']], year]);
-  map.setFilter('Social', ['==', ['number', ['get', 'year']], year]);
-  map.setFilter('Private', ['==', ['number', ['get', 'year']], year]);
-  // update text in the UI
-  document.getElementById('active-year').innerText = year;
-});
+  	// update the map
+  	filterYear = ['==', ['number', ['get', 'year']], year];
+  	map.setFilter('price-heatmap-private', ['all', filterYear, filterType]);
+  	map.setFilter('price-heatmap-social', ['all', filterYear, filterType]);
+  	map.setFilter('price-labels-private', ['all', filterYear, filterType]);
+  	map.setFilter('price-labels-social', ['all', filterYear, filterType]);
+  	map.setFilter('Social', ['all', filterYear, filterType]);
+  	map.setFilter('Private', ['all', filterYear, filterType]);
 
+ 	 // update text in the UI
+ 	 document.getElementById('active-year').innerText = year;
+ 	});
 
-document.getElementById('filters').addEventListener('change', function(e) {
-	var type = e.target.value;
-  // update the map filter
-  if (type === 'all') {
-    filterType = ['!=', ['string', ['get', 'typr']], 'placeholder'];
-  } else if (type === 'Weekly') {
-  	filterType = ['match', ['get', 'typr'], ['rent mean'], false, true];
-  } else if (type === 'Total') {
-  	filterType = ['match', ['get', 'typr'], ['rent mean'], true, true];
-  } else {
-  	console.log('error');
-  }
-  map.setFilter('price-heatmap-private', ['all', filterType]);
-  map.setFilter('price-heatmap-social', ['all', filterType]);
-  map.setFilter('price-labels-private', ['all', filterType]);
-  map.setFilter('price-labels-social', ['all', filterType]);
-  map.setFilter('Social', ['all', filterType]);
-  map.setFilter('Private', ['all', filterType]);
-});
+    document.getElementById('filters').addEventListener('change', function(e) {
+    	var type = e.target.value;
+  	// update the map filter
+  	if (type === 'all') {
+  		filterType = ['!=', ['string', ['get', 'typr']], 'placeholder'];
+  	} else if (type === 'total') {
+  		filterType = ['match', ['get', 'typr'], ['rent mean'], false, true];
+  	} else if (type === 'weekly') {
+  		filterType = ['match', ['get', 'typr'], ['rent mean'], true, true];
+  	} else {
+  		console.log('error');
+  	};
+
+  	map.setFilter('price-heatmap-social', ['all', filterYear, filterType]);
+  	map.setFilter('price-heatmap-private', ['all', filterYear, filterType]);
+  	map.setFilter('price-labels-private', ['all', filterYear, filterType]);
+  	map.setFilter('price-labels-social', ['all', filterYear, filterType]);
+  	map.setFilter('Social', ['all', filterYear, filterType]);
+  	map.setFilter('Private', ['all', filterYear, filterType]);
+  });
 
 
   // When a click event occurs on a feature in the states layer, open a popup at the
@@ -1104,24 +1109,24 @@ description: "The map shows the rent of privately owned and social owned social 
     },
 
     { title: "Social Houses Rent in London",
-description: "If you live colser to the city center, the higher the mean weekly rent becomes. Moreover, mean weekly rent of boroughs in the northwest is higher than those of boroughs in the southeast.",
-index: 312,
-Private: 'visible',
-Social: 'none',
-Private_status: "active",
-Social_status: "",
-flyTo1: {
-	zoom: 9,
-	center: [-0.14, 51.51],
-	pitch: 0,
-	speed: 0.3
-},
-flyTo2: {
-	zoom: 9,
-	center: [-0.14, 51.51],
-	pitch: 0,
-	speed: 0.3
-},
+    description: "If you live colser to the city center, the higher the mean weekly rent becomes. Moreover, mean weekly rent of boroughs in the northwest is higher than those of boroughs in the southeast.",
+    index: 312,
+    Private: 'visible',
+    Social: 'none',
+    Private_status: "active",
+    Social_status: "",
+    flyTo1: {
+    	zoom: 9,
+    	center: [-0.14, 51.51],
+    	pitch: 0,
+    	speed: 0.3
+    },
+    flyTo2: {
+    	zoom: 9,
+    	center: [-0.14, 51.51],
+    	pitch: 0,
+    	speed: 0.3
+    },
 },
 
 { title: "Social Houses Rent in London",
