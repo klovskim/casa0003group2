@@ -144,7 +144,7 @@
                 <script>
                   mapboxgl.accessToken = 'pk.eyJ1IjoiZGFuemhhbmc2MDI4IiwiYSI6ImNqbnl3cjA3NDAxa2Iza21xNTh0ZHJmanEifQ.-f1bD67sihexMWPoxNjZbw';
 
-
+// credit to David Clark for this next bit here, https://github.com/mapbox/mapbox-gl-sync-move
                   function moveToMapPosition (master, clones) {
                     var center = master.getCenter();
                     var zoom = master.getZoom();
@@ -200,7 +200,8 @@
           map.off('move', fns[index]);
         });
       }
-
+      
+// credit to David Clark for this next bit here, https://github.com/mapbox/mapbox-gl-sync-move
       // When one map moves, we turn off the movement listeners
       // on all the maps, move it, then turn the listeners on again
       function sync (master, clones) {

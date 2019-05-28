@@ -80,7 +80,7 @@
     <!-- start the script portion -->
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoibWtsb3Zza2kiLCJhIjoiY2l6N2R0azl2MDA1NDJ3cG9uZ2RoMzF5aiJ9.UacgAXrCVFX4BmcbH4oj_w';
-
+// credit to David Clark for this next bit here, https://github.com/mapbox/mapbox-gl-sync-move
         // clone map function
         function moveToMapPosition(master, clones) {
             // this makes both move at once, rather than individually
@@ -99,7 +99,7 @@
             });
         }
 
-        // Sync movements of two maps (credit to Dan Zhang here)
+// credit to David Clark for this next bit here too, https://github.com/mapbox/mapbox-gl-sync-move
         function syncMaps() {
             var maps;
             var argument_length = arguments.length;
@@ -112,7 +112,7 @@
                 }
             }
 
-            // again, credit to dan zhang here, continuing the logic to get them to move at once
+            // continuing the logic to get them to move at once
             var fns = [];
             maps.forEach(function (map, index) {
                 fns[index] = sync.bind(null, map, maps.filter(function (o, i) { return i !== index; }));
@@ -138,6 +138,7 @@
             }
             on();
         };
+// end of the bit sourced from David Clark
 
         // set the two maps as either social or private
         var social = new mapboxgl.Map({
